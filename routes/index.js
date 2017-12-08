@@ -10,7 +10,6 @@ router.all('/*', function (req, res, next) {
     });
 
 router.get('/', function(req, res){
-	
 	db.Galery.find({isFavorite: true}).sort({dateOfPlay: 'desc'}).exec(function(err, galeries){
 		res.render('home', {
 			title: 'Home',

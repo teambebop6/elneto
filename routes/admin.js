@@ -94,9 +94,7 @@ router.get('/admin/list-galeries', function(req,res){
 	
 		res.render('admin/list_galeries', {
 			title: 'Manage Galeries',
-			body_scripts: function(){
-				return 'admin/list_galeries.body';
-			},
+			custom_js: 'admin/list-galeries.bundle',
 			galeries: galeries,
 			active: {list_galeries : true}
 		});	

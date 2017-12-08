@@ -6,7 +6,7 @@ less = require 'gulp-less'
 coffee = require 'gulp-coffee'
 clean = require 'gulp-clean'
 nodemon = require 'gulp-nodemon'
-buildSemantic = require('./semantic/tasks/build')
+buildSemantic = require('./assets/vendor/semantic/tasks/build')
 
 # Compile Less
 gulp.task 'build-less', ->

@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "gulp start-server"
+    "start": "gulp start-server",
+    "webpack-watch": "webpack --watch --progress"
   },
   "keywords": [
     "elneto"
@@ -20,14 +21,18 @@
     "connect-redis": "^3.0.2",
     "cookie-parser": "^1.4.1",
     "crypto": "0.0.3",
+    "css-loader": "^0.28.7",
     "debug": "^2.2.0",
     "express": "^4.14.0",
     "express-handlebars": "^3.0.0",
     "express-session": "^1.13.0",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "file-loader": "^1.1.5",
     "gm": "^1.23.0",
     "gulp-clean": "^0.3.2",
     "handlebars": "^4.0.5",
     "jquery-file-upload-middleware": "^0.1.7",
+    "less-loader": "^4.0.5",
     "mongoose": "^4.5.5",
     "morgan": "^1.7.0",
     "npm-autoinit": "^0.2.0",
@@ -35,7 +40,10 @@
     "passport-local": "^1.0.0",
     "semantic-ui": "^2.1.8",
     "serve-favicon": "^2.3.0",
-    "slick-carousel": "^1.6.0"
+    "slick-carousel": "^1.6.0",
+    "style-loader": "^0.19.0",
+    "url-loader": "^0.6.2",
+    "webpack": "^3.10.0"
   },
   "devDependencies": {
     "gulp": "^3.9.1",
