@@ -1,0 +1,9 @@
+body {
+  background: #000;
+}
+.galleria-info {
+  display: none !important;
+}
+.image-info span {
+  display: block;
+}

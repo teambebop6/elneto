@@ -1,0 +1,26 @@
+<div class="ui page grid">
+	<div class="row">
+		<div class="column">
+			<h3>Por favor inicie sesión para continuar</h3>
+			{{#if flash.error}}
+				<div class="ui red error message">
+					<p class="header">Error</p>
+					<p class="error">
+						{{flash.error}}
+					</p>
+				</div>
+			{{/if}}
+			<form class="ui form" action="/login" method="post">
+				<div class="field">
+					<label>Nombre:</label>
+					<input placeholder="Username" type="text" name="username"/>
+				</div>
+				<div class="field">
+					<label>Contraseña:</label>
+					<input placeholder="Password" type="password" name="password"/>
+				</div>
+				<input class="ui button" type="submit" value="Iniciar sesión"/>
+			</form>
+		</div>
+	</div>
+</div>

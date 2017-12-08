@@ -1,0 +1,27 @@
+<div class="stage-bg">
+	<div class="jcarousel-wrapper">
+		<!-- Carousel -->
+		<div class="jcarousel">
+			<ul class="clearfix">
+				{{#each favoriteGaleries}}
+					<li>
+						<a href="/galery/{{this._id}}">
+								<img src="/static/images/galery/{{this.titlePicture}}" />
+									
+								<!--
+									<div class="ui basic segment description">
+										<h3 class="ui yellow header">{{this.title}}</h3>
+										<p>
+											{{this.location}}<br />
+											{{formatDateString this.dateOfPlay}}<br />
+											Dirección artística: {{this.director}}
+										</p>
+									</div>
+								-->
+						</a>
+					</li>
+				{{/each}}
+			</ul>
+		</div>
+	</div>
+</div>

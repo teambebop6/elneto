@@ -1,0 +1,25 @@
+extends layouts/main
+
+block content
+	.ui.stackable.page.grid.galeries
+		.five.column.row.container
+			each galeries
+				.center.aligned.column
+					a.galery-title(href='/galery/{{this._id}}')
+						img.ui.medium.image(src='/static/images/galery/thumbs/{{this.titlePicture}}')
+						.info
+							h3.ui.header.title= galery.title
+							p.moreInfo
+								= galery.location
+								br
+								= _.formatDateString(galery.dateOfPlay)
+								br
+								dirección artística: galery.director
+	.ui.divider
+	if active.teatro_cubano
+		.ui.centered.stackable.page.grid.searchdb
+			.row.container(style='padding-bottom:0;')
+				.seven.wide.column
+					h3.ui.sub.header(style='margin-top:0.558rem;') banco de datos sobre el teatro cubano (1948-1995):
+				.seven.wide.column
+					i página en construcción   

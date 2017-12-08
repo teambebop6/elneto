@@ -1,0 +1,7 @@
+/*******************************
+        User Overrides
+*******************************/
+
+.ui.dropdown .menu{
+	background:#FFF;
+}

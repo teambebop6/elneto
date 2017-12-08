@@ -1,0 +1,62 @@
+<div class="column">
+	<h2 class="ui left floated inverted header">Manage Galeries</h2>
+	<button id="new-galery" class="ui inverted basic button">
+	  <i class="plus icon"></i>
+	  Create new
+	</button>
+
+
+	<table class="ui inverted table">
+	  <thead>
+	    <tr>
+	      <th>Title</th>
+	      <th>Created on</th>
+	      <th>Date of play</th>
+	      <th>Location</th>
+	      <th>Author</th>
+	      <th>Director</th>
+	      <th style="min-width:125px;">Actions</th>
+	      <th></th>
+	    </tr>
+	  </thead>
+	  <tbody>
+		<div class="ui list clearfix">
+		{{#each galeries}}
+		    <tr id="galery_{{this._id}}" class="galery-listing">
+		      <td>{{this.title}}</td>
+		      <td>{{formatDate this.createdOn}}</td>
+		      <td>{{formatDate this.dateOfPlay}}</td>
+		      <td>{{this.location}}</td>
+		      <td>{{this.author}}</td>
+		      <td>{{this.director}}</td>
+		      <td>
+			<button onclick="modifyGalery({{this._id}})" class="ui inverted yellow icon button">
+				<i class="edit icon"></i>
+			</button>
+			<button onclick="deleteGalery({{this._id}})" class="ui inverted red icon button">
+				<i class="delete icon"></i>
+			</button>
+			</td>
+			<td>
+		     <div class="ui fitted checkbox">
+					 <input class="hidden" tabindex="0" type="checkbox">
+					 <label></label>
+		     </div>
+		    </tr>
+		{{/each}}
+	  </tbody>
+	 </table>
+		
+		{{#if galeries}}
+		<div class="ui right floated inverted compact menu">
+			<div class="ui simple dropdown item">
+				Select action
+				<i class="dropdown icon"></i>
+				<div class="menu">
+					<div class="item" id="deleteSelected">Delete selected</div>
+				</div>
+			</div>
+		</div>	
+		{{/if}}
+	</div>
+</div>

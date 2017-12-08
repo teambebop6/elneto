@@ -1,0 +1,55 @@
+<div class="ui stackable page grid galeries">
+	<div class="five column row container">
+		{{#each galeries}}
+		<div class="column">
+			<a class="galery-title" href="/galery/{{this._id}}" data-id="{{this._id}}">
+					<img class="ui medium image" src="/static/images/galery/thumbs/{{this.titlePicture}}" />
+					<div class="info" data-id="{{this._id}}">
+						<strong class="title line">
+							<span>{{this.title}}</span>
+						</strong>
+						<div class="moreInfo">
+							<div class="line">
+								<span>{{this.location}}</span>
+							</div>
+							<div class="line">
+								<span>{{formatDateString this.dateOfPlay}}</span>
+							</div>
+							<div class="line">
+								<span>dirección: {{this.director}}</span>
+							</div>
+							<div class="line">
+								<span>autor: {{this.author}}</span>
+							</div>
+						</div>
+					</div>
+			</a>
+		</div>
+		{{/each}}
+	</div>
+</div>
+
+<div class="ui divider"></div>
+
+{{#if active.teatro_cubano}}
+	<form class="ui form searchdb_form" action="">
+		<div class="ui centered stackable page grid searchdb">
+			<div class="center aligned column">
+				<p>Pagina en construcción</p>
+			</div>
+			<!--
+			<div class="two column row container">
+				<div class="column">
+					<label for="search_db">banco de datos sobre el teatro cubano (1948-1995):</label>
+				</div>
+				<div class="column">
+					<div class="ui small fluid icon disabled input">
+						<input id="search_db" placeholder="Pagina en construcción" type="text">
+						<i class="circular search link icon"></i>
+					</div>
+				</div>
+			</div>
+			-->
+		</div>
+	</form>
+{{/if}}
