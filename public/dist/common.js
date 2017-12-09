@@ -155,19 +155,19 @@ __webpack_require__(1); // html boilerplate
 
 // Less
 //
+__webpack_require__(7);
 __webpack_require__(8);
 __webpack_require__(9);
-__webpack_require__(10);
 
 var common = new Promise(function(resolve, reject){
-  __webpack_require__.e/* require */(0/* duplicate */).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(3)]; ((function($){
+  __webpack_require__.e/* require */(0/* duplicate */).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [!(function webpackMissingModule() { var e = new Error("Cannot find module \"jquery\""); e.code = 'MODULE_NOT_FOUND'; throw e; }())]; ((function($){
 
     jQuery = $;
     window.jQuery = jQuery;
     window.$ = $;
 
     // Semantic js
-    __webpack_require__(6);
+    __webpack_require__(5);
 
     // Resolve promise
     resolve();
@@ -189,7 +189,12 @@ module.exports = common;
 /* 4 */,
 /* 5 */,
 /* 6 */,
-/* 7 */,
+/* 7 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
 /* 8 */
 /***/ (function(module, exports) {
 
@@ -197,12 +202,6 @@ module.exports = common;
 
 /***/ }),
 /* 9 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 10 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

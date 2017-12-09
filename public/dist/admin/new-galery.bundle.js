@@ -1,6 +1,6 @@
 webpackJsonp([12],{
 
-/***/ 17:
+/***/ 16:
 /***/ (function(module, exports, __webpack_require__) {
 
 app = __webpack_require__(2);
@@ -17,7 +17,7 @@ app.then(function(){
       .transition('fade');
   });
 
-  __webpack_require__.e/* require */(6).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(5)]; ((function(){
+  __webpack_require__.e/* require */(7).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(4)]; ((function(){
     // Datepicker
     $( "input[id='date_of_play_string']" ).datepicker({
       changeMonth: true,
@@ -35,7 +35,7 @@ app.then(function(){
 });
 
 
-__webpack_require__.e/* require */(3).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(4), __webpack_require__(23)]; ((function(){
+__webpack_require__.e/* require */(4).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(3), __webpack_require__(22)]; ((function(){
   $('#form-new').validate({
     lang: 'de',
     rules: {
@@ -78,4 +78,4 @@ __webpack_require__.e/* require */(3).then(function() { var __WEBPACK_AMD_REQUIR
 
 /***/ })
 
-},[17]);
+},[16]);
