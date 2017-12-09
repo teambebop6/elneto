@@ -6,22 +6,26 @@ var development = {
   DEBUG_WARN : true,
   DEBUG_ERROR : true,
   DEBUG_CLIENT : true,
+  DB_PORT: '27017',
+  DB_NAME: 'elneto',
   USE_IMAGE_MAGICK : true,
   redis : {
     port: '6379'
   },
-}
+};
 
 var production = {
   DEBUG_LOG : false,
   DEBUG_WARN : false,
   DEBUG_ERROR : true,
   DEBUG_CLIENT : false,
+  DB_PORT: '27017',
+  DB_NAME: 'elneto',
   APP_PORT : 20082,
   redis : {
     port: '6379'
   },
-}
+};
 
 var config = {
   ROOT: __dirname,
