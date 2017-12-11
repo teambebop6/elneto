@@ -2,7 +2,7 @@ module.exports = {
   apps: [
     {
       name: "elneto_dev",
-      script: "./app.js",
+      script: "./index.js",
       instances: 1,
       exec_mode: "cluster",
       env: {
