@@ -8,7 +8,7 @@ module.exports = {
       env: {
         NODE_ENV: 'production',
         PORT: 5000,
-        DB_NAME: 'imhof_dev',
+        ELNETO_ENV: 'dev'
       },
       cwd: '/usr/local/share/website/dev.elneto.com/elneto_dev'
     }

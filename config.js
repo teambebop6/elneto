@@ -7,7 +7,7 @@ var development = {
   DEBUG_ERROR : true,
   DEBUG_CLIENT : true,
   DB_PORT: '27017',
-  DB_NAME: 'elneto',
+  DB_NAME: 'elneto_dev',
   USE_IMAGE_MAGICK : true,
   redis : {
     port: '6379'
