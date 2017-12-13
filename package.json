@@ -31,6 +31,7 @@
     "file-loader": "^1.1.5",
     "gm": "^1.23.0",
     "handlebars": "^4.0.5",
+    "jquery": "^3.2.1",
     "jquery-file-upload-middleware": "^0.1.7",
     "less-loader": "^4.0.5",
     "moment": "^2.19.3",
