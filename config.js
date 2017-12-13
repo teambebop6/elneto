@@ -7,7 +7,7 @@ var development = {
   DEBUG_ERROR : true,
   DEBUG_CLIENT : true,
   DB_PORT: '27017',
-  DB_NAME: (devEnc.db && devEnc.db.name) ? devEnc.db.name: 'elneto_dev',
+  DB_NAME: process.env.DB_NAME || "elneto_dev",
   USE_IMAGE_MAGICK : true,
   redis : {
     port: '6379'
@@ -20,7 +20,7 @@ var production = {
   DEBUG_ERROR : true,
   DEBUG_CLIENT : false,
   DB_PORT: '27017',
-  DB_NAME: (prodEnc.db && prodEnc.db.name) ? prodEnc.db.name: 'elneto',
+  DB_NAME: process.env.DB_NAME || (process.env.ELNETO_ENV == "dev") : "elneto_dev" : "elneto",
   APP_PORT : 20082,
   redis : {
     port: '6379'
