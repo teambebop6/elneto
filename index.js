@@ -51,7 +51,7 @@ var RedisStore = require('connect-redis')(session);
 var sess = {
 	resave: true,
 	saveUninitialized: true,
-	secret: config.redis.SECRET,
+	secret: config.SESSION_SECRET,
 	cookie:{ maxAge:24*60*60*1000 },
 	store: new RedisStore({
 		host: 'localhost',

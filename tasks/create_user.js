@@ -4,8 +4,7 @@ var Counter = require('../mongodb/counter_model')
 
 var env = process.env.NODE_ENV || 'development';
 
-var config = require('../config');
-config.setEnvironment(env);
+var config = require('../config')(env);
 
 var db = require('../mongodb/connect');
 db.connect(config, env);

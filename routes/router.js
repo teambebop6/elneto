@@ -5,6 +5,7 @@ var db = require('../mongodb/db');
 var path = require('path');
 
 // Static folders
+router.use('/assets', express.static('public/dist'));
 router.use('/static', express.static('public'));
 router.use('/static/semantic', express.static('semantic/dist'));
 router.use('/static/js', express.static('node_modules/handlebars/dist'));
