@@ -116,6 +116,9 @@ gulp.task 'dist:copy', () ->
 
   utils = gulp.src(['utils/**/*'])
     .pipe(gulp.dest('dist/utils/'));
+  
+  tasks = gulp.src(['tasks/**/*'])
+    .pipe(gulp.dest('dist/tasks/'));
 
   filesToToDist = ['config.js', 'index.js', 'package.json', 'pm2.dev.config.js',
     'pm2.www.config.js']
@@ -123,7 +126,7 @@ gulp.task 'dist:copy', () ->
   dist = gulp.src(filesToToDist)
     .pipe(gulp.dest('dist/'));
 
-  return merge(elneto_secret, lib, mongodb, publicFolder, routes, views, utils, dist)
+  return merge(elneto_secret, lib, mongodb, publicFolder, routes, views, utils, tasks, dist)
 
 gulp.task 'dist:archive', () ->
   distFolder = __dirname
