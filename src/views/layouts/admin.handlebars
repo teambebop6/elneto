@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Elneto Fotos - Ernst Rudin</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+  <link rel="stylesheet" href="/assets/commons.css">
+
+
+  <link type="text/css" rel="stylesheet" href="//fast.fonts.net/cssapi/ff2d2c4a-64b2-4789-879c-40facd89a49e.css"/>
+
+  {{#if head_scripts}}
+  <!-- custom styles -->
+  {{> (head_scripts) }}
+  {{/if}}
+
+</head>
+<body>
+  <!--[if lt IE 7]>
+    <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+  <![endif]-->
+
+  {{> admin/header }}
+
+  <div class="ui page grid">
+    <div class="row container">
+      {{{body}}}
+    </div>
+  </div>
+
+  {{> admin/footer }}
+
+
+  <!-- Delete Modal -->
+  <div class="ui basic modal confirm delete" id="confirmDeleteModal">
+    <i class="close icon"></i>
+    <div class="header">
+      Are you sure?
+    </div>
+    <div class="image content">
+      <div class="image">
+        <i class="archive icon"></i>
+      </div>
+      <div class="description">
+        <p>By clicking "Yes" you are going to delete ###placeholder###.</p>
+      </div>
+    </div>
+    <div class="actions">
+      <div class="two fluid ui inverted buttons">
+        <div class="ui deny red basic inverted button">
+          <i class="remove icon"></i>
+          Cancel
+        </div>
+        <div class="ui approve green basic inverted button">
+          <i class="checkmark icon"></i>
+          Yes, I want to delete ###placeholder###!
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <script src="/assets/admin/common.js" charset="utf-8"></script>
+
+  {{#if body_scripts}}
+  <script src="/assets/admin/{{body_scripts}}.js" charset="utf-8"></script>
+  {{/if}}
+
+
+</body>
+</html>
