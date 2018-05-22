@@ -53,3 +53,5 @@ public/dist/
 elneto-dist.zip
 
 elneto-dist/
+
+.travis/assets/
