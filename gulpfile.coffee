@@ -5,11 +5,11 @@ less = require 'gulp-less'
 coffee = require 'gulp-coffee'
 clean = require 'gulp-clean'
 nodemon = require 'gulp-nodemon'
-buildSemantic = require('./assets/vendor/semantic/tasks/build')
+buildSemantic = require('./src/assets/vendor/semantic/tasks/build')
 runSequence = require('run-sequence')
-merge = require('merge-stream');
-zip = require('gulp-zip');
-webpack = require('webpack');
+merge = require('merge-stream')
+zip = require('gulp-zip')
+webpack = require('webpack')
 webpackConfig = require './webpack.config'
 release = require './gulptasks/release'
 
@@ -56,7 +56,7 @@ gulp.task 'start-server', ->
 
   if not nodemon_instance?
     nodemon_instance = nodemon
-      script: 'index.js'
+      script: 'src/index.js'
       watch: ['.app/']
       ext: 'js'
       verbose: true

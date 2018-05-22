@@ -1,0 +1,16 @@
+<div class="stage-bg">
+	<div class="jcarousel-wrapper">
+		<!-- Carousel -->
+		<div class="jcarousel">
+			<ul class="clearfix">
+				{{#each favoriteGaleries}}
+					<li>
+						<a href="/galery/{{this._id}}">
+								<img src="/static/images/galery/{{this.titlePicture}}" />
+						</a>
+					</li>
+				{{/each}}
+			</ul>
+		</div>
+	</div>
+</div>
