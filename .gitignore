@@ -46,12 +46,11 @@ jspm_packages
 
 .idea/
 
-./dist/
-
+dist/
 public/dist/
 
-elneto-dist.zip
+!src/assets/vendor/semantic/dist/
 
-elneto-dist/
+elneto-dist.zip
 
 .travis/assets/
