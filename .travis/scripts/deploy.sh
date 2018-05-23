@@ -2,6 +2,9 @@
 
 echo "Start post..."
 
+echo 'dist/'
+ls -l dist/
+
 # copy ecosystem.config.js to dist
 cp ecosystem.config.js dist/
 
