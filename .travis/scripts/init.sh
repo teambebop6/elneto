@@ -7,7 +7,7 @@ echo branch is $TRAVIS_BRANCH
 # import ssh keys
 openssl aes-256-cbc -K $encrypted_8df8ba15f725_key -iv $encrypted_8df8ba15f725_iv -in .travis/assets.zip.enc -out assets.zip -d
 
-unzip assets.zip -d assets
+unzip assets.zip
 
 # Start SSH agent
 #eval $(ssh-agent -s)
