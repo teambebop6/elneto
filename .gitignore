@@ -46,7 +46,7 @@ jspm_packages
 
 .idea/
 
-dist/
+./dist/
 
 public/dist/
 
