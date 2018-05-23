@@ -9,7 +9,8 @@ var inputDir = process.argv[2];
 var outputDir = process.argv[3];
 
 if(!inputDir || !outputDir){ 
-	console.log("please give an input and an output directory"); return; 
+	console.log("please give an input and an output directory");
+	process.exit(-1);
 }
 
 // Read given directory

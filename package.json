@@ -5,10 +5,20 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dist": "gulp dist",
-    "start": "gulp start-server",
+
+    "start": "node .",
+    "start-dev": "node src/index.js",
+
+    "clean": "rimraf dist",
+    "build": "npm run build:server && npm run build:client && npm run copy",
+    "copy": "npm run copy:public && npm run copy:package.json",
+
     "dev": "webpack --mode development",
-    "build": "webpack --mode production"
+
+    "build:server": "npx babel src --out-dir dist --ignore src/assets && cp -R src/views dist/",
+    "build:client": "webpack --mode production",
+    "copy:public": "cp -R public dist/",
+    "copy:package.json": "cpx \"package*.json\" dist/"
   },
   "keywords": [
     "elneto"
