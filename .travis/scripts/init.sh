@@ -5,7 +5,7 @@ echo branch is $TRAVIS_BRANCH
 # how to encrypt sensitive files: https://docs.travis-ci.com/user/encrypting-files/
 
 # import ssh keys
-openssl aes-256-cbc -K $encrypted_f29dc9db7745_key -iv $encrypted_f29dc9db7745_iv -in .travis/assets.zip.enc -out assets.zip -d
+openssl aes-256-cbc -K $encrypted_8df8ba15f725_key -iv $encrypted_8df8ba15f725_iv -in .travis/assets.zip.enc -out assets.zip -d
 
 unzip assets.zip -d assets
 
