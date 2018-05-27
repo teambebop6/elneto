@@ -1,7 +1,4 @@
 require('../../vendor/semantic/dist/semantic.min.css');
-
-// Less
-//
 require('../../less/admin.less');
 
 var common = new Promise(function(resolve, reject){

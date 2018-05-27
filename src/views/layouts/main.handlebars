@@ -9,8 +9,8 @@
         <title>Elneto Fotos - Ernst Rudin</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="/assets/commons.css">
 
+        <link type="text/css" rel="stylesheet" href="/assets/commons.css" />
 				<link type="text/css" rel="stylesheet" href="//fast.fonts.net/cssapi/ff2d2c4a-64b2-4789-879c-40facd89a49e.css"/>
 				{{#if head_scripts}}
 					<!-- custom styles -->
@@ -30,11 +30,10 @@
 				{{> page/footer }}
 
 
-
-        <script src="/assets/main.js" charset="utf-8"></script>
-
 				{{#if scripts}}
           <script src="/assets/{{scripts}}.js" charset="utf-8"></script>
+				{{else}}
+          <script src="/assets/default.bundle.js" charset="utf-8"></script>
 				{{/if}}
 
 	</body>

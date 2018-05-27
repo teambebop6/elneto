@@ -1,12 +1,9 @@
-require('../vendor/semantic/dist/semantic.min.css'); // html boilerplate
-
-// Less
-//
 require('../less/main.less');
+require('../vendor/semantic/dist/semantic.min.css');
 require('../less/galery.less');
 require('../less/jcarousel.basic.less');
 
-var common = new Promise(function(resolve, reject){
+const common = new Promise(function(resolve, reject){
   require(['jquery'], function($){
 
     jQuery = $;

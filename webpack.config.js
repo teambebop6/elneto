@@ -2,10 +2,8 @@ var webpack;
 
 webpack = require('webpack');
 
-var env = process.env.NODE_ENV || "development";
-console.log("Node env is: " + env);
-
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const path = require('path');
 
@@ -25,7 +23,7 @@ module.exports = {
     }
   },
   entry: {
-    'default': './src/assets/js/default',
+    'def': './src/assets/js/default',
     'galery-cat': './src/assets/js/galery-cat',
     'galery': './src/assets/js/galery',
     'home': './src/assets/js/home',
@@ -34,7 +32,7 @@ module.exports = {
     'admin/new-galery': './src/assets/js/admin/new_galery',
   },
   output: {
-    path: path.resolve(__dirname, 'public/dist'),
+    path: process.env.NODE_ENV == "production" ? path.resolve(__dirname, 'dist/assets') : path.resolve(__dirname, 'public/dist'),
     filename: "[name].bundle.js",
     publicPath: "/assets/",
     chunkFilename: "[id].chunk.js"
@@ -63,47 +61,24 @@ module.exports = {
         test: /\.less$/,
         use:  [  'style-loader', MiniCssExtractPlugin.loader, 'css-loader', 'less-loader']
       },
-      // {
-      //   test: /\.less$/,
-      //   use: ExtractTextPlugin.extract({
-      //     fallback: 'style-loader',
-      //     use: 'css-loader!less-loader'
-      //   }),
-      // },
     ],
   },
   optimization: {
     splitChunks: {
       cacheGroups: {
-        'admin' : {
-          test: '/admin/',
-          name: "admin",
-          minChunks: 2,
+        commons: {
+          name: "commons",
+          chunks: "initial",
+          minChunks: 2
         }
       }
     },
   },
   plugins: [
-    //new ExtractTextPlugin({
-    //  // Options similar to the same options in webpackOptions.output
-    //  // both options are optional
-    //  filename: "[name].css",
-    //}),
     new MiniCssExtractPlugin({
-      // Options similar to the same options in webpackOptions.output
-      // both options are optional
       filename: "[name].css",
       chunkFilename: "[id].css"
     }),
-    // new webpack.optimize.CommonsChunkPlugin({
-    //   filename: "admin/common.js",
-    //   name: "admin/common",
-    //   chunks: ['admin/list-galeries', 'admin/modify-galery', 'admin/new-galery'],
-    // }),
-    // new webpack.optimize.CommonsChunkPlugin({
-    //   filename: "common.js",
-    //   name: "common",
-    //   chunks: ,
-    // })
+    new BundleAnalyzerPlugin(),
   ]
 };

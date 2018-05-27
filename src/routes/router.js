@@ -7,19 +7,15 @@ var env = process.env.NODE_ENV || "development";
 var config = require('../config')(env);
 
 // Static folders
-router.use('/assets', express.static('dist'));
-router.use('/assets', express.static('public/dist'));
-router.use(express.static(config.UPLOAD_FOLDER));
+router.use('/assets', express.static(process.env == "production" ? 'assets' : 'public/dist'));
 router.use('/static', express.static('public'));
-router.use('/static/semantic', express.static('semantic/dist'));
-router.use('/static/js', express.static('node_modules/handlebars/dist'));
-router.use('/static/vendor/slick', express.static('node_modules/slick-carousel/slick'));
+router.use('/uploads', express.static(config.UPLOAD_FOLDER));
 
-// Load sub routes
+// Load routes
 router.use('/', require('./api'));
 router.use('/', require('./index'));
 router.use('/', require('./admin'));
-// Load galery subroute
+
 router.use('/admin/galery', require('./admin/galery'));
 
 // Redirect if last char of url is '/'

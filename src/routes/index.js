@@ -16,7 +16,7 @@ router.get('/', function(req, res){
       //head_scripts: function(){
       //	return 'home.head';
       //},
-      scripts: 'home',
+      scripts: 'home.bundle',
       favoriteGaleries: galeries
     });
 

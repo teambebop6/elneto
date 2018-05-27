@@ -1,4 +1,4 @@
-app = require('./globals');
+var app = require('./globals');
 
 app.then(function(){
   console.log("Loaded globals.");
