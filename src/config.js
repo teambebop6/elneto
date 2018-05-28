@@ -1,9 +1,24 @@
 var path = require('path');
 
 var devEnc = require('./elneto-secret/development');
+var stagingEnc = require('./elneto-secret/staging');
 var prodEnc = require('./elneto-secret/production');
 
 var development = {
+  UPLOAD_FOLDER: process.env.UPLOAD_FOLDER || path.join(process.env.HOME, '/www/uploads/elneto'),
+  DEBUG_LOG : true,
+  DEBUG_WARN : true,
+  DEBUG_ERROR : true,
+  DEBUG_CLIENT : true,
+  DB_PORT: '27017',
+  DB_NAME: process.env.DB_NAME || "elneto_dev",
+  USE_IMAGE_MAGICK : true,
+  redis : {
+    port: '6379'
+  },
+};
+
+var staging = {
   UPLOAD_FOLDER: process.env.UPLOAD_FOLDER || path.join(process.env.HOME, '/www/uploads/elneto'),
   DEBUG_LOG : true,
   DEBUG_WARN : true,
@@ -42,6 +57,13 @@ module.exports = function (env) {
       Object.assign(config, development);
       if (devEnc) {
         Object.assign(config, devEnc);
+      }
+      break;
+    }
+    case "staging": {
+      Object.assign(config, staging);
+      if (stagingEnc) {
+        Object.assign(config, stagingEnc);
       }
       break;
     }
