@@ -1,11 +1,20 @@
-var webpack;
-
-webpack = require('webpack');
+const webpack = require('webpack');
 
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const path = require('path');
+
+const plugins = [
+  new MiniCssExtractPlugin({
+    filename: "[name].css",
+    chunkFilename: "[id].css"
+  }),
+];
+
+if (process.env.NODE_ENV !== 'production') {
+  plugins.push(new BundleAnalyzerPlugin());
+}
 
 module.exports = {
   resolve: {
@@ -32,7 +41,7 @@ module.exports = {
     'admin/new-galery': './src/assets/js/admin/new_galery',
   },
   output: {
-    path: process.env.NODE_ENV == "production" ? path.resolve(__dirname, 'dist/assets') : path.resolve(__dirname, 'public/dist'),
+    path: process.env.NODE_ENV === 'production' ? path.resolve(__dirname, 'dist/assets') : path.resolve(__dirname, 'public/dist'),
     filename: "[name].bundle.js",
     publicPath: "/assets/",
     chunkFilename: "[id].chunk.js"
@@ -47,9 +56,9 @@ module.exports = {
         test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
         loader: 'file-loader'
       },
-      {test:/\.gif$/,loader:'url-loader'},
-      {test:/\.png$/,loader:'url-loader'},
-      {test:/\.cur/,loader:'url-loader'},
+      { test: /\.gif$/, loader: 'url-loader' },
+      { test: /\.png$/, loader: 'url-loader' },
+      { test: /\.cur/, loader: 'url-loader' },
       {
         test: /\.css$/,
         use: [
@@ -59,7 +68,7 @@ module.exports = {
       },
       {
         test: /\.less$/,
-        use:  [  'style-loader', MiniCssExtractPlugin.loader, 'css-loader', 'less-loader']
+        use: ['style-loader', MiniCssExtractPlugin.loader, 'css-loader', 'less-loader']
       },
     ],
   },
@@ -74,11 +83,5 @@ module.exports = {
       }
     },
   },
-  plugins: [
-    new MiniCssExtractPlugin({
-      filename: "[name].css",
-      chunkFilename: "[id].css"
-    }),
-    new BundleAnalyzerPlugin(),
-  ]
+  plugins,
 };
