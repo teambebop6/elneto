@@ -5,11 +5,11 @@ less = require 'gulp-less'
 coffee = require 'gulp-coffee'
 clean = require 'gulp-clean'
 nodemon = require 'gulp-nodemon'
-buildSemantic = require('./assets/vendor/semantic/tasks/build')
+buildSemantic = require('./src/assets/vendor/semantic/tasks/build')
 runSequence = require('run-sequence')
-merge = require('merge-stream');
-zip = require('gulp-zip');
-webpack = require('webpack');
+merge = require('merge-stream')
+zip = require('gulp-zip')
+webpack = require('webpack')
 webpackConfig = require './webpack.config'
 release = require './gulptasks/release'
 
@@ -56,7 +56,7 @@ gulp.task 'start-server', ->
 
   if not nodemon_instance?
     nodemon_instance = nodemon
-      script: 'index.js'
+      script: 'src/index.js'
       watch: ['.app/']
       ext: 'js'
       verbose: true
@@ -116,6 +116,9 @@ gulp.task 'dist:copy', () ->
 
   utils = gulp.src(['utils/**/*'])
     .pipe(gulp.dest('dist/utils/'));
+  
+  tasks = gulp.src(['tasks/**/*'])
+    .pipe(gulp.dest('dist/tasks/'));
 
   filesToToDist = ['config.js', 'index.js', 'package.json', 'pm2.dev.config.js',
     'pm2.www.config.js']
@@ -123,7 +126,7 @@ gulp.task 'dist:copy', () ->
   dist = gulp.src(filesToToDist)
     .pipe(gulp.dest('dist/'));
 
-  return merge(elneto_secret, lib, mongodb, publicFolder, routes, views, utils, dist)
+  return merge(elneto_secret, lib, mongodb, publicFolder, routes, views, utils, tasks, dist)
 
 gulp.task 'dist:archive', () ->
   distFolder = __dirname

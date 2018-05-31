@@ -1,22 +1,26 @@
 language: node_js
 sudo: true
 node_js:
-- 6.9.1
+- 8.11.1
 cache:
   directories:
   - node_modules
 addons:
-  ssh_known_hosts: github.com
+  ssh_known_hosts:
+  - github.com
+  - gitlab.com
 before_install:
-- bash ./.travis/checkout_secret.sh
+- npm install -g npx
+- npm install -g pm2
+- npm install -g cpx
+- bash ./.travis/scripts/init.sh
+- bash ./.travis/scripts/clone.sh
 script:
-- gulp build
-- gulp dist
-- gulp release
+- npm install
+- CI=false npm run build
+- bash ./.travis/scripts/deploy.sh
 branches:
   only:
+  - master
   - dev
   - release
-env:
-  global:
-    secure: X4/sCre3iFux7BMnj4YcPcglJV6dUhkYJ4Bpb6oQd9Nued8tcfe1KODc9ghmC7LbcFP4j8Hj4Q20id6AV32t4K5jgHolM6yrMzMU50xbwf/UOl7DwPUUtFtOrsHHY/Em+BxPC8IsBiPEpsLmvvIbiTEDB3iig9s1CxkXfVpO6kg9h/u8EsyczidJXwnuakYqovpH5Y7aFVZCnLu2+g2kZEHN3C9f6FkCBQe0XNo3gQSdmV137p4b77Z+bEEKK48830TE/BCQdBr3QDsJFaEm17f6u/Gmmth2yc75VjCOi6PfyDj/qnZ2A7yaxOh8/dqZIsKZV+tmhB6J+xXJaYM/GXoUsl1bbdxF2YxcoNLgj6q89iMmJK42AJtCoQcUb09cx/l0O8oa18mx50GAb4RQkcjzJJYFX2gsp5+ZTBnAdUsnWHJlCv9+Mf4773y2ZkuZcQb/82mtewgRsnaX4wlSQka34iJPyYaID3Mlhp8dBRR+GxKJVbg4auVAAuo1hq7OTdjJL6f/g0UirT7+Na/EuxXxaw7HlXynY2/2p14GRMPqk8W6E3lL4tIXn+8UBh5vrDu+XPktfpK078q4hOTOiNtzTMqq+gv8jHNfMmIzbMmk/qFUA40hEcI2GtjdWdrJl4Ordhln2QAtEth5s5vJ5Sddr0mCEpSnVFxTPNWCjoQ=
