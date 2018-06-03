@@ -1,6 +1,6 @@
-<div class="stage-bg">
-	<div class="jcarousel-wrapper">
-		<!-- Carousel -->
+<div id="homePage" class="homePage_wrapper">
+<!-- 	<div class="jcarousel-wrapper">
+		
 		<div class="jcarousel">
 			<ul class="clearfix">
 				{{#each favoriteGaleries}}
@@ -12,5 +12,25 @@
 				{{/each}}
 			</ul>
 		</div>
+
+	</div> -->
+
+	<div class="movingImage imageMove">
+		<img src="/static/images/home1.jpg" />
+		<img src="/static/images/home1.jpg" />
+	</div>
+
+
+	<div class="menuBar">
+		<a href="/"><div class="title">elneto • Fotos</div></a>
+		<div class="menu">
+			<a class="item {{#if active.teatro_cubano}}active{{/if}}" href="/teatro-cubano">Teatro Cubano</a>
+			<a class="item {{#if active.danza}}active{{/if}}" href="/danza">Danza</a>
+			<a class="item {{#if active.musik}}active{{/if}}" href="/musica">Música</a>
+			<a class="item {{#if active.theater}}active{{/if}}" href="/teatro">Teatro</a>
+			<a class="item {{#if active.yonny}}active{{/if}}" href="/yonny">Yonny</a>
+		</div>
+
 	</div>
 </div>
+
