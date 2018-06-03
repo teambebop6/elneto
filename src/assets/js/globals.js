@@ -3,7 +3,7 @@ require('../vendor/semantic/dist/semantic.min.css');
 require('../less/galery.less');
 require('../less/jcarousel.basic.less');
 
-const common = new Promise(function(resolve, reject){
+var common = new Promise(function(resolve, reject){
   require(['jquery'], function($){
 
     jQuery = $;

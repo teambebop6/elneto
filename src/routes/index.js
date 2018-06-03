@@ -34,9 +34,7 @@ router.get('/teatro-cubano', function(req, res){
       active: {
         teatro_cubano: true
       },
-      body_scripts: function(){
-        return 'galery-cat.body';
-      }
+      scripts: 'galery-cat.bundle',
     });
   });
 });

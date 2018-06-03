@@ -12,14 +12,16 @@ const plugins = [
   }),
 ];
 
-if (process.env.NODE_ENV !== 'production') {
+const nodeEnv = process.env.NODE_ENV;
+if (nodeEnv !== 'production') {
   plugins.push(new BundleAnalyzerPlugin());
 }
 
 module.exports = {
   resolve: {
     alias: {
-      'jquery': path.join(__dirname, '/node_modules/jquery/dist/jquery.js'),
+      jquery: path.join(__dirname, '/node_modules/jquery/dist/jquery.js'),
+      justifiedGallery: path.join(__dirname, '/src/assets/vendor/justifiedGallery/dist/js/jquery.justifiedGallery.js'),
       'jquery.validate': path.join(__dirname, '/public/vendor/jquery.validate.min.js'),
       'jquery.validate.de': path.join(__dirname, '/src/assets/vendor/jquery.validate.de.js'),
       'jquery-ui': path.join(__dirname, '/public/js/vendor/jquery-ui.min'),
@@ -41,7 +43,7 @@ module.exports = {
     'admin/new-galery': './src/assets/js/admin/new_galery',
   },
   output: {
-    path: process.env.NODE_ENV === 'production' ? path.resolve(__dirname, 'dist/assets') : path.resolve(__dirname, 'public/dist'),
+    path: path.resolve(__dirname, 'public/dist'),
     filename: "[name].bundle.js",
     publicPath: "/assets/",
     chunkFilename: "[id].chunk.js"

@@ -7,7 +7,7 @@ var env = process.env.NODE_ENV || "development";
 var config = require('../config')(env);
 
 // Static folders
-router.use('/assets', express.static(process.env.NODE_ENV === 'production' ? 'assets' : 'public/dist'));
+router.use('/assets', express.static('public/dist'));
 router.use('/static', express.static('public'));
 router.use('/uploads', express.static(config.UPLOAD_FOLDER));
 

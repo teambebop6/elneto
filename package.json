@@ -9,8 +9,8 @@
     "start-dev": "node src/index.js",
     "clean": "rimraf dist",
     "build": "npm run build:server && npm run build:client && npm run copy",
-    "copy": "npm run copy:package.json",
-    "dev": "webpack --mode=development",
+    "copy": "npm run copy:package.json && npm run copy:public",
+    "dev": "webpack --mode=development --watch",
     "build:server": "npx babel src --out-dir dist --ignore src/assets && cp -R src/views dist/",
     "build:client": "NODE_ENV=production npm run dev",
     "copy:public": "cp -R public dist/",
@@ -37,7 +37,7 @@
     "file-loader": "^1.1.11",
     "gm": "^1.23.0",
     "handlebars": "^4.0.5",
-    "jquery": "^3.2.1",
+    "jquery": "^3.3.1",
     "jquery-file-upload-middleware": "^0.1.7",
     "less-loader": "^4.0.5",
     "moment": "^2.19.3",
@@ -53,6 +53,7 @@
     "webpack": "^4.8.3"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
     "better-console": "^1.0.1",
     "extract-text-webpack-plugin": "^4.0.0-alpha",
     "ghreleases": "^1.0.6",
