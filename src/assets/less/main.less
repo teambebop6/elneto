@@ -104,7 +104,7 @@
    ========================================================================== */
 
    @import "../vendor/semantic/src/site/globals/site.variables";
-
+   @import "../vendor/justifiedGallery/src/less/justifiedGallery";
 
 
    .construccion{
@@ -587,7 +587,7 @@ img.logo{
 
 			&:hover{
 				font-weight: 400;
-				letter-spacing: 1px;
+				// letter-spacing: 1px;
 			}
 			&:before {
 				backface-visibility: hidden;
@@ -614,6 +614,7 @@ img.logo{
 .goToTop{
 	top: 0;
 	line-height: 60px;
+	background: black;
 
 	.title{
 		font-size: 1.5rem;
@@ -652,12 +653,21 @@ img.logo{
 .albums_wrapper{
 	position: relative;
 	min-height: 300px;
-	max-width: 1000px;
+	max-width: 1200px;
 	margin: auto;
 	color: white;
 
 
-
+	&.justified-gallery{
+		a{
+			&:extend(.clearfix all);
+			margin-bottom: 50px;
+			.caption{
+				background: rgba(0,0,0,.8);
+				display: block;
+			}
+		}
+	}
 
 }
 

@@ -12,9 +12,11 @@ app.then(function(){
     console.log("loaded justified galery");
 
     $('#basicExample').justifiedGallery({
-      rowHeight : 300,
+      rowHeight : 280,
       lastRow : 'nojustify',
-      margins : 10
+      maxRowHeight: 380,
+      randomize: true,
+      margins : 20
     });
   });
 });

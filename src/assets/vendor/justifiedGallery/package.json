@@ -1,36 +1,62 @@
 {
-  "name": "justifiedGallery",
-  "version": "3.7.0",
-  "description": "Justified Gallery is a JavaScript library that allows you to create an high quality justified gallery of images.",
-  "main": "dist/js/jquery.justifiedGallery.js",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/miromannino/Justified-Gallery.git"
-  },
-  "homepage": "http://miromannino.github.io/Justified-Gallery/",
-  "keywords": [
-    "gallery",
-    "justification",
-    "thumbnails",
-    "masonry",
-    "infinite-scroll",
-    "css-animations",
-    "bricklayer",
-    "mason",
-    "justified-layout"
+  "_args": [
+    [
+      {
+        "raw": "justifiedGallery",
+        "scope": null,
+        "escapedName": "justifiedGallery",
+        "name": "justifiedGallery",
+        "rawSpec": "",
+        "spec": "latest",
+        "type": "tag"
+      },
+      "/Users/ayakaqinwen/Documents/GitHub/elneto"
+    ]
   ],
+  "_from": "justifiedGallery@latest",
+  "_id": "justifiedGallery@3.7.0",
+  "_inCache": true,
+  "_location": "/justifiedGallery",
+  "_nodeVersion": "6.9.1",
+  "_npmOperationalInternal": {
+    "host": "s3://npm-registry-packages",
+    "tmp": "tmp/justifiedGallery_3.7.0_1522599804324_0.09349566622419125"
+  },
+  "_npmUser": {
+    "name": "miromannino",
+    "email": "miro.mannino@gmail.com"
+  },
+  "_npmVersion": "3.10.8",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "justifiedGallery",
+    "scope": null,
+    "escapedName": "justifiedGallery",
+    "name": "justifiedGallery",
+    "rawSpec": "",
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_resolved": "https://registry.npmjs.org/justifiedGallery/-/justifiedGallery-3.7.0.tgz",
+  "_shasum": "794401e455d1e4b62de2081e8843fbc30ea4cbfd",
+  "_shrinkwrap": null,
+  "_spec": "justifiedGallery",
+  "_where": "/Users/ayakaqinwen/Documents/GitHub/elneto",
   "author": {
     "name": "Miro Mannino",
     "email": "miro.mannino@gmail.com",
     "url": "http://miromannino.com/"
   },
-  "license": "MIT",
-  "engines": {
-    "node": ">= 0.8.0"
+  "bugs": {
+    "url": "https://github.com/miromannino/Justified-Gallery/issues"
   },
-  "scripts": {
-    "test": "grunt qunit"
+  "dependencies": {
+    "jquery": "^3.3.1"
   },
+  "description": "Justified Gallery is a JavaScript library that allows you to create an high quality justified gallery of images.",
   "devDependencies": {
     "bower": "^1.8.2",
     "grunt": "^1.0.2",
@@ -46,7 +72,54 @@
     "grunt-wiredep": "^3.0.1",
     "load-grunt-tasks": "^3.5.2"
   },
-  "dependencies": {
-    "jquery": "^3.3.1"
-  }
+  "directories": {},
+  "dist": {
+    "shasum": "794401e455d1e4b62de2081e8843fbc30ea4cbfd",
+    "tarball": "https://registry.npmjs.org/justifiedGallery/-/justifiedGallery-3.7.0.tgz",
+    "fileCount": 184,
+    "unpackedSize": 4773388
+  },
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "gitHead": "2cfe37a7c6b5adb59e43b809b0c519007fed779b",
+  "homepage": "http://miromannino.github.io/Justified-Gallery/",
+  "keywords": [
+    "gallery",
+    "justification",
+    "thumbnails",
+    "masonry",
+    "infinite-scroll",
+    "css-animations",
+    "bricklayer",
+    "mason",
+    "justified-layout"
+  ],
+  "license": "MIT",
+  "main": "dist/js/jquery.justifiedGallery.js",
+  "maintainers": [
+    {
+      "name": "alexandernst",
+      "email": "alexandernst@gmail.com"
+    },
+    {
+      "name": "fxkr",
+      "email": "npm@fxkr.net"
+    },
+    {
+      "name": "miromannino",
+      "email": "miro.mannino@gmail.com"
+    }
+  ],
+  "name": "justifiedGallery",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/miromannino/Justified-Gallery.git"
+  },
+  "scripts": {
+    "test": "grunt qunit"
+  },
+  "version": "3.7.0"
 }
