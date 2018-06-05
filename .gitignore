@@ -1,6 +1,5 @@
 elneto-secret/
 
-
 .sass-cache/
 
 semantic/dist
@@ -46,8 +45,8 @@ jspm_packages
 
 .idea/
 
-dist/
-public/dist/
+/dist
+/public/dist/
 
 !src/assets/vendor/semantic/dist/
 

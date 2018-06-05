@@ -1,6 +1,6 @@
 var app = require('./globals');
 
-var css = require('../../vendor/datepicker/dist/datepicker.css');
+require('../../vendor/datepicker/dist/datepicker.css');
 
 app.then(function(){
   // Initialize UI
@@ -15,19 +15,17 @@ app.then(function(){
   });
 
   require(['datepicker'], function(){
+    console.log("loaded datepicker.");
     // Datepicker
-    $( "input[id='date_of_play_string']" ).datepicker({
-      changeMonth: true,
-      changeYear: true,
-      altFormat: "yy-mm-dd",
-      dateFormat:"DD, d. MM, yy",
-      altField: "#date_of_play",
-      onSelect: function(dateText) {
-        //$('#form-new').valid();
-      }
-    });
+    var picker = $('#date_of_play_string');
 
-    $.datepicker.setDefaults($.datepicker.regional["de"]);
+    picker.datepicker({
+      format: 'DD, d. MM, yy',
+      date: this.dateString,
+      pick: function(){
+        $('#date_of_play').val(picker.datepicker('getDate'));
+      },
+    });
   });
 
   require(['jquery.validate', '../../../utils/locales/messages_de.js'], function(){

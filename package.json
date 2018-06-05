@@ -12,7 +12,7 @@
     "copy": "npm run copy:package.json && npm run copy:public",
     "dev": "webpack --mode=development --watch",
     "build:server": "npx babel src --out-dir dist --ignore src/assets && cp -R src/views dist/",
-    "build:client": "NODE_ENV=production npm run dev",
+    "build:client": "NODE_ENV=production webpack --mode=production",
     "copy:public": "cp -R public dist/",
     "copy:package.json": "cpx \"package*.json\" dist/"
   },

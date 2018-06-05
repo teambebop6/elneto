@@ -9,10 +9,10 @@ var common = new Promise(function(resolve, reject){
     window.$ = $;
 
     // Semantic js
-    require('../../vendor/semantic/dist/semantic.min.js');
-
-    // Resolve promise
-    resolve();
+    require(['../../vendor/semantic/dist/semantic.min.js'], function(){
+      // Resolve promise
+      resolve();
+    });
   });
 });
 

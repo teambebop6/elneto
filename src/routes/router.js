@@ -12,8 +12,9 @@ router.use('/static', express.static('public'));
 router.use('/uploads', express.static(config.UPLOAD_FOLDER));
 
 // Load routes
-router.use('/', require('./api'));
+router.use('/api', require('./api'));
 router.use('/', require('./index'));
+router.use('/yonny', require('./yonny'));
 router.use('/', require('./admin'));
 
 router.use('/admin/galery', require('./admin/galery'));

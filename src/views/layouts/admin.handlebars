@@ -17,9 +17,11 @@
 
   <link type="text/css" rel="stylesheet" href="//fast.fonts.net/cssapi/ff2d2c4a-64b2-4789-879c-40facd89a49e.css"/>
 
-  {{#if head_scripts}}
-  <!-- custom styles -->
-  {{> (head_scripts) }}
+  {{#if css}}
+    {{#each css}}
+      <!-- custom styles -->
+      <link rel="stylesheet" type="text/css" href="/assets/admin/{{this}}.css" />
+    {{/each}}
   {{/if}}
 
 </head>
