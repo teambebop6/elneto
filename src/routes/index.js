@@ -97,14 +97,6 @@ router.get('/teatro', function(req, res){
 });
 
 
-router.get('/yonny', function(req, res){
-  res.render('home', {
-    title: 'Yonny',
-    active: {
-      yonny: true
-    }
-  });
-});
 
 router.get('/impressum', function(req, res){
   res.render('impressum', {

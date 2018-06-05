@@ -77,7 +77,8 @@ router.post('/modify', function(req,res){
 router.get('/new', function(req, res){
 	res.render('admin/new_galery', {
 		title: 'Create new galery',	
-		body_scripts: 'new-galery.bundle'
+		body_scripts: 'new-galery.bundle',
+    css: ['new-galery'],
 	});
 });
 
@@ -149,10 +150,7 @@ router.get('/:id/modify', function(req, res){
 		res.render('admin/modify_galery', {
 			title: 'Manage galery',	
 			galery: galery,
-			body_scripts: function(){
-				return 'admin/modify_galery.body';
-			}
-
+			body_scripts: 'modify-galery.bundle'
 		});
 	});
 });

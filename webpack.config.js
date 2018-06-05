@@ -28,7 +28,7 @@ module.exports = {
       'cookies': path.join(__dirname, '/src/assets/js/js.cookie'),
       'lightbox': path.join(__dirname, '/bower_components/lightbox2/dist/js/lightbox.min.js'),
       'jquery.datepicker': path.join(__dirname, '/src/assets/vendor/jquery.datepicker/datepicker.min.js'),
-      'datepicker': path.join(__dirname, 'src/assets/vendor/datepicker/dist/datepicker.js'),
+      datepicker: path.join(__dirname, 'src/assets/vendor/datepicker/dist/datepicker'),
       'jquery.fileupload': path.join(__dirname, '/public/vendor/jquery.fileupload'),
       'jquery.ui.widget': path.join(__dirname, '/public/vendor/jquery.ui.widget'),
     }
@@ -38,6 +38,7 @@ module.exports = {
     'galery-cat': './src/assets/js/galery-cat',
     'galery': './src/assets/js/galery',
     'home': './src/assets/js/home',
+    'yonny': './src/assets/js/yonny',
     'admin/list-galeries': './src/assets/js/admin/list_galeries',
     'admin/modify-galery': './src/assets/js/admin/modify_galery',
     'admin/new-galery': './src/assets/js/admin/new_galery',
