@@ -18,24 +18,27 @@ html, body{
 	.title{
 		color: #555;
 		line-height: 60px;
+		float: left;
+		font-size: 1.2rem;
+		margin: 0;
 	}
 
-	.menu{a{color:#555;}}
+	.menu{
+		font-size: 1.2rem;
+		a{
+			color: #555;
+			&:hover:before, &.active:before {
+				border-color: #888;
+			}
+		}
+	}
 }
 
 .yonnyPage .menuBar.yonnyMenu{
 	position: relative;
 	top: 0;
 
-	.menu{
-		font-size: 1.2rem;
-		a{
-			color: #555;
-			&:hover:before {
-				border-color: #555;
-			}
-		}
-	}
+
 }
 
 

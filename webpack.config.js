@@ -22,6 +22,7 @@ module.exports = {
     alias: {
       jquery: path.join(__dirname, '/node_modules/jquery/dist/jquery.js'),
       justifiedGallery: path.join(__dirname, '/src/assets/vendor/justifiedGallery/dist/js/jquery.justifiedGallery.js'),
+      photoswipe: path.join(__dirname, '/src/assets/vendor/photoswipe/dist/photoswipe.min.js'),
       'jquery.validate': path.join(__dirname, '/public/vendor/jquery.validate.min.js'),
       'jquery.validate.de': path.join(__dirname, '/src/assets/vendor/jquery.validate.de.js'),
       'jquery-ui': path.join(__dirname, '/public/js/vendor/jquery-ui.min'),

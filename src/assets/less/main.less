@@ -104,7 +104,10 @@
    ========================================================================== */
 
    @import "../vendor/semantic/src/site/globals/site.variables";
+
    @import "../vendor/justifiedGallery/src/less/justifiedGallery";
+   @import "../vendor/photoswipe/dist/photoswipe.css";
+   @import "../vendor/photoswipe/dist/default-skin/default-skin.css";
 
 
    .construccion{
@@ -586,12 +589,16 @@ img.logo{
 			.transition;
 
 			&:hover{
-				font-weight: 400;
+				// font-weight: 400;
 				// letter-spacing: 1px;
 			}
-			&:before {
+			&.active{
+				font-weight: 400;
+			}
+
+			&:before{
 				backface-visibility: hidden;
-				border: 1px solid rgba(255,255,255,0);
+				border: 0.5px solid rgba(255,255,255,0);
 				bottom: -12px;
 				content: " ";
 				display: block;
@@ -600,7 +607,7 @@ img.logo{
 				transition: all 280ms ease-in-out;
 				width: 0;
 			}
-			&:hover:before {
+			&:hover:before, &.active:before {
 				backface-visibility: hidden;
 				border-color: #fff;
 				transition: width 350ms ease-in-out;
@@ -620,9 +627,15 @@ img.logo{
 		font-size: 1.5rem;
 	}
 
-	.menu{font-size: 1.2rem}
+	.menu{
+		font-size: 1.2rem;
+		a{
+			&:before, &.active:before {
+				bottom: -32px;
+			}
+		}
+	}
 }
-
 
 
 .pageTile_wrapper{
@@ -645,7 +658,7 @@ img.logo{
 			font-size: 4rem;
 			line-height: 4rem;
 			margin-bottom: 1rem;
-			letter-spacing: 3px;
+			letter-spacing: 1px;
 			font-weight: 700;
 		}
 	}
@@ -665,14 +678,47 @@ img.logo{
 			&:extend(.clearfix all);
 			margin-bottom: 50px;
 			.caption{
-				background: rgba(0,0,0,.8);
-				display: block;
+				// background: rgba(0,0,0,.8);
+				display: initial;
+				filter: "alpha(opacity=0)";
+				opacity: 0;
 			}
 		}
 	}
-
 }
 
 
+.justified-gallery > a > .caption.caption-visible,
+.justified-gallery > div > .caption.caption-visible,
+.justified-gallery > figure > .caption.caption-visible {
+	display: initial;
+	filter: "alpha(opacity=70)";
+	opacity: 0.7;
+	-webkit-transition: opacity 500ms ease-in;
+	-moz-transition: opacity 500ms ease-in;
+	-o-transition: opacity 500ms ease-in;
+	transition: opacity 500ms ease-in;
+}
+
+
+
+.footer{
+	color: #aaa;
+	text-align: center;
+	font-size: 11px;
+	margin: 0 3% 20px;
+    // float: right;
+}
+
+.impressum{
+	margin: 100px auto;
+	position: relative;
+	max-width: 1000px;
+
+	.container{
+		padding: 3%;
+		color: #ddd;
+	}
+}
 
 
