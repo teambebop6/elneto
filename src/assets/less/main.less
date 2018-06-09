@@ -102,7 +102,7 @@
 /* ==========================================================================
    Author's custom styles
    ========================================================================== */
-   @import "menu";
+
    @import "../vendor/semantic/src/site/globals/site.variables";
 
    @import "../vendor/justifiedGallery/src/less/justifiedGallery";
@@ -349,7 +349,8 @@
      }
  }
 
-
+ @import "menu";
+ @import "home";
 
 
  body{
@@ -368,58 +369,13 @@
  }
 
 
- .homePage_wrapper{
- 	background: black;
- 	width:100vw;
- 	height: 100vh;
- 	z-index: 10000;
- 	position: relative;
-
- 	.menuBar{
- 		    z-index: 1;
- 		.menu{
- 			a{
-
- 			}
- 		}
- 		.title{
- 		}
- 	}
- }
-
- .movingImage{
- 	height: 40vh;
- 	width: 200vw;
- 	position: fixed;
- 	top: 30vh;
-
- 	img{
- 		height: 100%;
- 		margin-right: 67vw;
- 	}
-
- 	animation-duration: 50s;
- 	animation-iteration-count: infinite;
-    // transform-origin: bottom;
-}
-.imageMove {
-	animation-name: imageMove;
-	animation-timing-function: linear;
-}
-@keyframes imageMove{
-	0%   { transform: translateX(-100vw); }
-	50%  { transform: translateX(0); }
-	100% { transform: translateX(100vw); }
-}
-
-
 
 
 .menuBar{
 	.transition;
 
 	position: fixed;
-	top: 45vh;
+	top: 43vh;
 	width: 100vw;
 	height: 60px;
 	text-align: center;
