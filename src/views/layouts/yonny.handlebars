@@ -29,13 +29,25 @@
 
         <div class="menuBar goToTop">
             <a href="/"><div class="title">elneto <</div></a>
-            <!-- <div class="menu">
-                <a class="item {{#if active.teatro_cubano}}active{{/if}}" href="/teatro-cubano">Teatro Cubano</a>
-                <a class="item {{#if active.danza}}active{{/if}}" href="/danza">Danza</a>
-                <a class="item {{#if active.musik}}active{{/if}}" href="/musica">Música</a>
-                <a class="item {{#if active.theater}}active{{/if}}" href="/teatro">Teatro</a>
-                <a class="item {{#if active.yonny}}active{{/if}}" href="/yonny">Yonny</a>
-            </div> -->
+            
+
+            <div class="mobileOnly menuMobile">
+                <input id="burger" type="checkbox" />
+                <label for="burger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </label>
+                <nav>    
+                    <ul>
+                        <li><a class="item {{#if active.yonny}}active{{/if}}" href="/yonny">Yonny</a></li>
+                        <li><a class="item {{#if active.cuadros}}active{{/if}}" href="/yonny/cuadros">sus cuadros</a></li>
+                        <li><a class="item {{#if active.poemas}}active{{/if}}" href="/yonny/poemas">sus poemas</a></li>
+                        <li><a class="item {{#if active.enFotos}}active{{/if}}" href="/yonny/en-fotos">yonny en fotos</a></li>
+                    </ul>  
+                </nav>
+            </div>
+
             <div class="menu">
                 <a class="item {{#if active.yonny}}active{{/if}}" href="/yonny">Yonny</a>
                 <a class="item {{#if active.cuadros}}active{{/if}}" href="/yonny/cuadros">sus cuadros</a>
