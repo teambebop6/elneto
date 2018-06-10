@@ -9,20 +9,29 @@ router.all('/*', function (req, res, next) {
 	next(); // pass control to the next handler
     });
 
+
+
+
 router.get('/', function(req, res){
 	db.Galery.find({isFavorite: true}).sort({dateOfPlay: 'desc'}).exec(function(err, galeries){
 		res.render('home', {
       title: 'Home',
-      //head_scripts: function(){
-      //	return 'home.head';
-      //},
       scripts: 'home.bundle',
       favoriteGaleries: galeries
     });
-
   });	
-
 });
+
+// DUMMY
+router.get('/detail', function(req, res){
+  res.render('galery', {
+    title: 'Galery',
+    galery: {}
+  });
+});
+
+
+
 router.get('/teatro-cubano', function(req, res){
   db.Galery.find({tags: "teatro-cubano", isActive: true}).sort({dateOfPlay: 'desc'}).exec(function(err, galeries){
     if(err){
