@@ -13,38 +13,15 @@ app.then(function(){
   var justifiedGallery = require(['justifiedGallery'], function(){
     console.log("loaded justified galery");
 
-    // $('#albumList').justifiedGallery({
-    //   rowHeight : 280,
-    //   lastRow : 'nojustify',
-    //   maxRowHeight: 380,
-    //   randomize: true,
-    //   margins : 30
-    // });
-
-
-
-
-    // =========this is for inside album gallery=========
-    $('#albumSelf').justifiedGallery({
+    $('#albumList').justifiedGallery({
       rowHeight : 280,
       lastRow : 'nojustify',
-      maxRowHeight: 310,
+      maxRowHeight: 380,
       randomize: true,
-      selector: 'figure, div:not(.spinner)',
-      margins : 20
+      margins : 30
     });
 
-    $(window).scroll(function() {
-      if($(window).scrollTop() + $(window).height() == $(document).height()) {
-        for (var i = 0; i < 5; i++) {
-          $('#albumSelf').append('<a>' +
-            '<img src="http://path/to/image" />' + 
-            '</a>');
-        }
-        $('#albumSelf').justifiedGallery('norewind');
-      }
-    });
-    // =========this is for inside album gallery  END=========
+
 
   });
 
