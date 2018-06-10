@@ -13,6 +13,9 @@ router.get('/*', function(req, res, next){
 router.get('/', function(req, res){
   res.render('yonny/home', {
     title: 'Yonny',
+    active: {
+      yonny: true
+    },
   });
 });
 router.get('/cuadros', function(req, res){

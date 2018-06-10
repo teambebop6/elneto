@@ -1,3 +1,65 @@
 html, body{
-  background: white !important;
+	background: #FCF8F5;
 }
+
+.yonnyPage{
+	.menuMobile input ~ nav{background: #FCF8F5 }
+	.menuMobile input + label span{background: #555}
+	.menuMobile input ~ nav > ul > li > a{color: #555}
+
+	.pageTile_wrapper{
+		color:#555;
+
+	}
+
+	.goToTop{
+		background: transparent;
+		max-width: 1200px;
+		margin: auto;
+		left: 3%;
+		right: 3%;
+
+		.title{
+			color: #555;
+			line-height: 60px;
+			float: left;
+			font-size: 1.2rem;
+			margin: 0;
+		}
+
+		.menu{
+			font-size: 1.2rem;
+			a{
+				color: #555;
+				&:hover:before, &.active:before {
+					border-color: #888;
+				}
+			}
+		}
+	}
+
+	.menuBar.yonnyMenu{
+		position: relative;
+		top: 0;
+
+
+	}
+}
+
+.yonnyPhoto{
+	max-width: 1200px;
+	margin: auto;
+	min-height: 240px;
+	margin-bottom: 5rem;
+
+	&:extend(.clearfix all);
+	img{margin: 10px;}
+}
+
+
+
+
+
+
+
+

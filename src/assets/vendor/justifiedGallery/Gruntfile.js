@@ -177,5 +177,4 @@ module.exports = function(grunt) {
   // Debug mode (when the library is needed to be compiled only for the tests)
   grunt.registerTask('debug', ['less', 'concat']);
 
-
 };

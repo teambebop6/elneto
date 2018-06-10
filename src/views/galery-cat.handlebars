@@ -1,84 +1,50 @@
-<!-- <div class="ui stackable page grid galeries">
-	<div class="five column row container">
-		{{#each galeries}}
-		<div class="column">
-			<a class="galery-title" href="/galery/{{this._id}}" data-id="{{this._id}}">
-				<img class="ui medium image" src="/static/images/galery/thumbs/{{this.titlePicture}}" />
-				<div class="info" data-id="{{this._id}}">
-					<strong class="title line">
-						<span>{{this.title}}</span>
-					</strong>
-					<div class="moreInfo">
-						<div class="line">
-							<span>{{this.location}}</span>
-						</div>
-						<div class="line">
-							<span>{{formatDateString this.dateOfPlay}}</span>
-						</div>
-						<div class="line">
-							<span>dirección: {{this.director}}</span>
-						</div>
-						<div class="line">
-							<span>autor: {{this.author}}</span>
-						</div>
-					</div>
-				</div>
-			</a>
-		</div>
-		{{/each}}
+
+
+
+
+<div class="pageTile_wrapper">
+	<div class="text_content">
+		<div class="title">Teatro Cubano</div>
+		<div class="des">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</div>
 	</div>
 </div>
 
-<div class="ui divider"></div>
 
-{{#if active.teatro_cubano}}
-	<form class="ui form searchdb_form" action="">
-		<div class="ui centered stackable page grid searchdb">
-			<div class="center aligned column">
-				<p>Pagina en construcción</p>
-			</div>
-			
-			<div class="two column row container">
-				<div class="column">
-					<label for="search_db">banco de datos sobre el teatro cubano (1948-1995):</label>
-				</div>
-				<div class="column">
-					<div class="ui small fluid icon disabled input">
-						<input id="search_db" placeholder="Pagina en construcción" type="text">
-						<i class="circular search link icon"></i>
-					</div>
-				</div>
-			</div>
-			
-		</div>
-	</form>
-  {{/if}}
--->
+<div class="albums_wrapper justified-gallery" id="albumList">
+	{{#each galeries}}
+	<a href="/galery/{{this._id}}" data-id="{{this._id}}">
+		<img alt="{{this.title}}" src="/static/images/galery/thumbs/{{this.titlePicture}}"/>
+	</a>
+	{{/each}}
+	<a href="path/to/image1.jpg">
+		<img alt="caption for image 1" src="https://images.unsplash.com/photo-1520647593701-4e9951e22428?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=7c7fad58b363a2c01d52eb9c5d483167&auto=format&fit=crop&w=500&q=60"/>
+	</a>
+	<a href="path/to/image2.jpg">
+		<img alt="caption for image 2" src="https://images.unsplash.com/photo-1516476643801-3748856d17c1?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=ee7f14db4ae5132ad465b4e5c0fa21df&auto=format&fit=crop&w=500&q=60"/>
+	</a>
 
-<div class="pageTile_wrapper">
-  <div class="text_content">
-    <div class="title">Teatro Cubano</div>
-    <div class="des">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</div>
-  </div>
+	<a href="path/to/image2.jpg">
+		<img alt="caption for image 2" src="https://images.unsplash.com/photo-1493546109643-cd9fda7b38fe?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=b4d5ccc45de5d32f03cd22958c6f6b85&auto=format&fit=crop&w=500&q=60"/>
+	</a>
+
+	<a href="path/to/image2.jpg">
+		<img alt="caption for image 2" src="https://images.unsplash.com/photo-1508349937151-22b68b72d5b1?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ab9aab3fb12c6b367439d2acea49898&auto=format&fit=crop&w=334&q=80"/>
+	</a>
+
+	<a href="path/to/image2.jpg">
+		<img alt="caption for image 2" src="https://images.unsplash.com/photo-1508749627231-ce8a002264e9?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=489d758ee431756f66ac69c154427afb&auto=format&fit=crop&w=500&q=60"/>
+	</a>
+	<a href="path/to/image2.jpg">
+		<img alt="caption for image 2" src="https://images.unsplash.com/photo-1516054782498-beb65831f3a6?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=4bece8586616ced7b43f16ecd3f14b4e&auto=format&fit=crop&w=500&q=60"/>
+	</a>
+	<a href="path/to/image2.jpg">
+		<img alt="caption for image 2 caption for image 2 caption for image 2" src="https://images.unsplash.com/photo-1502036553-38f7ef7bcade?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=da4c0d496cf12b6228af238ad6b13361&auto=format&fit=crop&w=500&q=60"/>
+	</a>
+	<a href="path/to/image2.jpg">
+		<img alt="caption for image 2" src="https://images.unsplash.com/photo-1500393600906-a3136b3c5f70?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=43f68365543ecc00817d158627c4406a&auto=format&fit=crop&w=500&q=60"/>
+	</a>
+
 </div>
 
-<div class="albums_wrapper" id="basicExample">
-  <a href="path/to/image1.jpg">
-    <img alt="caption for image 1" src="https://images.unsplash.com/photo-1520647593701-4e9951e22428?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=7c7fad58b363a2c01d52eb9c5d483167&auto=format&fit=crop&w=500&q=60"/>
-  </a>
-  <a href="path/to/image2.jpg">
-    <img alt="caption for image 2" src="https://images.unsplash.com/photo-1516476643801-3748856d17c1?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=ee7f14db4ae5132ad465b4e5c0fa21df&auto=format&fit=crop&w=500&q=60"/>
-  </a>
 
-  <a href="path/to/image2.jpg">
-    <img alt="caption for image 2" src="https://images.unsplash.com/photo-1493546109643-cd9fda7b38fe?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=b4d5ccc45de5d32f03cd22958c6f6b85&auto=format&fit=crop&w=500&q=60"/>
-  </a>
 
-  <a href="path/to/image2.jpg">
-    <img alt="caption for image 2" src="https://images.unsplash.com/photo-1508349937151-22b68b72d5b1?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ab9aab3fb12c6b367439d2acea49898&auto=format&fit=crop&w=334&q=80"/>
-  </a>
-
-  <a href="path/to/image2.jpg">
-    <img alt="caption for image 2" src="https://images.unsplash.com/photo-1508749627231-ce8a002264e9?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=489d758ee431756f66ac69c154427afb&auto=format&fit=crop&w=500&q=60"/>
-  </a>
-</div>

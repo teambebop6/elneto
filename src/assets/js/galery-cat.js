@@ -1,7 +1,9 @@
 var app = require('./globals');
 
 // load gallery style
-var galeryLess = require('../vendor/justifiedGallery/dist/css/justifiedGallery.css');
+
+// var galeryLess = require('../vendor/justifiedGallery/dist/css/justifiedGallery.css');
+// require('../vendor/photoswipe/dist/default-skin/default-skin.css');
 
 app.then(function(){
   console.log("loaded app.");
@@ -11,10 +13,20 @@ app.then(function(){
   var justifiedGallery = require(['justifiedGallery'], function(){
     console.log("loaded justified galery");
 
-    $('#basicExample').justifiedGallery({
-      rowHeight : 300,
+    $('#albumList').justifiedGallery({
+      rowHeight : 280,
       lastRow : 'nojustify',
-      margins : 10
+      maxRowHeight: 380,
+      randomize: true,
+      margins : 30
     });
+
+
+
   });
+
+
+
+
 });
+
