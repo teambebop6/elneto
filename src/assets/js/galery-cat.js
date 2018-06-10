@@ -9,7 +9,6 @@ app.then(function(){
   console.log("loaded app.");
   // load gallery js
 
-  //var jquery = $;
   var justifiedGallery = require(['justifiedGallery'], function(){
     console.log("loaded justified galery");
 
@@ -20,13 +19,5 @@ app.then(function(){
       randomize: true,
       margins : 30
     });
-
-
-
   });
-
-
-
-
 });
-

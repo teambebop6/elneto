@@ -1,9 +1,9 @@
 <div class="column">
 	<h2 class="ui left floated inverted header">Manage Galeries</h2>
-	<button id="new-galery" class="ui inverted basic button">
+	<a class="ui inverted basic button" href="/admin/galery/new">
 	  <i class="plus icon"></i>
 	  Create new
-	</button>
+	</a>
 
 
 	<table class="ui inverted table">
@@ -30,12 +30,12 @@
 		      <td>{{this.author}}</td>
 		      <td>{{this.director}}</td>
 		      <td>
-			<button onclick="modifyGalery({{this._id}})" class="ui inverted yellow icon button">
+			<a href="/admin/galery/{{this._id}}/modify" class="ui inverted yellow icon button">
 				<i class="edit icon"></i>
-			</button>
-			<button onclick="deleteGalery({{this._id}})" class="ui inverted red icon button">
+			</a>
+      <a id="{{this._id}}" class="ui inverted red icon button deleteGaleryButton">
 				<i class="delete icon"></i>
-			</button>
+			</a>
 			</td>
 			<td>
 		     <div class="ui fitted checkbox">

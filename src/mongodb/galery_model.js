@@ -3,8 +3,10 @@ var mongoose = require('mongoose');
 var ImageSchema = new mongoose.Schema({
 	_id: Number,
 	src: String,
+  title: String,
 	description: String,
-	title: String
+	width: Number,
+  height: Number,
 });
 
 var GalerySchema = new mongoose.Schema({

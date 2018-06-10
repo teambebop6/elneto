@@ -193,7 +193,12 @@ app.then(function(){
 
     $.datepicker.setDefaults($.datepicker.regional["de"]);
 
-    $('.ui.dropdown').dropdown('set selected', JSON.parse($('#galery-tags').val())); 
+
+    // Load tags
+    var tagsString = $('#galery-tags').val();
+    if(tagsString){
+      $('.ui.dropdown').dropdown('set selected', tagsString); 
+    }
 
 
     $(window).scroll(function() {
@@ -248,9 +253,9 @@ app.then(function(){
         $('.ui.progress').show();
         var progress = parseInt(data.loaded / data.total * 100, 10);
         $('.ui.progress .bar').css(
-            'width',
-            progress + '%'
-            );
+          'width',
+          progress + '%'
+        );
         $('.ui.progress .bar .progress').html(progress + '%');
       }
     });

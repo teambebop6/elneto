@@ -7,8 +7,7 @@ var handlebars = require('handlebars');
 
 router.get('/getThumbTemplate', function(req,res){
 	var src = req.query.src;
-	//req.app.locals.layout = '';=
-	fs.readFile('./views/partials/admin/galery-thumb-element.handlebars', 'utf8', function(err, content){
+  fs.readFile('./src/views/partials/admin/galery-thumb-element.handlebars', 'utf8', function(err, content){
 			var template = handlebars.compile(content);
 			res.write(template({src: src}));
 			res.end();
@@ -150,7 +149,8 @@ router.get('/:id/modify', function(req, res){
 		res.render('admin/modify_galery', {
 			title: 'Manage galery',	
 			galery: galery,
-			body_scripts: 'modify-galery.bundle'
+      body_scripts: 'modify-galery.bundle',
+      tags: [],
 		});
 	});
 });

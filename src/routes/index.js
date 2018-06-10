@@ -10,8 +10,6 @@ router.all('/*', function (req, res, next) {
     });
 
 
-
-
 router.get('/', function(req, res){
 	db.Galery.find({isFavorite: true}).sort({dateOfPlay: 'desc'}).exec(function(err, galeries){
 		res.render('home', {
@@ -22,14 +20,6 @@ router.get('/', function(req, res){
   });	
 });
 
-// DUMMY
-router.get('/detail', function(req, res){
-  res.render('galery', {
-    title: 'Galery',
-    galery: {}
-  });
-});
-
 
 
 router.get('/teatro-cubano', function(req, res){
@@ -37,12 +27,13 @@ router.get('/teatro-cubano', function(req, res){
     if(err){
       throw err;
     }
+
+    console.log(galeries);
+
     res.render('galery-cat', {
       title: 'Teatro Cubano',
       galeries: galeries,
-      active: {
-        teatro_cubano: true
-      },
+      active: { teatro_cubano: true },
       scripts: 'galery-cat.bundle',
     });
   });
@@ -139,19 +130,15 @@ router.post('/getGalery', function(req, res, next){
 });
 
 router.get('/galery/:id', function(req, res){
-  req.app.locals.layout = 'galery';
   db.Galery.findOne({_id: req.params.id}, function(err, galery){
     if(err){ return next(err); }
     if(!galery){ return next({status: 400, message: "Galery not found."}); }
 
+    console.log(galery);
+
     res.render('galery', {
       title: 'Galery',
-      body_scripts: function(){
-        return 'galery.body';
-      },
-      head_scripts: function(){
-        return 'galery.head';
-      },
+      scripts: 'galery.bundle',
       galery: galery
     });
   });
