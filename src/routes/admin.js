@@ -48,7 +48,7 @@ passport.use(new LocalStrategy({passReqToCallback: true},
       }
 
       // Compare hash of entered password to hashed password stored in database
-      crypto.pbkdf2(password, user.salt, 10000, 512, function (err, hash) {
+      crypto.pbkdf2(password, user.salt, 10000, 512, 'sha512', function (err, hash) {
         if (err) {
           return done(err);
         }
