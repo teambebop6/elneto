@@ -44,6 +44,7 @@ var production = {
   redis : {
     port: '6379'
   },
+  USE_IMAGE_MAGICK : true,
 };
 
 var config = {

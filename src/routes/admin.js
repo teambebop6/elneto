@@ -12,15 +12,15 @@ var adminUtils = require('../utils/AdminUtils');
 var sizeOf = require('image-size');
 
 
-if (process.env.USE_IMAGE_MAGICK) {
-  gm = gm.subClass({imageMagick: true});
-}
-
 
 
 var env = process.env.NODE_ENV || 'development';
 // Load config
 var config = require('../config')(env);
+
+if (config.USE_IMAGE_MAGICK) {
+  gm = gm.subClass({imageMagick: true});
+}
 
 
 
