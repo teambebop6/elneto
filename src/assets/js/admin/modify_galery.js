@@ -159,6 +159,11 @@ app.then(function(){
       });
     }
 
+    // Delete single galery
+    $('.setTitlePicture').click(function(){
+      setTitlePicture($(this).data("id"));
+    })
+
 
     $('#form-galery-info').submit(function(e){
       e.preventDefault();

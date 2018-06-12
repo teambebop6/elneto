@@ -1,8 +1,9 @@
 var app = require('./globals');
 
 // load gallery style
-var galeryLess = require('../vendor/justifiedGallery/dist/css/justifiedGallery.css');
-var photoSwipeCss = require('../vendor/photoswipe/dist/default-skin/default-skin.css');
+//var galeryLess = require('../vendor/justifiedGallery/dist/css/justifiedGallery.css');
+//var photoSwipeCss = require('../vendor/photoswipe/dist/default-skin/default-skin.css');
+//var photoSwipeCss = require("../vendor/photoswipe/dist/photoswipe.css");
 
 app.then(function(){
   console.log("loaded app.");

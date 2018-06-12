@@ -8,7 +8,7 @@ var handlebars = require('handlebars');
 router.get('/getThumbTemplate', function(req, res, next){
   var src = req.query.src;
 
-  fs.readFile(path.join(req.locals.config.VIEW_FOLDER, '/partials/admin/galery-thumb-element.handlebars'), 'utf8', function(err, content){
+  fs.readFile(path.join(req.config.VIEW_FOLDER, '/partials/admin/galery-thumb-element.handlebars'), 'utf8', function(err, content){
     var template = handlebars.compile(content);
     res.write(template({src: src}));
     res.end();
