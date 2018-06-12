@@ -50,9 +50,7 @@ router.get('/danza', function(req, res){
       active: {
         danza: true
       },
-      body_scripts: function(){
-        return 'galery-cat.body';
-      }
+      scripts: 'galery-cat.bundle',
 
     });
   });
@@ -69,9 +67,7 @@ router.get('/musica', function(req, res){
       active: {
         musik: true
       },
-      body_scripts: function(){
-        return 'galery-cat.body';
-      }
+      scripts: 'galery-cat.bundle',
 
     });
   });
@@ -88,15 +84,11 @@ router.get('/teatro', function(req, res){
       active: {
         theater: true
       },
-      body_scripts: function(){
-        return 'galery-cat.body';
-      }
+      scripts: 'galery-cat.bundle',
 
     });
   });
 });
-
-
 
 router.get('/impressum', function(req, res){
   res.render('impressum', {
@@ -143,4 +135,7 @@ router.get('/galery/:id', function(req, res){
     });
   });
 });
+
+
+
 module.exports = router;
