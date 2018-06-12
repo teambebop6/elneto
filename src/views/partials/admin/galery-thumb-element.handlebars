@@ -7,10 +7,13 @@
 			
 			<div class="info">
 				<div class="actions">
-					<a href="javascript:;" class="deletePictureIcon" onclick="deletePicture('{{this.src}}')"><i class="ui trash icon"></i></a>
+					
+          <a href="javascript:;" class="deletePicture" data-id="{{this.src}}">
+            <i class="ui trash icon"></i>
+          </a>
 
 					{{#unless this.isTitlePicture}}
-						<div class="ui blue mini button setTitlePicture" onclick="setTitlePicture('{{this.src}}')">
+						<div class="ui blue mini button setTitlePicture" data-id="{{this.src}}">
 							<i class="icon square outline"></i>
 							Set title picture
 						</div>

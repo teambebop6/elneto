@@ -2,7 +2,50 @@ var app = require('./globals');
 
 app.then(function(){
 
-  require(['jquery.fileupload']);
+  require(['jquery.fileupload'], function(){
+    // Fileupload
+    var galery_id = $('#galery-id').val();
+    $('#fileupload').fileupload({
+      dataType: 'json',
+      formData: {galery_id: galery_id },
+      sequentialUploads: true,
+      disableImageResize: false,
+      imageMaxWidth: 1177,
+      imageMaxHeight: 1177,
+      done: function(e, data){
+        $.each(data.result.files, function(index, file){
+
+          $.get("/admin/galery/getThumbTemplate?src=" + file.name, function(data){
+            var thumb = $('<div/>').html(data).find('> div');
+
+            refreshThumb(thumb); // Bind mouseover events
+            thumb.appendTo($('.images-list'));
+          });
+        });
+
+        $('.ui.progress').hide();
+        $('.no-images-yet-message').hide();	
+      },
+      stop: function(e){
+        d = new Date();
+        $.each($('.images-list').find('.image-thumb'), function(index, element){
+          var path = $(element).attr("id").substr(12); // cut off image-thumb- in order to get path
+          var imgElement = $(element).find('img');
+          imgElement.attr("src", '/static/images/galery/thumbs/' + path + "?t=" + d.getTime()); 
+        });
+      },
+      progressall: function (e, data) {
+
+        $('.ui.progress').show();
+        var progress = parseInt(data.loaded / data.total * 100, 10);
+        $('.ui.progress .bar').css(
+          'width',
+          progress + '%'
+        );
+        $('.ui.progress .bar .progress').html(progress + '%');
+      }
+    });
+  });
 
   require(['jquery.validate', 'jquery-ui'], function(){
 
@@ -56,12 +99,12 @@ app.then(function(){
       refreshThumb($(this));
     });
 
-    // Delete single galery
+
     var deletePicture = function(id){
       var confirmDelete = $('#confirmDeleteModal').clone()
         .html($('#confirmDeleteModal').html().replace(/###placeholder###/g, 
-              "this picture")
-            );
+          "this picture")
+        );
 
       var galery_id = $('#galery-id').val();
       confirmDelete.modal({
@@ -70,10 +113,8 @@ app.then(function(){
             method: 'POST',
             url: '/admin/galery/'+galery_id+'/deletePicture',
             data: { id: id },
-            success : function(result){
-              console.log(result.message);
-
-              if(result.success){ 
+            success : function(data, textStatus, xhr){
+              if(xhr.status == 200){ 
                 $('#galery-thumb-' + String(id).replace(/\./g, "\\.")).hide();
               }
             },
@@ -83,9 +124,13 @@ app.then(function(){
           })
         }
       })
-      .modal('show');	
-
+        .modal('show');	
     }
+
+    // Delete single galery
+    $('.deletePicture').click(function(){
+      deletePicture($(this).data("id"));
+    })
 
     // Set title picture of galery
     var setTitlePicture = function(imgSrc){
@@ -217,48 +262,7 @@ app.then(function(){
     // Hide progress bar initially
     $('.ui.progress').hide();
 
-    var galery_id = $('#galery-id').val();
 
-    $('#fileupload').fileupload({
-      dataType: 'json',
-      formData: {galery_id: galery_id },
-      sequentialUploads: true,
-      disableImageResize: false,
-      imageMaxWidth: 1177,
-      imageMaxHeight: 1177,
-      done: function(e, data){
-        $.each(data.result.files, function(index, file){
-
-          $.get("/admin/galery/getThumbTemplate?src=" + file.name, function(data){
-            var thumb = $('<div/>').html(data).find('> div');
-
-            refreshThumb(thumb); // Bind mouseover events
-            thumb.appendTo($('.images-list'));
-          });
-        });
-
-        $('.ui.progress').hide();
-        $('.no-images-yet-message').hide();	
-      },
-      stop: function(e){
-        d = new Date();
-        $.each($('.images-list').find('.image-thumb'), function(index, element){
-          var path = $(element).attr("id").substr(12); // cut off image-thumb- in order to get path
-          var imgElement = $(element).find('img');
-          imgElement.attr("src", '/static/images/galery/thumbs/' + path + "?t=" + d.getTime()); 
-        });
-      },
-      progressall: function (e, data) {
-
-        $('.ui.progress').show();
-        var progress = parseInt(data.loaded / data.total * 100, 10);
-        $('.ui.progress .bar').css(
-          'width',
-          progress + '%'
-        );
-        $('.ui.progress .bar .progress').html(progress + '%');
-      }
-    });
 
     // Initialize tab
     $('.menu .item').tab();

@@ -257,33 +257,39 @@ router.post('/:id/modify', function(req, res){
   });
 });
 
-// POST, delete galery picture
-//
+// Delete galery picture
+router.post('/:id/deletePicture', function(req, res, next){
+  var postData = {
+    galeryId : req.params.id,
+    pictureId : req.body.id,
+  }
 
-router.post('/:id/deletePicture', function(req, res){
-  db.Galery.findOne({_id: req.params.id}, function(err, galery){
-    if(err){ res.json({success:false, message: err.message}); return;}
+  console.log(postData);
 
-    var errors = [];
-    // Picture id
-    var pictureId = req.body.id;
+  if(!postData.pictureId){
+    return res.status(400).json();
+  }
 
+  db.Galery.findOne({ _id: postData.galeryId }, function(err, galery){
+    if(err){ return err; } 
+ 
     galery.images = galery.images.filter(function(el){
-      return el.src !== pictureId;
+      return el.src !== postData.pictureId;
     });
 
+    var errors = {};
     // Delete uploaded files
-    fs.unlink(path.join(__dirname, '../../public/images/galery', pictureId), function(err){
-      if(err){ errors.push(err.message); }
+    fs.unlink(path.join(req.config.UPLOAD_FOLDER, postData.pictureId), function(err){
+      if(err){ errors.original = err.message; }
     });
-    fs.unlink(path.join(__dirname, '../../public/images/galery/thumbs', pictureId), function(err){
-      if(err){ errors.push(err.message); }
+    fs.unlink(path.join(req.config.UPLOAD_FOLDER, 'thumbs', postData.pictureId), function(err){
+      if(err){ errors.thumb = err.message; }
     });
 
     galery.save(function(err){
-      if(err){ res.json({success:false, message: err.message}); return;}
+      if(err){ return err; }
 
-      res.json({success: true, errors: errors });
+      res.status(200).json(errors);
     });
 
   });
