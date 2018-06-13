@@ -5,6 +5,11 @@ var path = require('path');
 var fs = require('fs');
 var handlebars = require('handlebars');
 
+var constants = require('../../utils/constants');
+
+console.log(constants);
+module.exports = router;
+
 router.get('/getThumbTemplate', function(req, res, next){
   var src = req.query.src;
 
@@ -128,7 +133,7 @@ router.post('/new', function(req, res){
   });
 });
 
-// GET, modify galery
+// Modify galery
 router.get('/:id/modify', function(req, res){
 
   db.Galery.findOne({_id: req.params.id}, function(err, galery){
@@ -147,13 +152,12 @@ router.get('/:id/modify', function(req, res){
         return false;
       });
     }
-
-
+    
     res.render('admin/modify_galery', {
       title: 'Manage galery',	
       galery: galery,
       body_scripts: 'modify-galery.bundle',
-      tags: [],
+      tags: constants.tags,
     });
   });
 });
@@ -297,8 +301,6 @@ router.post('/:id/deletePicture', function(req, res, next){
 
 
 // POST, set Favorite
-//
-
 router.post('/:id/setFavorite', function(req, res){
   db.Galery.findOne({_id: req.params.id}, function(err, galery){
     if(err){ res.json({success:false, message: err.message}); return;}
@@ -325,10 +327,7 @@ router.post('/:id/unsetFavorite', function(req, res){
 });
 
 
-
-
-
-function deleteImage(image) {
+function deleteImage(dirname, filename) {
   var taskPath = path.resolve(__dirname, '../../tasks/deleteImage.js');
   var childProcess = require('child_process').fork(taskPath);
 
@@ -339,11 +338,14 @@ function deleteImage(image) {
     console.error(error.stack)
   });
   childProcess.on('exit', function() {
-    console.log('process exited');
+    console.log(filename + ' done.');
   });
 
-  if(image.src) {
-    childProcess.send(image.src);
+  if(filename) { 
+    childProcess.send({
+      dirname: dirname, 
+      filename: filename 
+    });
   }
 }
 
@@ -351,27 +353,32 @@ function deleteImage(image) {
 // POST, delete galery
 router.post('/delete', function(req, res){
   if(!req.body.id){
-    res.json({success: false, message: "Missing galery id"});
-    return;
+    return res.status(400).json({ message: "Missing galery id." });
   }
 
   db.Galery.findOne({_id: req.body.id}, function(err, galery){
-    if(err){ res.json({success: false, message: err.message}); return; }
-    if(!galery){ res.json({success: false, message: "Galery does not exist!"}); return; }
+    if(err){ return res.json(err) }
+
+    if(!galery){ 
+      return res.status(400).json({ message: "Galery does not exist!" }); 
+    }
 
     galery.remove(function(err){
-      if(err){ res.json({success: false, message: err.message}); return; }
+      if(err){ return res.json(err); }
 
       res.json({success: true, message: "Galery deleted successfully!"});
     });
 
+    // Delete associated images
     console.log(galery.images.length + " images to delete...");
+
     galery.images.forEach(function(image){
+      var filename = image.src;
+
       // Call child process to delete image
-      console.log("Deleting " + image.src);
-      deleteImage(image);
+      console.log("Deleting " + filename);
+      deleteImage(req.config.UPLOAD_FOLDER, filename);
     });
 
   });
 });
-module.exports = router;

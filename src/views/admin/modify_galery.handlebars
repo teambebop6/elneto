@@ -9,13 +9,13 @@
 					<div class="column">
 						<div class="ui slider checkbox isFavorite"> 
 							<input class="hidden" name="fav" type="checkbox">
-							<label>{{#unless galery.isFavorite}}Don't show{{else}}Show{{/unless}} on home page</label>
+							<label>{{#unless galery.isFavorite}}Not displayed{{else}}Displayed{{/unless}} on home page</label>
 						</div>
 					</div>
 					<div class="column">
 						<div class="ui toggle checkbox isActive"> 
 							<input class="hidden" tabindex="0" type="checkbox">
-							<label>Currently {{#unless galery.isActive}}in{{/unless}}active</label>
+              <label>{{#unless galery.isActive}}Inactive{{else}}Active{{/unless}}</label>
 						</div>
 					</div>
 				</div>
@@ -23,8 +23,10 @@
 					<div class="sixteen wide column">
 
             <!-- hidden fields -->
-            <input type="hidden" id="galery-tags" value="{{tags}}" />
+            <input type="hidden" id="galery-tags" value="{{#each galery.tags}}{{this}}{{#unless @last}},{{/unless}}{{/each}}" />
+            <input type="hidden" id="is-active" value="{{galery.isActive}}" />
             <input type="hidden" id="galery-id" value="{{galery._id}}" />
+            <input type="hidden" id="is-favorite" value="{{galery.isFavorite}}" />
 
 
             <div class="two fields">
@@ -69,12 +71,11 @@
               <div class="field">
                 <label>Tags</label>
                 <div class="ui input">
-                  <select name="tags" multiple="" class="ui dropdown">
+                  <select name="tags" multiple="" class="ui tags dropdown">
                     <option value="">Tags</option>
-                    <option value="teatro-cubano">Teatro Cubano</option>
-                    <option value="theater">Teatro</option>
-                    <option value="musik">Musica</option>
-                    <option value="danza">Danza</option>
+                    {{#each tags}}
+                      <option value="{{this.id}}">{{this.name}}</option>
+                    {{/each}}
                   </select>
                 </div>
               </div>

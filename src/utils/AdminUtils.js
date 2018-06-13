@@ -2,11 +2,8 @@ var fs = require('fs');
 
 
 exports.isNotAuthenticatedThenLogin = function (req, res, next) {
-  if (req.user) {
-    console.log("Req session is set.");
-    return next();
-  } else {
-    console.log("Req session is not set.");
+  if (req.user) { return next(); } 
+  else {
     return res.redirect('/login');
   }
 };

@@ -64,18 +64,15 @@ app.then(function(){
   */
 
 
-  // Delete single galery
-
+  // Delete galery
   $(".deleteGalery").click(function(){
-    var id = $(this).attr("id");
+    var id = $(this).data("id");
     console.log("Deleting: " + id);
 
     deleteGalery(id);
   })
-  //
-  //
-  //
-    var deleteGalery = function(id){
+
+  var deleteGalery = function(id){
     var confirmDelete = $('#deleteModalTemplate').clone().html($('#deleteModalTemplate').html().replace(/###placeholder###/g, "this galery"));
 
     confirmDelete.modal({
@@ -97,8 +94,7 @@ app.then(function(){
         })
       }
     })
-    .modal('show');	
-
+      .modal('show');	
   }
 
   $('.ui.checkbox').checkbox();

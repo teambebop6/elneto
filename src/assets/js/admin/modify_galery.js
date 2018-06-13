@@ -1,7 +1,6 @@
 var app = require('./globals');
 
 app.then(function(){
-
   require(['jquery.fileupload'], function(){
     // Fileupload
     var galery_id = $('#galery-id').val();
@@ -243,12 +242,13 @@ app.then(function(){
 
     $.datepicker.setDefaults($.datepicker.regional["de"]);
 
+    // Initialize Dropdown
+    $('.ui.dropdown.tags').dropdown();
 
     // Load tags
     var tagsString = $('#galery-tags').val();
-    if(tagsString){
-      $('.ui.dropdown').dropdown('set selected', tagsString); 
-    }
+    var tags = tagsString.split(",");
+    $('.ui.dropdown.tags').dropdown('set selected', tags); 
 
 
     $(window).scroll(function() {
@@ -272,19 +272,27 @@ app.then(function(){
     // Initialize tab
     $('.menu .item').tab();
 
-    // Initialize Dropdown
-    $('.ui.dropdown').dropdown();
 
-    // Initialize isfavorite toggle
+
+    // Initialize checkboxes
+    if($('#is-active').val() == "true"){
+      $('.ui.checkbox.isActive').checkbox('check');
+    }
+    if($('#is-favorite').val() == "true"){
+      $('.ui.checkbox.isFavorite').checkbox('check');
+    }
+
+    // Add checkbox events
     $('.ui.checkbox.isFavorite')
       .checkbox({
         onChecked: function(){
+          console.log("Checked event called/")
           var galery_id = $('#galery-id').val();
           $.ajax({
             method: 'post',
             url: '/admin/galery/'+galery_id+'/setFavorite',
             success: function(data){
-              $('.ui.checkbox.isFavorite label').text("Show on home page");
+              $('.ui.checkbox.isFavorite label').text("Displayed on home page");
             },
             error: function(err){
               $('.ui.checkbox.isFavorite').prop('checked', false);	
@@ -299,7 +307,7 @@ app.then(function(){
             method: 'post',
             url: '/admin/galery/'+galery_id+'/unsetFavorite',
             success: function(data){
-              $('.ui.checkbox.isFavorite label').text("Don't show on home page");
+              $('.ui.checkbox.isFavorite label').text("Not displayed on home page");
             },
             error: function(err){
               $('.ui.checkbox.isFavorite').prop('checked', true);	
@@ -323,7 +331,7 @@ app.then(function(){
               action: 'setActive'	
             },
             success: function(data){
-              $('.ui.checkbox.isActive label').text("Currently active");
+              $('.ui.checkbox.isActive label').text("Active");
             },
             error: function(err){
               $('.ui.checkbox.isActive').prop('checked', false);	
@@ -342,7 +350,7 @@ app.then(function(){
               action: 'setInactive'	
             },
             success: function(data){
-              $('.ui.checkbox.isActive label').text("Currently inactive");
+              $('.ui.checkbox.isActive label').text("Inactive");
             },
             error: function(err){
               $('.ui.checkbox.isActive').prop('checked', true);	
@@ -352,14 +360,7 @@ app.then(function(){
         }
       });
 
-    // Initialize checkbox
-    if($('#is-active').val()){
-      $('.ui.checkbox.isActive').checkbox('check');
-
-    }else{
-
-      $('.ui.checkbox.isFavorite').checkbox('check');
-    }
+    
   });
 });
 

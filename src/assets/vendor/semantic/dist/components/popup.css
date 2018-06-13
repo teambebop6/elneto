@@ -1,5 +1,5 @@
 /*!
- * # Semantic UI 2.2.13 - Popup
+ * # Semantic UI 2.3.1 - Popup
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -24,10 +24,10 @@
   min-width: -moz-min-content;
   min-width: min-content;
   z-index: 1900;
-  border: 1px solid #d4d4d5;
+  border: 1px solid #D4D4D5;
   line-height: 1.4285em;
   max-width: 250px;
-  background: #ffffff;
+  background: #FFFFFF;
   padding: 0.833em 1em;
   font-weight: normal;
   font-style: normal;
@@ -38,7 +38,7 @@
 }
 .ui.popup > .header {
   padding: 0em;
-  font-family: 'Optima LT W01 Demi Bold', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
   font-size: 1.14285714em;
   line-height: 1.2;
   font-weight: bold;
@@ -51,7 +51,7 @@
   content: '';
   width: 0.71428571em;
   height: 0.71428571em;
-  background: #ffffff;
+  background: #FFFFFF;
   -webkit-transform: rotate(45deg);
           transform: rotate(45deg);
   z-index: 2;
@@ -83,7 +83,7 @@
   font-size: 1rem;
   width: 0.71428571em;
   height: 0.71428571em;
-  background: #ffffff;
+  background: #FFFFFF;
   -webkit-transform: rotate(45deg);
           transform: rotate(45deg);
   z-index: 2;
@@ -100,10 +100,10 @@
   text-align: left;
   white-space: nowrap;
   font-size: 1rem;
-  border: 1px solid #d4d4d5;
+  border: 1px solid #D4D4D5;
   line-height: 1.4285em;
   max-width: none;
-  background: #ffffff;
+  background: #FFFFFF;
   padding: 0.833em 1em;
   font-weight: normal;
   font-style: normal;
@@ -120,7 +120,7 @@
   right: auto;
   bottom: 100%;
   left: 50%;
-  background: #ffffff;
+  background: #FFFFFF;
   margin-left: -0.07142857rem;
   margin-bottom: 0.14285714rem;
 }
@@ -215,20 +215,20 @@
 
 /* Arrow Position */
 [data-tooltip][data-inverted]:before {
-  background: #1b1c1d;
+  background: #1B1C1D;
 }
 
 /* Popup  */
 [data-tooltip][data-inverted]:after {
-  background: #1b1c1d;
-  color: #ffffff;
+  background: #1B1C1D;
+  color: #FFFFFF;
   border: none;
   -webkit-box-shadow: none;
           box-shadow: none;
 }
 [data-tooltip][data-inverted]:after .header {
   background-color: none;
-  color: #ffffff;
+  color: #FFFFFF;
 }
 
 /*--------------
@@ -251,7 +251,7 @@
   right: auto;
   bottom: 100%;
   left: 50%;
-  background: #ffffff;
+  background: #FFFFFF;
   margin-left: -0.07142857rem;
   margin-bottom: 0.14285714rem;
 }
@@ -371,42 +371,42 @@
 
 /* Arrow */
 [data-position~="bottom"][data-tooltip]:before {
-  background: #ffffff;
+  background: #FFFFFF;
   -webkit-box-shadow: -1px -1px 0px 0px #bababc;
           box-shadow: -1px -1px 0px 0px #bababc;
 }
 [data-position="left center"][data-tooltip]:before {
-  background: #ffffff;
+  background: #FFFFFF;
   -webkit-box-shadow: 1px -1px 0px 0px #bababc;
           box-shadow: 1px -1px 0px 0px #bababc;
 }
 [data-position="right center"][data-tooltip]:before {
-  background: #ffffff;
+  background: #FFFFFF;
   -webkit-box-shadow: -1px 1px 0px 0px #bababc;
           box-shadow: -1px 1px 0px 0px #bababc;
 }
 [data-position~="top"][data-tooltip]:before {
-  background: #ffffff;
+  background: #FFFFFF;
 }
 
 /* Inverted Arrow Color */
 [data-inverted][data-position~="bottom"][data-tooltip]:before {
-  background: #1b1c1d;
+  background: #1B1C1D;
   -webkit-box-shadow: -1px -1px 0px 0px #bababc;
           box-shadow: -1px -1px 0px 0px #bababc;
 }
 [data-inverted][data-position="left center"][data-tooltip]:before {
-  background: #1b1c1d;
+  background: #1B1C1D;
   -webkit-box-shadow: 1px -1px 0px 0px #bababc;
           box-shadow: 1px -1px 0px 0px #bababc;
 }
 [data-inverted][data-position="right center"][data-tooltip]:before {
-  background: #1b1c1d;
+  background: #1B1C1D;
   -webkit-box-shadow: -1px 1px 0px 0px #bababc;
           box-shadow: -1px 1px 0px 0px #bababc;
 }
 [data-inverted][data-position~="top"][data-tooltip]:before {
-  background: #1b1c1d;
+  background: #1B1C1D;
 }
 [data-position~="bottom"][data-tooltip]:before {
   -webkit-transform-origin: center bottom;
@@ -590,26 +590,26 @@
 
 /* Arrow Color By Location */
 .ui.bottom.popup:before {
-  background: #ffffff;
+  background: #FFFFFF;
 }
 .ui.right.center.popup:before,
 .ui.left.center.popup:before {
-  background: #ffffff;
+  background: #FFFFFF;
 }
 .ui.top.popup:before {
-  background: #ffffff;
+  background: #FFFFFF;
 }
 
 /* Inverted Arrow Color */
 .ui.inverted.bottom.popup:before {
-  background: #1b1c1d;
+  background: #1B1C1D;
 }
 .ui.inverted.right.center.popup:before,
 .ui.inverted.left.center.popup:before {
-  background: #1b1c1d;
+  background: #1B1C1D;
 }
 .ui.inverted.top.popup:before {
-  background: #1b1c1d;
+  background: #1B1C1D;
 }
 
 
@@ -692,18 +692,18 @@
 
 /* Inverted colors  */
 .ui.inverted.popup {
-  background: #1b1c1d;
-  color: #ffffff;
+  background: #1B1C1D;
+  color: #FFFFFF;
   border: none;
   -webkit-box-shadow: none;
           box-shadow: none;
 }
 .ui.inverted.popup .header {
   background-color: none;
-  color: #ffffff;
+  color: #FFFFFF;
 }
 .ui.inverted.popup:before {
-  background-color: #1b1c1d;
+  background-color: #1B1C1D;
   -webkit-box-shadow: none !important;
           box-shadow: none !important;
 }

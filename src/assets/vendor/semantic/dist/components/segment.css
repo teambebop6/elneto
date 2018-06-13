@@ -1,5 +1,5 @@
 /*!
- * # Semantic UI 2.2.13 - Segment
+ * # Semantic UI 2.3.1 - Segment
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -15,7 +15,7 @@
 
 .ui.segment {
   position: relative;
-  background: #ffffff;
+  background: #FFFFFF;
   -webkit-box-shadow: 0px 1px 2px 0 rgba(34, 36, 38, 0.15);
           box-shadow: 0px 1px 2px 0 rgba(34, 36, 38, 0.15);
   margin: 1rem 0em;
@@ -53,7 +53,7 @@
 
 /* Header */
 .ui.inverted.segment > .ui.header {
-  color: #ffffff;
+  color: #FFFFFF;
 }
 
 /* Label */
@@ -88,7 +88,7 @@
 
 /* Table */
 .ui.basic.table.segment {
-  background: #ffffff;
+  background: #FFFFFF;
   border: 1px solid rgba(34, 36, 38, 0.15);
   -webkit-box-shadow: 0px 1px 2px 0 rgba(34, 36, 38, 0.15);
           box-shadow: 0px 1px 2px 0 rgba(34, 36, 38, 0.15);
@@ -124,7 +124,7 @@
 .ui.piled.segments:before,
 .ui.piled.segment:after,
 .ui.piled.segment:before {
-  background-color: #ffffff;
+  background-color: #FFFFFF;
   visibility: visible;
   content: '';
   display: block;
@@ -358,7 +358,7 @@
   background-color: transparent;
   border-radius: 0px;
   padding: 0em;
-  background-color: #ffffff;
+  background-color: #FFFFFF;
   -webkit-box-shadow: 0px 1px 2px 0 rgba(34, 36, 38, 0.15);
           box-shadow: 0px 1px 2px 0 rgba(34, 36, 38, 0.15);
   margin: 1rem 0em;
@@ -520,101 +520,101 @@
 
 /* Red */
 .ui.red.segment:not(.inverted) {
-  border-top: 2px solid #db2828 !important;
+  border-top: 2px solid #DB2828 !important;
 }
 .ui.inverted.red.segment {
-  background-color: #db2828 !important;
-  color: #ffffff !important;
+  background-color: #DB2828 !important;
+  color: #FFFFFF !important;
 }
 
 /* Orange */
 .ui.orange.segment:not(.inverted) {
-  border-top: 2px solid #f2711c !important;
+  border-top: 2px solid #F2711C !important;
 }
 .ui.inverted.orange.segment {
-  background-color: #f2711c !important;
-  color: #ffffff !important;
+  background-color: #F2711C !important;
+  color: #FFFFFF !important;
 }
 
 /* Yellow */
 .ui.yellow.segment:not(.inverted) {
-  border-top: 2px solid #fbbd08 !important;
+  border-top: 2px solid #FBBD08 !important;
 }
 .ui.inverted.yellow.segment {
-  background-color: #fbbd08 !important;
-  color: #ffffff !important;
+  background-color: #FBBD08 !important;
+  color: #FFFFFF !important;
 }
 
 /* Olive */
 .ui.olive.segment:not(.inverted) {
-  border-top: 2px solid #b5cc18 !important;
+  border-top: 2px solid #B5CC18 !important;
 }
 .ui.inverted.olive.segment {
-  background-color: #b5cc18 !important;
-  color: #ffffff !important;
+  background-color: #B5CC18 !important;
+  color: #FFFFFF !important;
 }
 
 /* Green */
 .ui.green.segment:not(.inverted) {
-  border-top: 2px solid #21ba45 !important;
+  border-top: 2px solid #21BA45 !important;
 }
 .ui.inverted.green.segment {
-  background-color: #21ba45 !important;
-  color: #ffffff !important;
+  background-color: #21BA45 !important;
+  color: #FFFFFF !important;
 }
 
 /* Teal */
 .ui.teal.segment:not(.inverted) {
-  border-top: 2px solid #00b5ad !important;
+  border-top: 2px solid #00B5AD !important;
 }
 .ui.inverted.teal.segment {
-  background-color: #00b5ad !important;
-  color: #ffffff !important;
+  background-color: #00B5AD !important;
+  color: #FFFFFF !important;
 }
 
 /* Blue */
 .ui.blue.segment:not(.inverted) {
-  border-top: 2px solid #2185d0 !important;
+  border-top: 2px solid #2185D0 !important;
 }
 .ui.inverted.blue.segment {
-  background-color: #2185d0 !important;
-  color: #ffffff !important;
+  background-color: #2185D0 !important;
+  color: #FFFFFF !important;
 }
 
 /* Violet */
 .ui.violet.segment:not(.inverted) {
-  border-top: 2px solid #6435c9 !important;
+  border-top: 2px solid #6435C9 !important;
 }
 .ui.inverted.violet.segment {
-  background-color: #6435c9 !important;
-  color: #ffffff !important;
+  background-color: #6435C9 !important;
+  color: #FFFFFF !important;
 }
 
 /* Purple */
 .ui.purple.segment:not(.inverted) {
-  border-top: 2px solid #a333c8 !important;
+  border-top: 2px solid #A333C8 !important;
 }
 .ui.inverted.purple.segment {
-  background-color: #a333c8 !important;
-  color: #ffffff !important;
+  background-color: #A333C8 !important;
+  color: #FFFFFF !important;
 }
 
 /* Pink */
 .ui.pink.segment:not(.inverted) {
-  border-top: 2px solid #e03997 !important;
+  border-top: 2px solid #E03997 !important;
 }
 .ui.inverted.pink.segment {
-  background-color: #e03997 !important;
-  color: #ffffff !important;
+  background-color: #E03997 !important;
+  color: #FFFFFF !important;
 }
 
 /* Brown */
 .ui.brown.segment:not(.inverted) {
-  border-top: 2px solid #a5673f !important;
+  border-top: 2px solid #A5673F !important;
 }
 .ui.inverted.brown.segment {
-  background-color: #a5673f !important;
-  color: #ffffff !important;
+  background-color: #A5673F !important;
+  color: #FFFFFF !important;
 }
 
 /* Grey */
@@ -623,16 +623,16 @@
 }
 .ui.inverted.grey.segment {
   background-color: #767676 !important;
-  color: #ffffff !important;
+  color: #FFFFFF !important;
 }
 
 /* Black */
 .ui.black.segment:not(.inverted) {
-  border-top: 2px solid #1b1c1d !important;
+  border-top: 2px solid #1B1C1D !important;
 }
 .ui.inverted.black.segment {
-  background-color: #1b1c1d !important;
-  color: #ffffff !important;
+  background-color: #1B1C1D !important;
+  color: #FFFFFF !important;
 }
 
 /*-------------------
@@ -674,7 +674,7 @@
 }
 .ui.inverted.segment,
 .ui.primary.inverted.segment {
-  background: #1b1c1d;
+  background: #1B1C1D;
   color: rgba(255, 255, 255, 0.9);
 }
 
@@ -698,7 +698,7 @@
 
 /* Secondary */
 .ui.secondary.segment {
-  background: #f3f4f5;
+  background: #F3F4F5;
   color: rgba(0, 0, 0, 0.6);
 }
 .ui.secondary.inverted.segment {
@@ -710,7 +710,7 @@
 
 /* Tertiary */
 .ui.tertiary.segment {
-  background: #dcddde;
+  background: #DCDDDE;
   color: rgba(0, 0, 0, 0.6);
 }
 .ui.tertiary.inverted.segment {
@@ -735,7 +735,7 @@
   max-width: calc(100% +  2px );
   -webkit-box-shadow: none;
           box-shadow: none;
-  border: 1px solid #d4d4d5;
+  border: 1px solid #D4D4D5;
 }
 .ui.attached:not(.message) + .ui.attached.segment:not(.top) {
   border-top: none;
@@ -815,6 +815,3 @@
          Site Overrides
 *******************************/
 
-.ui.inverted.segment .ui.inverted.form .ui.transparent.input input {
-  color: #ffffff;
-}

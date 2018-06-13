@@ -1,13 +1,3 @@
 /*******************************
          Site Overrides
 *******************************/
-.ui.inverted.segment{
-	.ui.inverted.form{
-		.ui.transparent.input{
-			input{
-				color: @white;
-			}
-		}
-	}
-}
-

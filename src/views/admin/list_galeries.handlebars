@@ -9,6 +9,7 @@
 	<table class="ui inverted table">
 	  <thead>
 	    <tr>
+	      <th></th>
 	      <th>Title</th>
 	      <th>Created on</th>
 	      <th>Date of play</th>
@@ -23,6 +24,11 @@
 		<div class="ui list clearfix">
 		{{#each galeries}}
 		    <tr id="galery_{{this._id}}" class="galery-listing">
+		      <td>
+            {{#unless this.isActive}}
+            <i class="eye slash outline icon" title="Inactive"></i>
+            {{/unless}}
+          </td>
 		      <td>{{this.title}}</td>
 		      <td>{{formatDate this.createdOn}}</td>
 		      <td>{{formatDate this.dateOfPlay}}</td>
@@ -33,7 +39,7 @@
 			<a href="/admin/galery/{{this._id}}/modify" class="ui inverted yellow icon button">
 				<i class="edit icon"></i>
 			</a>
-      <a id="{{this._id}}" class="ui inverted red icon button deleteGaleryButton">
+      <a data-id="{{this._id}}" class="ui inverted red icon button deleteGalery">
 				<i class="delete icon"></i>
 			</a>
 			</td>
