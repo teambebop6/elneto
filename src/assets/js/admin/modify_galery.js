@@ -1,6 +1,39 @@
 var app = require('./globals');
 
 app.then(function(){
+  // Refresh rollover events for thumbnails
+  var refreshThumb = function(thumb){		
+
+    // Hide hidden content of galery thumbs
+    thumb.find('.info .actions').hide();
+
+    var actionsButton = thumb.find('.info .actions .button').first();
+    var icon = actionsButton.find('i').first();	
+
+    actionsButton.mouseover(function(){
+      icon.removeClass("square outline");
+      icon.addClass("checkmark box");
+    });
+    actionsButton.mouseout(function(){
+      icon.addClass("square outline");
+      icon.removeClass("checkmark box");
+    });
+
+    //Show actions and hide states on rollover 
+    thumb.mouseover(function(){
+      var actions = thumb.find('.info .actions').first();
+      actions.show();
+    });
+    thumb.mouseout(function(){
+      thumb.find('.actions').hide();
+    });
+  }
+
+  $('.image-thumb').each(function(){
+    refreshThumb($(this));
+  });
+
+
   require(['jquery.fileupload'], function(){
     // Fileupload
     var galery_id = $('#galery-id').val();
@@ -66,37 +99,6 @@ app.then(function(){
       return o;
     };    
 
-    // Refresh rollover events for thumbnails
-    var refreshThumb = function(thumb){		
-
-      // Hide hidden content of galery thumbs
-      thumb.find('.info .actions').hide();
-
-      var actionsButton = thumb.find('.info .actions .button').first();
-      var icon = actionsButton.find('i').first();	
-
-      actionsButton.mouseover(function(){
-        icon.removeClass("square outline");
-        icon.addClass("checkmark box");
-      });
-      actionsButton.mouseout(function(){
-        icon.addClass("square outline");
-        icon.removeClass("checkmark box");
-      });
-
-      //Show actions and hide states on rollover 
-      thumb.mouseover(function(){
-        var actions = thumb.find('.info .actions').first();
-        actions.show();
-      });
-      thumb.mouseout(function(){
-        thumb.find('.actions').hide();
-      });
-    }
-
-    $('.image-thumb').each(function(){
-      refreshThumb($(this));
-    });
 
 
     var deletePicture = function(id){
@@ -360,7 +362,7 @@ app.then(function(){
         }
       });
 
-    
+
   });
 });
 
