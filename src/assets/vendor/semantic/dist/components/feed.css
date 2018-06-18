@@ -1,5 +1,5 @@
 /*!
- * # Semantic UI 2.2.13 - Feed
+ * # Semantic UI 2.3.1 - Feed
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -238,10 +238,10 @@
   transition: 0.2s color ease;
 }
 .ui.feed > .event > .content .meta .like:hover .icon {
-  color: #ff2733;
+  color: #FF2733;
 }
 .ui.feed > .event > .content .meta .active.like .icon {
-  color: #ef404a;
+  color: #EF404A;
 }
 
 /* First element */
@@ -264,7 +264,7 @@
 .ui.feed > .event > .content .meta a:hover,
 .ui.feed > .event > .content .meta a:hover .icon,
 .ui.feed > .event > .content .meta > .icon:hover {
-  color: rgba(0, 0, 0, 0.95);
+  color: #FBBD08;
 }
 
 

@@ -1,8 +1,83 @@
 var app = require('./globals');
 
 app.then(function(){
+  // Refresh rollover events for thumbnails
+  var refreshThumb = function(thumb){		
 
-  require(['jquery.fileupload']);
+    // Hide hidden content of galery thumbs
+    thumb.find('.info .actions').hide();
+
+    var actionsButton = thumb.find('.info .actions .button').first();
+    var icon = actionsButton.find('i').first();	
+
+    actionsButton.mouseover(function(){
+      icon.removeClass("square outline");
+      icon.addClass("checkmark box");
+    });
+    actionsButton.mouseout(function(){
+      icon.addClass("square outline");
+      icon.removeClass("checkmark box");
+    });
+
+    //Show actions and hide states on rollover 
+    thumb.mouseover(function(){
+      var actions = thumb.find('.info .actions').first();
+      actions.show();
+    });
+    thumb.mouseout(function(){
+      thumb.find('.actions').hide();
+    });
+  }
+
+  $('.image-thumb').each(function(){
+    refreshThumb($(this));
+  });
+
+
+  require(['jquery.fileupload'], function(){
+    // Fileupload
+    var galery_id = $('#galery-id').val();
+    $('#fileupload').fileupload({
+      dataType: 'json',
+      formData: {galery_id: galery_id },
+      sequentialUploads: true,
+      disableImageResize: false,
+      imageMaxWidth: 1177,
+      imageMaxHeight: 1177,
+      done: function(e, data){
+        $.each(data.result.files, function(index, file){
+
+          $.get("/admin/galery/getThumbTemplate?src=" + file.name, function(data){
+            var thumb = $('<div/>').html(data).find('> div');
+
+            refreshThumb(thumb); // Bind mouseover events
+            thumb.appendTo($('.images-list'));
+          });
+        });
+
+        $('.ui.progress').hide();
+        $('.no-images-yet-message').hide();	
+      },
+      stop: function(e){
+        d = new Date();
+        $.each($('.images-list').find('.image-thumb'), function(index, element){
+          var path = $(element).attr("id").substr(12); // cut off image-thumb- in order to get path
+          var imgElement = $(element).find('img');
+          imgElement.attr("src", '/static/images/galery/thumbs/' + path + "?t=" + d.getTime()); 
+        });
+      },
+      progressall: function (e, data) {
+
+        $('.ui.progress').show();
+        var progress = parseInt(data.loaded / data.total * 100, 10);
+        $('.ui.progress .bar').css(
+          'width',
+          progress + '%'
+        );
+        $('.ui.progress .bar .progress').html(progress + '%');
+      }
+    });
+  });
 
   require(['jquery.validate', 'jquery-ui'], function(){
 
@@ -24,44 +99,13 @@ app.then(function(){
       return o;
     };    
 
-    // Refresh rollover events for thumbnails
-    var refreshThumb = function(thumb){		
 
-      // Hide hidden content of galery thumbs
-      thumb.find('.info .actions').hide();
 
-      var actionsButton = thumb.find('.info .actions .button').first();
-      var icon = actionsButton.find('i').first();	
-
-      actionsButton.mouseover(function(){
-        icon.removeClass("square outline");
-        icon.addClass("checkmark box");
-      });
-      actionsButton.mouseout(function(){
-        icon.addClass("square outline");
-        icon.removeClass("checkmark box");
-      });
-
-      //Show actions and hide states on rollover 
-      thumb.mouseover(function(){
-        var actions = thumb.find('.info .actions').first();
-        actions.show();
-      });
-      thumb.mouseout(function(){
-        thumb.find('.actions').hide();
-      });
-    }
-
-    $('.image-thumb').each(function(){
-      refreshThumb($(this));
-    });
-
-    // Delete single galery
     var deletePicture = function(id){
       var confirmDelete = $('#confirmDeleteModal').clone()
         .html($('#confirmDeleteModal').html().replace(/###placeholder###/g, 
-              "this picture")
-            );
+          "this picture")
+        );
 
       var galery_id = $('#galery-id').val();
       confirmDelete.modal({
@@ -70,10 +114,8 @@ app.then(function(){
             method: 'POST',
             url: '/admin/galery/'+galery_id+'/deletePicture',
             data: { id: id },
-            success : function(result){
-              console.log(result.message);
-
-              if(result.success){ 
+            success : function(data, textStatus, xhr){
+              if(xhr.status == 200){ 
                 $('#galery-thumb-' + String(id).replace(/\./g, "\\.")).hide();
               }
             },
@@ -83,9 +125,13 @@ app.then(function(){
           })
         }
       })
-      .modal('show');	
-
+        .modal('show');	
     }
+
+    // Delete single galery
+    $('.deletePicture').click(function(){
+      deletePicture($(this).data("id"));
+    })
 
     // Set title picture of galery
     var setTitlePicture = function(imgSrc){
@@ -113,6 +159,11 @@ app.then(function(){
         }
       });
     }
+
+    // Delete single galery
+    $('.setTitlePicture').click(function(){
+      setTitlePicture($(this).data("id"));
+    })
 
 
     $('#form-galery-info').submit(function(e){
@@ -193,7 +244,13 @@ app.then(function(){
 
     $.datepicker.setDefaults($.datepicker.regional["de"]);
 
-    $('.ui.dropdown').dropdown('set selected', JSON.parse($('#galery-tags').val())); 
+    // Initialize Dropdown
+    $('.ui.dropdown.tags').dropdown();
+
+    // Load tags
+    var tagsString = $('#galery-tags').val();
+    var tags = tagsString.split(",");
+    $('.ui.dropdown.tags').dropdown('set selected', tags); 
 
 
     $(window).scroll(function() {
@@ -212,65 +269,32 @@ app.then(function(){
     // Hide progress bar initially
     $('.ui.progress').hide();
 
-    var galery_id = $('#galery-id').val();
 
-    $('#fileupload').fileupload({
-      dataType: 'json',
-      formData: {galery_id: galery_id },
-      sequentialUploads: true,
-      disableImageResize: false,
-      imageMaxWidth: 1177,
-      imageMaxHeight: 1177,
-      done: function(e, data){
-        $.each(data.result.files, function(index, file){
-
-          $.get("/admin/galery/getThumbTemplate?src=" + file.name, function(data){
-            var thumb = $('<div/>').html(data).find('> div');
-
-            refreshThumb(thumb); // Bind mouseover events
-            thumb.appendTo($('.images-list'));
-          });
-        });
-
-        $('.ui.progress').hide();
-        $('.no-images-yet-message').hide();	
-      },
-      stop: function(e){
-        d = new Date();
-        $.each($('.images-list').find('.image-thumb'), function(index, element){
-          var path = $(element).attr("id").substr(12); // cut off image-thumb- in order to get path
-          var imgElement = $(element).find('img');
-          imgElement.attr("src", '/static/images/galery/thumbs/' + path + "?t=" + d.getTime()); 
-        });
-      },
-      progressall: function (e, data) {
-
-        $('.ui.progress').show();
-        var progress = parseInt(data.loaded / data.total * 100, 10);
-        $('.ui.progress .bar').css(
-            'width',
-            progress + '%'
-            );
-        $('.ui.progress .bar .progress').html(progress + '%');
-      }
-    });
 
     // Initialize tab
     $('.menu .item').tab();
 
-    // Initialize Dropdown
-    $('.ui.dropdown').dropdown();
 
-    // Initialize isfavorite toggle
+
+    // Initialize checkboxes
+    if($('#is-active').val() == "true"){
+      $('.ui.checkbox.isActive').checkbox('check');
+    }
+    if($('#is-favorite').val() == "true"){
+      $('.ui.checkbox.isFavorite').checkbox('check');
+    }
+
+    // Add checkbox events
     $('.ui.checkbox.isFavorite')
       .checkbox({
         onChecked: function(){
+          console.log("Checked event called/")
           var galery_id = $('#galery-id').val();
           $.ajax({
             method: 'post',
             url: '/admin/galery/'+galery_id+'/setFavorite',
             success: function(data){
-              $('.ui.checkbox.isFavorite label').text("Show on home page");
+              $('.ui.checkbox.isFavorite label').text("Displayed on home page");
             },
             error: function(err){
               $('.ui.checkbox.isFavorite').prop('checked', false);	
@@ -285,7 +309,7 @@ app.then(function(){
             method: 'post',
             url: '/admin/galery/'+galery_id+'/unsetFavorite',
             success: function(data){
-              $('.ui.checkbox.isFavorite label').text("Don't show on home page");
+              $('.ui.checkbox.isFavorite label').text("Not displayed on home page");
             },
             error: function(err){
               $('.ui.checkbox.isFavorite').prop('checked', true);	
@@ -309,7 +333,7 @@ app.then(function(){
               action: 'setActive'	
             },
             success: function(data){
-              $('.ui.checkbox.isActive label').text("Currently active");
+              $('.ui.checkbox.isActive label').text("Active");
             },
             error: function(err){
               $('.ui.checkbox.isActive').prop('checked', false);	
@@ -328,7 +352,7 @@ app.then(function(){
               action: 'setInactive'	
             },
             success: function(data){
-              $('.ui.checkbox.isActive label').text("Currently inactive");
+              $('.ui.checkbox.isActive label').text("Inactive");
             },
             error: function(err){
               $('.ui.checkbox.isActive').prop('checked', true);	
@@ -338,14 +362,7 @@ app.then(function(){
         }
       });
 
-    // Initialize checkbox
-    if($('#is-active').val()){
-      $('.ui.checkbox.isActive').checkbox('check');
 
-    }else{
-
-      $('.ui.checkbox.isFavorite').checkbox('check');
-    }
   });
 });
 

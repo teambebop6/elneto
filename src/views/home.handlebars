@@ -1,16 +1,46 @@
-<div class="stage-bg">
-	<div class="jcarousel-wrapper">
-		<!-- Carousel -->
-		<div class="jcarousel">
-			<ul class="clearfix">
-				{{#each favoriteGaleries}}
-					<li>
-						<a href="/galery/{{this._id}}">
-								<img src="/static/images/galery/{{this.titlePicture}}" />
-						</a>
-					</li>
-				{{/each}}
-			</ul>
+<div id="homePage" class="homePage_wrapper">
+
+
+	<div class="movingImage imageMove">
+		<div class="default active">
+			<img src="/static/images/home1.jpg" />
+			<img src="/static/images/home1.jpg" />
+		</div>
+		<div class="teatro-cubano">
+			<img src="https://images.unsplash.com/photo-1514533450685-4493e01d1fdc?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=ef83ecf505188d03ab8002e57706b285&auto=format&fit=crop&w=667&q=80" />
+			<img src="https://images.unsplash.com/photo-1514533450685-4493e01d1fdc?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=ef83ecf505188d03ab8002e57706b285&auto=format&fit=crop&w=667&q=80" />
+		</div>
+		<div class="danza">
+			<img src="https://images.unsplash.com/photo-1485932465394-d20cc595f08b?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=b2fdc92239d55d550a0a2a6303051f40&auto=format&fit=crop&w=375&q=80">
+			<img src="https://images.unsplash.com/photo-1485932465394-d20cc595f08b?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=b2fdc92239d55d550a0a2a6303051f40&auto=format&fit=crop&w=375&q=80">
+		</div>
+		<div class="musica">
+			<img src="https://images.unsplash.com/photo-1511702771955-42b52e1cd168?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=0b8ce1412e0f8646fa9f794963ab897e&auto=format&fit=crop&w=750&q=80">
+			<img src="https://images.unsplash.com/photo-1511702771955-42b52e1cd168?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=0b8ce1412e0f8646fa9f794963ab897e&auto=format&fit=crop&w=750&q=80">
+		</div>
+		<div class="teatro">
+			<img src="https://images.unsplash.com/photo-1501707305551-9b2adda5e527?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=0cf5887247e17503ce4e542d00d86b9d&auto=format&fit=crop&w=735&q=80">
+			<img src="https://images.unsplash.com/photo-1501707305551-9b2adda5e527?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=0cf5887247e17503ce4e542d00d86b9d&auto=format&fit=crop&w=735&q=80">
+		</div>
+		<div class="yonny">
+			<img src="https://images.unsplash.com/photo-1496749843252-699a989877a1?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=fe5da9650707e5a93c8c3cf164c2e74b&auto=format&fit=crop&w=775&q=80">
+			<img src="https://images.unsplash.com/photo-1496749843252-699a989877a1?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=fe5da9650707e5a93c8c3cf164c2e74b&auto=format&fit=crop&w=775&q=80">
 		</div>
 	</div>
+
+
+	<div class="menuBar">
+		<a href="/"><div class="title">elneto • Fotos</div></a>
+		<div class="menu">
+			<a class="item {{#if active.teatro_cubano}}active{{/if}}" href="/teatro-cubano">Teatro Cubano</a>
+			<a class="item {{#if active.danza}}active{{/if}}" href="/danza">Danza</a>
+			<a class="item {{#if active.musik}}active{{/if}}" href="/musica">Música</a>
+			<a id="teatro" class="item {{#if active.theater}}active{{/if}}" href="/teatro">Teatro</a>
+			<a id="yonny" class="item {{#if active.yonny}}active{{/if}}" href="/yonny">Yonny</a>
+		</div>
+
+	</div>
+	<div class="mask"></div>
 </div>
+
+

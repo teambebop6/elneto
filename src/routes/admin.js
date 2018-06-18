@@ -8,9 +8,21 @@ var path = require('path');
 var gm = require('gm');
 var adminUtils = require('../utils/AdminUtils');
 
-if (process.env.USE_IMAGE_MAGICK) {
+
+var sizeOf = require('image-size');
+
+
+
+
+var env = process.env.NODE_ENV || 'development';
+// Load config
+var config = require('../config')(env);
+
+if (config.USE_IMAGE_MAGICK) {
   gm = gm.subClass({imageMagick: true});
 }
+
+
 
 // File upload middleware
 var upload = require('jquery-file-upload-middleware');
@@ -36,7 +48,7 @@ passport.use(new LocalStrategy({passReqToCallback: true},
       }
 
       // Compare hash of entered password to hashed password stored in database
-      crypto.pbkdf2(password, user.salt, 10000, 512, function (err, hash) {
+      crypto.pbkdf2(password, user.salt, 10000, 512, 'sha512', function (err, hash) {
         if (err) {
           return done(err);
         }
@@ -83,7 +95,8 @@ router.get('/admin', function (req, res) {
 
 // File Upload
 upload.configure({
-  uploadDir: __dirname + '/../public/uploads',
+  uploadDir: config.UPLOAD_FOLDER,
+  //uploadDir: __dirname + '/../public/uploads',
   uploadUrl: '/uploads'
 });
 
@@ -107,58 +120,74 @@ function sleep(time) {
 }
 
 upload.on('end', function (fileInfo, req, res) {
-
-  // Move to proper directory
-  upload.fileManager().move(fileInfo.name, '../images/galery', function (err, result) {
-    if (err) {
-      console.log(err);
-      return;
-    }
-
-    db.Galery.findOne({_id: req.fields.galery_id}, function (err, galery) {
-      if (err || !galery) {
-        // Delete uploaded files
-        fs.unlink(path.join(__dirname, '../images/galery', fileInfo.name), function (err) {
-          if (err) {
-            return console.log(err);
-          }
-        });
-
+  var filePath = path.join(config.UPLOAD_FOLDER, fileInfo.name);
+  console.log("File path is: "+ filePath);
+  
+  db.Galery.findOne({_id: req.fields.galery_id}, function (err, galery) {
+    if (err || !galery) {
+      // Delete uploaded files
+      fs.unlink(filePath, function (err) {
         if (err) {
           console.log(err);
           return;
         }
-        else {
-          console.log("There was an error uploading the file!");
-        }
+      });
+
+      if (err) {
+        console.log(err);
+        return;
+      }
+      else {
+        console.log("There was an error uploading the file!");
+      }
+    }
+
+
+    var thumbFolder = path.join(config.UPLOAD_FOLDER, "thumbs");
+    
+    adminUtils.ensureDirExists(thumbFolder, function(err){
+      if(err){
+        console.log(err);
+        return;
       }
 
       // Create thumbs
-      //
+      var thumbWidth = 500; // px
+      var thumbHeight = 500; // px
 
-      gm(path.join(__dirname, '../public/images/galery', fileInfo.name))
-        .resize('240', '240', '^') // ^ designates minimum height
+      gm(filePath)
+        .resize(thumbWidth, thumbHeight, '^') // ^ designates minimum height
         .gravity('Center')
-        .crop('240', '160')
-        .write(path.join(__dirname, '../public/images/galery/thumbs', fileInfo.name), function (err) {
+        //.crop('240', '160')
+        .write(path.join(thumbFolder, fileInfo.name), function (err) {
           if (err) {
             console.log(err);
             return;
           }
           console.log("Thumbnail successfully generated!");
 
+          sizeOf(filePath, function(err, dimensions){
 
-          // Add new picture to galery
-          galery.images.push({
-            src: fileInfo.name
+            var image = {
+              src: fileInfo.name,
+              width: parseInt(dimensions.width),
+              height: parseInt(dimensions.height),
+            }
+            console.log(image);
+            // Add new picture to galery
+            galery.images.push(image);
+
+            if (galery.images.length == 1) {
+              galery.titlePicture = fileInfo.name;
+            }
+
+            galery.save();
+
+
+            console.log(galery.images);
           });
-
-          if (galery.images.length == 1) {
-            galery.titlePicture = fileInfo.name;
-          }
-          galery.save();
         });
-    });
+    })
   });
 });
 

@@ -1,5 +1,5 @@
 /*!
- * # Semantic UI 2.2.13 - Form
+ * # Semantic UI 2.3.1 - Form
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -85,7 +85,7 @@
 /* Set max height on unusual input */
 .ui.form ::-webkit-datetime-edit,
 .ui.form ::-webkit-inner-spin-button {
-  height: 1.2142em;
+  height: 1.21428571em;
 }
 .ui.form input:not([type]),
 .ui.form input[type="date"],
@@ -99,15 +99,15 @@
 .ui.form input[type="text"],
 .ui.form input[type="file"],
 .ui.form input[type="url"] {
-  font-family: 'Optima LT W01 Roman', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
   margin: 0em;
   outline: none;
   -webkit-appearance: none;
   tap-highlight-color: rgba(255, 255, 255, 0);
-  line-height: 1.2142em;
-  padding: 0.67861429em 1em;
+  line-height: 1.21428571em;
+  padding: 0.67857143em 1em;
   font-size: 1em;
-  background: #ffffff;
+  background: #FFFFFF;
   border: 1px solid rgba(34, 36, 38, 0.15);
   color: rgba(0, 0, 0, 0.87);
   border-radius: 0.28571429rem;
@@ -123,7 +123,7 @@
   -webkit-appearance: none;
   tap-highlight-color: rgba(255, 255, 255, 0);
   padding: 0.78571429em 1em;
-  background: #ffffff;
+  background: #FFFFFF;
   border: 1px solid rgba(34, 36, 38, 0.15);
   outline: none;
   color: rgba(0, 0, 0, 0.87);
@@ -162,7 +162,7 @@
   display: block;
   height: auto;
   width: 100%;
-  background: #ffffff;
+  background: #FFFFFF;
   border: 1px solid rgba(34, 36, 38, 0.15);
   border-radius: 0.28571429rem;
   -webkit-box-shadow: 0em 0em 0em 0em transparent inset;
@@ -259,9 +259,9 @@
 
 .ui.form .field .prompt.label {
   white-space: normal;
-  background: #ffffff !important;
-  border: 1px solid #e0b4b4 !important;
-  color: #9f3a38 !important;
+  background: #FFFFFF !important;
+  border: 1px solid #E0B4B4 !important;
+  color: #9F3A38 !important;
 }
 .ui.form .inline.fields .field .prompt,
 .ui.form .inline.field .prompt {
@@ -288,23 +288,23 @@
 ---------------------*/
 
 .ui.form .field.field input:-webkit-autofill {
-  -webkit-box-shadow: 0px 0px 0px 100px #fffff0 inset !important;
-          box-shadow: 0px 0px 0px 100px #fffff0 inset !important;
-  border-color: #e5dfa1 !important;
+  -webkit-box-shadow: 0px 0px 0px 100px #FFFFF0 inset !important;
+          box-shadow: 0px 0px 0px 100px #FFFFF0 inset !important;
+  border-color: #E5DFA1 !important;
 }
 
 /* Focus */
 .ui.form .field.field input:-webkit-autofill:focus {
-  -webkit-box-shadow: 0px 0px 0px 100px #fffff0 inset !important;
-          box-shadow: 0px 0px 0px 100px #fffff0 inset !important;
-  border-color: #d5c315 !important;
+  -webkit-box-shadow: 0px 0px 0px 100px #FFFFF0 inset !important;
+          box-shadow: 0px 0px 0px 100px #FFFFF0 inset !important;
+  border-color: #D5C315 !important;
 }
 
 /* Error */
 .ui.form .error.error input:-webkit-autofill {
-  -webkit-box-shadow: 0px 0px 0px 100px #fffaf0 inset !important;
-          box-shadow: 0px 0px 0px 100px #fffaf0 inset !important;
-  border-color: #e0b4b4 !important;
+  -webkit-box-shadow: 0px 0px 0px 100px #FFFAF0 inset !important;
+          box-shadow: 0px 0px 0px 100px #FFFAF0 inset !important;
+  border-color: #E0B4B4 !important;
 }
 
 /*--------------------
@@ -368,18 +368,18 @@
 .ui.form input[type="text"]:focus,
 .ui.form input[type="file"]:focus,
 .ui.form input[type="url"]:focus {
-  color: rgba(0, 0, 0, 0.95);
-  border-color: #85b7d9;
+  color: #FBBD08;
+  border-color: #85B7D9;
   border-radius: 0.28571429rem;
-  background: #ffffff;
+  background: #FFFFFF;
   -webkit-box-shadow: 0px 0em 0em 0em rgba(34, 36, 38, 0.35) inset;
           box-shadow: 0px 0em 0em 0em rgba(34, 36, 38, 0.35) inset;
 }
 .ui.form textarea:focus {
-  color: rgba(0, 0, 0, 0.95);
-  border-color: #85b7d9;
+  color: #FBBD08;
+  border-color: #85B7D9;
   border-radius: 0.28571429rem;
-  background: #ffffff;
+  background: #FFFFFF;
   -webkit-box-shadow: 0px 0em 0em 0em rgba(34, 36, 38, 0.35) inset;
           box-shadow: 0px 0em 0em 0em rgba(34, 36, 38, 0.35) inset;
   -webkit-appearance: none;
@@ -444,12 +444,12 @@
 .ui.form .field.error label,
 .ui.form .fields.error .field .input,
 .ui.form .field.error .input {
-  color: #9f3a38;
+  color: #9F3A38;
 }
 .ui.form .fields.error .field .corner.label,
 .ui.form .field.error .corner.label {
-  border-color: #9f3a38;
-  color: #ffffff;
+  border-color: #9F3A38;
+  color: #FFFFFF;
 }
 .ui.form .fields.error .field textarea,
 .ui.form .fields.error .field select,
@@ -479,9 +479,9 @@
 .ui.form .field.error input[type="text"],
 .ui.form .field.error input[type="file"],
 .ui.form .field.error input[type="url"] {
-  background: #fff6f6;
-  border-color: #e0b4b4;
-  color: #9f3a38;
+  background: #FFF6F6;
+  border-color: #E0B4B4;
+  color: #9F3A38;
   border-radius: '';
   -webkit-box-shadow: none;
           box-shadow: none;
@@ -500,9 +500,9 @@
 .ui.form .field.error input[type="text"]:focus,
 .ui.form .field.error input[type="file"]:focus,
 .ui.form .field.error input[type="url"]:focus {
-  background: #fff6f6;
-  border-color: #e0b4b4;
-  color: #9f3a38;
+  background: #FFF6F6;
+  border-color: #E0B4B4;
+  color: #9F3A38;
   -webkit-appearance: none;
   -webkit-box-shadow: none;
           box-shadow: none;
@@ -522,43 +522,43 @@
 .ui.form .field.error .ui.dropdown,
 .ui.form .field.error .ui.dropdown .text,
 .ui.form .field.error .ui.dropdown .item {
-  background: #fff6f6;
-  color: #9f3a38;
+  background: #FFF6F6;
+  color: #9F3A38;
 }
 .ui.form .fields.error .field .ui.dropdown,
 .ui.form .field.error .ui.dropdown {
-  border-color: #e0b4b4 !important;
+  border-color: #E0B4B4 !important;
 }
 .ui.form .fields.error .field .ui.dropdown:hover,
 .ui.form .field.error .ui.dropdown:hover {
-  border-color: #e0b4b4 !important;
+  border-color: #E0B4B4 !important;
 }
 .ui.form .fields.error .field .ui.dropdown:hover .menu,
 .ui.form .field.error .ui.dropdown:hover .menu {
-  border-color: #e0b4b4;
+  border-color: #E0B4B4;
 }
 .ui.form .fields.error .field .ui.multiple.selection.dropdown > .label,
 .ui.form .field.error .ui.multiple.selection.dropdown > .label {
-  background-color: #eacbcb;
-  color: #9f3a38;
+  background-color: #EACBCB;
+  color: #9F3A38;
 }
 
 /* Hover */
 .ui.form .fields.error .field .ui.dropdown .menu .item:hover,
 .ui.form .field.error .ui.dropdown .menu .item:hover {
-  background-color: #fbe7e7;
+  background-color: #FBE7E7;
 }
 
 /* Selected */
 .ui.form .fields.error .field .ui.dropdown .menu .selected.item,
 .ui.form .field.error .ui.dropdown .menu .selected.item {
-  background-color: #fbe7e7;
+  background-color: #FBE7E7;
 }
 
 /* Active */
 .ui.form .fields.error .field .ui.dropdown .menu .active.item,
 .ui.form .field.error .ui.dropdown .menu .active.item {
-  background-color: #fdcfcf !important;
+  background-color: #FDCFCF !important;
 }
 
 /*--------------------
@@ -569,20 +569,20 @@
 .ui.form .field.error .checkbox:not(.toggle):not(.slider) label,
 .ui.form .fields.error .field .checkbox:not(.toggle):not(.slider) .box,
 .ui.form .field.error .checkbox:not(.toggle):not(.slider) .box {
-  color: #9f3a38;
+  color: #9F3A38;
 }
 .ui.form .fields.error .field .checkbox:not(.toggle):not(.slider) label:before,
 .ui.form .field.error .checkbox:not(.toggle):not(.slider) label:before,
 .ui.form .fields.error .field .checkbox:not(.toggle):not(.slider) .box:before,
 .ui.form .field.error .checkbox:not(.toggle):not(.slider) .box:before {
-  background: #fff6f6;
-  border-color: #e0b4b4;
+  background: #FFF6F6;
+  border-color: #E0B4B4;
 }
 .ui.form .fields.error .field .checkbox label:after,
 .ui.form .field.error .checkbox label:after,
 .ui.form .fields.error .field .checkbox .box:after,
 .ui.form .field.error .checkbox .box:after {
-  color: #9f3a38;
+  color: #9F3A38;
 }
 
 /*--------------------
@@ -681,7 +681,7 @@
 .ui.form .required.field > .checkbox:after {
   margin: -0.2em 0em 0em 0.2em;
   content: '*';
-  color: #db2828;
+  color: #DB2828;
 }
 .ui.form .required.fields:not(.grouped) > .field > label:after,
 .ui.form .required.fields.grouped > label:after,
@@ -733,7 +733,7 @@
 .ui.inverted.form input[type="text"],
 .ui.inverted.form input[type="file"],
 .ui.inverted.form input[type="url"] {
-  background: #ffffff;
+  background: #FFFFFF;
   border-color: rgba(255, 255, 255, 0.1);
   color: rgba(0, 0, 0, 0.87);
   -webkit-box-shadow: none;

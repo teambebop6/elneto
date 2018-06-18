@@ -7,14 +7,14 @@ var env = process.env.NODE_ENV || "development";
 var config = require('../config')(env);
 
 // Static folders
-// router.use('/assets', express.static((process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging') ? 'assets' : 'public/dist'));
 router.use('/assets', express.static('public/dist'));
 router.use('/static', express.static('public'));
 router.use('/uploads', express.static(config.UPLOAD_FOLDER));
 
 // Load routes
-router.use('/', require('./api'));
+router.use('/api', require('./api'));
 router.use('/', require('./index'));
+router.use('/yonny', require('./yonny'));
 router.use('/', require('./admin'));
 
 router.use('/admin/galery', require('./admin/galery'));
@@ -42,6 +42,7 @@ router.use(function (req, res, next) {
 // will print stacktrace
 if (router.get('env') === 'development') {
   router.use(function (err, req, res, next) {
+    console.log(err);
     res.status(err.status || 500);
     res.render('error', {
       message: err.message,

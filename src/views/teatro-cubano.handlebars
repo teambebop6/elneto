@@ -1,0 +1,23 @@
+<div class="ui page grid default-content">
+  <div class="two column row">
+    <div class="centered right aligned column">
+      {{> search}}
+    </div>
+  </div>
+</div>
+<div class="pageTile_wrapper">
+
+
+  <div class="text_content">
+    <div class="title">Teatro Cubano</div>
+    <div class="des">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</div>
+  </div>
+</div>
+
+<div class="albums_wrapper justified-gallery" id="albumList">
+  {{#each galeries}}
+  <a href="/galery/{{this._id}}" data-id="{{this._id}}">
+    <img alt="{{this.title}}" src="/uploads/thumbs/{{this.titlePicture}}"/>
+  </a>
+  {{/each}}
+</div>

@@ -1,5 +1,5 @@
 /*!
- * # Semantic UI 2.2.13 - Dropdown
+ * # Semantic UI 2.3.1 - Dropdown
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -47,7 +47,7 @@
   min-width: max-content;
   margin: 0em;
   padding: 0em 0em;
-  background: #ffffff;
+  background: #FFFFFF;
   font-size: 1em;
   text-shadow: none;
   text-align: left;
@@ -168,7 +168,7 @@
   height: 0em;
   margin: 0.5em 0em;
 }
-.ui.dropdown .menu > .input {
+.ui.dropdown.dropdown .menu > .input {
   width: auto;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -355,8 +355,8 @@
   -webkit-transform: rotateZ(0deg);
           transform: rotateZ(0deg);
   min-width: 14em;
-  min-height: 2.7142em;
-  background: #ffffff;
+  min-height: 2.71428571em;
+  background: #FFFFFF;
   display: inline-block;
   padding: 0.78571429em 2.1em 0.78571429em 1em;
   color: rgba(0, 0, 0, 0.87);
@@ -386,7 +386,7 @@ select.ui.dropdown {
   position: absolute;
   width: auto;
   height: auto;
-  line-height: 1.2142em;
+  line-height: 1.21428571em;
   top: 0.78571429em;
   right: 1em;
   z-index: 3;
@@ -456,7 +456,7 @@ select.ui.dropdown {
 
 /* Menu Item */
 .ui.selection.dropdown .menu > .item {
-  border-top: 1px solid #fafafa;
+  border-top: 1px solid #FAFAFA;
   padding: 0.78571429rem 1.14285714rem !important;
   white-space: normal;
   word-wrap: normal;
@@ -476,24 +476,24 @@ select.ui.dropdown {
 
 /* Active */
 .ui.selection.active.dropdown {
-  border-color: #96c8da;
+  border-color: #96C8DA;
   -webkit-box-shadow: 0px 2px 3px 0px rgba(34, 36, 38, 0.15);
           box-shadow: 0px 2px 3px 0px rgba(34, 36, 38, 0.15);
 }
 .ui.selection.active.dropdown .menu {
-  border-color: #96c8da;
+  border-color: #96C8DA;
   -webkit-box-shadow: 0px 2px 3px 0px rgba(34, 36, 38, 0.15);
           box-shadow: 0px 2px 3px 0px rgba(34, 36, 38, 0.15);
 }
 
 /* Focus */
 .ui.selection.dropdown:focus {
-  border-color: #96c8da;
+  border-color: #96C8DA;
   -webkit-box-shadow: none;
           box-shadow: none;
 }
 .ui.selection.dropdown:focus .menu {
-  border-color: #96c8da;
+  border-color: #96C8DA;
   -webkit-box-shadow: 0px 2px 3px 0px rgba(34, 36, 38, 0.15);
           box-shadow: 0px 2px 3px 0px rgba(34, 36, 38, 0.15);
 }
@@ -506,12 +506,12 @@ select.ui.dropdown {
 
 /* Visible Hover */
 .ui.selection.active.dropdown:hover {
-  border-color: #96c8da;
+  border-color: #96C8DA;
   -webkit-box-shadow: 0px 2px 3px 0px rgba(34, 36, 38, 0.15);
           box-shadow: 0px 2px 3px 0px rgba(34, 36, 38, 0.15);
 }
 .ui.selection.active.dropdown:hover .menu {
-  border-color: #96c8da;
+  border-color: #96C8DA;
   -webkit-box-shadow: 0px 2px 3px 0px rgba(34, 36, 38, 0.15);
           box-shadow: 0px 2px 3px 0px rgba(34, 36, 38, 0.15);
 }
@@ -580,14 +580,14 @@ select.ui.dropdown {
 
 /* Search Selection */
 .ui.search.selection.dropdown > input.search {
-  line-height: 1.2142em;
-  padding: 0.67861429em 2.1em 0.67861429em 1em;
+  line-height: 1.21428571em;
+  padding: 0.67857143em 2.1em 0.67857143em 1em;
 }
 
 /* Used to size multi select input to character width */
 .ui.search.selection.dropdown > span.sizer {
-  line-height: 1.2142em;
-  padding: 0.67861429em 2.1em 0.67861429em 1em;
+  line-height: 1.21428571em;
+  padding: 0.67857143em 2.1em 0.67857143em 1em;
   display: none;
   white-space: pre;
 }
@@ -647,7 +647,7 @@ select.ui.dropdown {
 
 /* Multiple Selection */
 .ui.multiple.dropdown {
-  padding: 0.22620476em 2.1em 0.22620476em 0.35714286em;
+  padding: 0.22619048em 2.1em 0.22619048em 0.35714286em;
 }
 .ui.multiple.dropdown .menu {
   cursor: auto;
@@ -686,7 +686,7 @@ select.ui.dropdown {
   position: static;
   padding: 0;
   max-width: 100%;
-  margin: 0.45240952em 0em 0.45240952em 0.64285714em;
+  margin: 0.45238095em 0em 0.45238095em 0.64285714em;
   line-height: 1.21428571em;
 }
 .ui.multiple.dropdown > .label ~ input.search {
@@ -708,7 +708,7 @@ select.ui.dropdown {
   top: 0;
   left: 0;
   padding: inherit;
-  margin: 0.45240952em 0em 0.45240952em 0.64285714em;
+  margin: 0.45238095em 0em 0.45238095em 0.64285714em;
   line-height: 1.21428571em;
 }
 .ui.multiple.search.dropdown > .label ~ .text {
@@ -720,7 +720,7 @@ select.ui.dropdown {
   position: static;
   padding: 0;
   max-width: 100%;
-  margin: 0.45240952em 0em 0.45240952em 0.64285714em;
+  margin: 0.45238095em 0em 0.45238095em 0.64285714em;
   width: 2.2em;
   line-height: 1.21428571em;
 }
@@ -762,7 +762,7 @@ select.ui.dropdown {
 .ui.dropdown .menu .active.item {
   background: transparent;
   font-weight: bold;
-  color: rgba(0, 0, 0, 0.95);
+  color: #FBBD08;
   -webkit-box-shadow: none;
           box-shadow: none;
   z-index: 12;
@@ -776,7 +776,7 @@ select.ui.dropdown {
 /* Menu Item Hover */
 .ui.dropdown .menu > .item:hover {
   background: rgba(0, 0, 0, 0.05);
-  color: rgba(0, 0, 0, 0.95);
+  color: #FBBD08;
   z-index: 13;
 }
 
@@ -893,7 +893,7 @@ select.ui.dropdown {
 .ui.dropdown.selected,
 .ui.dropdown .menu .selected.item {
   background: rgba(0, 0, 0, 0.03);
-  color: rgba(0, 0, 0, 0.95);
+  color: #FBBD08;
 }
 
 /*--------------------
@@ -916,34 +916,34 @@ select.ui.dropdown {
 .ui.dropdown.error,
 .ui.dropdown.error > .text,
 .ui.dropdown.error > .default.text {
-  color: #9f3a38;
+  color: #9F3A38;
 }
 .ui.selection.dropdown.error {
-  background: #fff6f6;
-  border-color: #e0b4b4;
+  background: #FFF6F6;
+  border-color: #E0B4B4;
 }
 .ui.selection.dropdown.error:hover {
-  border-color: #e0b4b4;
+  border-color: #E0B4B4;
 }
 .ui.dropdown.error > .menu,
 .ui.dropdown.error > .menu .menu {
-  border-color: #e0b4b4;
+  border-color: #E0B4B4;
 }
 .ui.dropdown.error > .menu > .item {
-  color: #9f3a38;
+  color: #9F3A38;
 }
 .ui.multiple.selection.error.dropdown > .label {
-  border-color: #e0b4b4;
+  border-color: #E0B4B4;
 }
 
 /* Item Hover */
 .ui.dropdown.error > .menu > .item:hover {
-  background-color: #fff2f2;
+  background-color: #FFF2F2;
 }
 
 /* Item Active */
 .ui.dropdown.error > .menu .active.item {
-  background-color: #fdcfcf;
+  background-color: #FDCFCF;
 }
 
 /*--------------------
@@ -1258,7 +1258,7 @@ select.ui.dropdown {
   height: 0.5em;
   -webkit-box-shadow: -1px -1px 0px 0px rgba(34, 36, 38, 0.15);
           box-shadow: -1px -1px 0px 0px rgba(34, 36, 38, 0.15);
-  background: #ffffff;
+  background: #FFFFFF;
   z-index: 2;
 }
 .ui.pointing.dropdown > .menu:after {
@@ -1505,6 +1505,3 @@ select.ui.dropdown {
         User Overrides
 *******************************/
 
-.ui.dropdown .menu {
-  background: #FFF;
-}

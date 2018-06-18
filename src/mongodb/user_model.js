@@ -15,7 +15,7 @@ UserSchema.pre('save', function(next){
 	if (!user.isModified('password')) return next();
 
 	var salt = crypto.randomBytes(128).toString('base64');
-	crypto.pbkdf2(user.password, salt, 10000, 512, function(err, hash) {
+	crypto.pbkdf2(user.password, salt, 10000, 512, 'sha512' , function(err, hash) {
 		user.password = hash;
 		user.salt = salt;
 

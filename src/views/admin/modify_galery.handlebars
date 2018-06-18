@@ -9,117 +9,124 @@
 					<div class="column">
 						<div class="ui slider checkbox isFavorite"> 
 							<input class="hidden" name="fav" type="checkbox">
-							<label>{{#unless galery.isFavorite}}Don't show{{else}}Show{{/unless}} on home page</label>
+							<label>{{#unless galery.isFavorite}}Not displayed{{else}}Displayed{{/unless}} on home page</label>
 						</div>
 					</div>
 					<div class="column">
 						<div class="ui toggle checkbox isActive"> 
 							<input class="hidden" tabindex="0" type="checkbox">
-							<label>Currently {{#unless galery.isActive}}in{{/unless}}active</label>
+              <label>{{#unless galery.isActive}}Inactive{{else}}Active{{/unless}}</label>
 						</div>
 					</div>
 				</div>
 				<div class="row">
 					<div class="sixteen wide column">
-						<div class="two fields">
-							<div class="field">
-								<label>Title</label>
-								<div class="ui underlined input">
-									<input placeholder="Titel" type="text" name="title" value="{{galery.title}}" required>
-								</div>
-							</div>
-							<div class="field">
-								<label>Date of play:</label>
-								<div class="ui underlined input">
-								<input type="text"id="date_of_play_string" name="date_of_play_string" readonly="readonly" value="{{formatFullDateString galery.dateOfPlay}}" required>
-								</div>
-							</div>
-							<div class="hidden field">
-								<input type="hidden" id="date_of_play" name="date_of_play" value="{{galery.dateOfPlay}}">
-							</div>
-						</div>
-					
-						<div class="two fields">
-							<div class="field">
-								<label>Location</label>
-								<div class="ui underlined input">
-									<input type="text" name="location" value="{{galery.location}}">
-								</div>
-							</div>
-							<div class="field">
-								<label>Author</label>
-								<div class="ui underlined input">
-									<input type="text" name="author" value="{{galery.author}}">
-								</div>
-							</div>
-						</div>
-						<div class="two fields">
-							<div class="field">
-								<label>Director</label>
-								<div class="ui underlined input">
-									<input type="text" name="director" value="{{galery.director}}">
-								</div>
-							</div>
-							<div class="field">
-								<label>Tags</label>
-								<div class="ui input">
-									<select name="tags" multiple="" class="ui dropdown">
-										<option value="">Tags</option>
-										<option value="teatro-cubano">Teatro Cubano</option>
-										<option value="theater">Teatro</option>
-										<option value="musik">Musica</option>
-										<option value="danza">Danza</option>
-									</select>
-								</div>
-							</div>
-						</div>
-						<button class="ui hidden button" type="submit">Save</button>
-					</div>
-				</div>
-			</div>
-		</form>
-	</div>
-	
-	<h2 class="ui header">Images</h2>
-	<div class="ui inverted yellow segment upload-images">
-		<form class="ui form">
-			<div class="field">
-				<label for="fileupload">Upload Images</label>
-				<!-- The file input field used as target for the file upload widget -->
-				<input id="fileupload" type="file" name="files[]" data-url="/admin/upload" multiple>
 
-				<!-- The global progress bar -->
-				<div class="ui progress">
-					<div class="bar">
-						<div class="progress"></div>
-					</div>
-					<div class="label">Uploading Files</div>
-				</div>
-			</div>
-		</form>
-	</div>
+            <!-- hidden fields -->
+            <input type="hidden" id="galery-tags" value="{{#each galery.tags}}{{this}}{{#unless @last}},{{/unless}}{{/each}}" />
+            <input type="hidden" id="is-active" value="{{galery.isActive}}" />
+            <input type="hidden" id="galery-id" value="{{galery._id}}" />
+            <input type="hidden" id="is-favorite" value="{{galery.isFavorite}}" />
 
 
-	<p class="ui info message no-images-yet-message {{#if galery.images}}hidden{{/if}}">No images uploaded yet!</p>	
-		<div class="ui inverted segment">
-			<form class="ui inverted form" id="form-images">
-				<div class="ui stackable two column grid images-list">	
-					{{#each galery.images}}
-						{{> admin/galery-thumb-element this}}
-					{{/each}}
-				</div>
-				<div class="ui mobile reversed page grid" id="save-changes">
-					<div class="row">
-						<div class="eight wide column">
-							<div class="ui hidden save success message"><div class="header">Saved</div></div>	
-							<div class="ui hidden save error message"><div class="header">There was an error!</div></div>	
-						</div>
-						<div class="eight wide column">
-							<button class="ui right floated green button" type="submit">Save changes</button>
-						</div>
-					</div>
-				</div>
-			</form>
-		</div>
+            <div class="two fields">
+              <div class="field">
+                <label>Title</label>
+                <div class="ui underlined input">
+                  <input placeholder="Titel" type="text" name="title" value="{{galery.title}}" required>
+                </div>
+              </div>
+              <div class="field">
+                <label>Date of play:</label>
+                <div class="ui underlined input">
+                  <input type="text"id="date_of_play_string" name="date_of_play_string" readonly="readonly" value="{{formatFullDateString galery.dateOfPlay}}" required>
+                </div>
+              </div>
+              <div class="hidden field">
+                <input type="hidden" id="date_of_play" name="date_of_play" value="{{galery.dateOfPlay}}">
+              </div>
+            </div>
+
+            <div class="two fields">
+              <div class="field">
+                <label>Location</label>
+                <div class="ui underlined input">
+                  <input type="text" name="location" value="{{galery.location}}">
+                </div>
+              </div>
+              <div class="field">
+                <label>Author</label>
+                <div class="ui underlined input">
+                  <input type="text" name="author" value="{{galery.author}}">
+                </div>
+              </div>
+            </div>
+            <div class="two fields">
+              <div class="field">
+                <label>Director</label>
+                <div class="ui underlined input">
+                  <input type="text" name="director" value="{{galery.director}}">
+                </div>
+              </div>
+              <div class="field">
+                <label>Tags</label>
+                <div class="ui input">
+                  <select name="tags" multiple="" class="ui tags dropdown">
+                    <option value="">Tags</option>
+                    {{#each tags}}
+                      <option value="{{this.id}}">{{this.name}}</option>
+                    {{/each}}
+                  </select>
+                </div>
+              </div>
+            </div>
+            <button class="ui hidden button" type="submit">Save</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <h2 class="ui header">Images</h2>
+  <div class="ui inverted yellow segment upload-images">
+    <form class="ui form">
+      <div class="field">
+        <label for="fileupload">Upload Images</label>
+        <!-- The file input field used as target for the file upload widget -->
+        <input id="fileupload" type="file" name="files[]" data-url="/admin/upload" multiple>
+
+        <!-- The global progress bar -->
+        <div class="ui progress">
+          <div class="bar">
+            <div class="progress"></div>
+          </div>
+          <div class="label">Uploading Files</div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+
+  <p class="ui info message no-images-yet-message {{#if galery.images}}hidden{{/if}}">No images uploaded yet!</p>	
+  <div class="ui inverted segment">
+    <form class="ui inverted form" id="form-images">
+      <div class="ui stackable two column grid images-list">	
+        {{#each galery.images}}
+        {{> admin/galery-thumb-element this}}
+        {{/each}}
+      </div>
+      <div class="ui mobile reversed page grid" id="save-changes">
+        <div class="row">
+          <div class="eight wide column">
+            <div class="ui hidden save success message"><div class="header">Saved</div></div>	
+            <div class="ui hidden save error message"><div class="header">There was an error!</div></div>	
+          </div>
+          <div class="eight wide column">
+            <button class="ui right floated green button" type="submit">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
 </div>
 

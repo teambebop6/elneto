@@ -44,11 +44,13 @@ var production = {
   redis : {
     port: '6379'
   },
+  USE_IMAGE_MAGICK : true,
 };
 
 var config = {
   ROOT: __dirname,
   DB_HOST: 'localhost',
+  VIEW_FOLDER: path.join(__dirname, 'views'),
 };
 
 module.exports = function (env) {

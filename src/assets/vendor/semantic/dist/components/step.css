@@ -1,5 +1,5 @@
 /*!
- * # Semantic UI 2.2.13 - Step
+ * # Semantic UI 2.3.1 - Step
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -71,7 +71,7 @@
           justify-content: center;
   margin: 0em 0em;
   padding: 1.14285714em 2em;
-  background: #ffffff;
+  background: #FFFFFF;
   color: rgba(0, 0, 0, 0.87);
   -webkit-box-shadow: none;
           box-shadow: none;
@@ -93,7 +93,7 @@
   top: 50%;
   right: 0%;
   border: medium none;
-  background-color: #ffffff;
+  background-color: #FFFFFF;
   width: 1.14285714em;
   height: 1.14285714em;
   border-style: solid;
@@ -135,7 +135,7 @@
 
 /* Title */
 .ui.steps .step .title {
-  font-family: 'Optima LT W01 Demi Bold', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
   font-size: 1.14285714em;
   font-weight: bold;
 }
@@ -339,7 +339,7 @@
 .ui.steps .link.step:hover,
 .ui.steps a.step:hover::after,
 .ui.steps a.step:hover {
-  background: #f9fafb;
+  background: #F9FAFB;
   color: rgba(0, 0, 0, 0.8);
 }
 
@@ -348,20 +348,20 @@
 .ui.steps .link.step:active,
 .ui.steps a.step:active::after,
 .ui.steps a.step:active {
-  background: #f3f4f5;
+  background: #F3F4F5;
   color: rgba(0, 0, 0, 0.9);
 }
 
 /* Active */
 .ui.steps .step.active {
   cursor: auto;
-  background: #f3f4f5;
+  background: #F3F4F5;
 }
 .ui.steps .step.active:after {
-  background: #f3f4f5;
+  background: #F3F4F5;
 }
 .ui.steps .step.active .title {
-  color: #fbbd08;
+  color: #FBBD08;
 }
 .ui.ordered.steps .step.active:before,
 .ui.steps .active.step .icon {
@@ -388,20 +388,20 @@
 .ui.steps a.active.step:hover::after,
 .ui.steps a.active.step:hover {
   cursor: pointer;
-  background: #dcddde;
+  background: #DCDDDE;
   color: rgba(0, 0, 0, 0.87);
 }
 
 /* Completed */
 .ui.steps .step.completed > .icon:before,
 .ui.ordered.steps .step.completed:before {
-  color: #21ba45;
+  color: #21BA45;
 }
 
 /* Disabled */
 .ui.steps .disabled.step {
   cursor: auto;
-  background: #ffffff;
+  background: #FFFFFF;
   pointer-events: none;
 }
 .ui.steps .disabled.step,
@@ -410,7 +410,7 @@
   color: rgba(40, 40, 40, 0.3);
 }
 .ui.steps .disabled.step:after {
-  background: #ffffff;
+  background: #FFFFFF;
 }
 
 

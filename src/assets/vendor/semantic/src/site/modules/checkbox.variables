@@ -2,8 +2,7 @@
     User Variable Overrides
 *******************************/
 
+@labelActiveColor: @primaryColor;
+
 @sliderOnLineColor: @primaryColor;
-@toggleOnLineColor: @primaryColor;
-@sliderOnLabelColor: @invertedTextColor;
-@toggleOnLabelColor: @invertedTextColor;
 

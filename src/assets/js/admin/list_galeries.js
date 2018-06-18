@@ -3,13 +3,7 @@ var app = require('./globals');
 app.then(function(){
   console.log("Loaded globals.");
 
-  $('#new-galery').click(function(){
-    window.location.replace("/admin/galery/new");
-  });
-
-  var modifyGalery = function(id){
-    window.location.replace('/admin/galery/' + id + '/modify');
-  }
+  /*
 
   var getSelectedGaleries = function(){
     var selectedGaleries = [];
@@ -67,8 +61,17 @@ app.then(function(){
     .modal('show');	
 
   });
+  */
 
-  // Delete single galery
+
+  // Delete galery
+  $(".deleteGalery").click(function(){
+    var id = $(this).data("id");
+    console.log("Deleting: " + id);
+
+    deleteGalery(id);
+  })
+
   var deleteGalery = function(id){
     var confirmDelete = $('#deleteModalTemplate').clone().html($('#deleteModalTemplate').html().replace(/###placeholder###/g, "this galery"));
 
@@ -91,8 +94,7 @@ app.then(function(){
         })
       }
     })
-    .modal('show');	
-
+      .modal('show');	
   }
 
   $('.ui.checkbox').checkbox();
