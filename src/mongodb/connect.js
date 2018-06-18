@@ -1,13 +1,17 @@
 var mongoose = require('mongoose');
 
-exports.connect = function (config, env) {
+exports.mongoose = mongoose;
 
+exports.connect = function (config, env) {
   console.log("Connecting to db: " + config.DB_NAME);
 
-
   var options = {
+    autoIndex: process.env.NODE_ENV !== 'production',
     useMongoClient: true,
   }
+
+  console.log("mongodb default options: ");
+  console.log(options);
 
   if (config.db && config.db.user && config.db.pass) {
     options.user = config.db.user;
@@ -34,6 +38,4 @@ exports.connect = function (config, env) {
   });
 
   mongoose.Promise = global.Promise;
-
-  exports.mongoose = mongoose;
 };

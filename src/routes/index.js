@@ -3,16 +3,17 @@ var router = express.Router();
 var db = require('../mongodb/db');
 var passport = require('passport');
 var helpers = require('../lib/helpers')
+var request = require('request');
+var path = require('path');
 
 router.all('/*', function (req, res, next) {
-	req.app.locals.layout = 'main';
-	next(); // pass control to the next handler
-    });
-
+  req.app.locals.layout = 'main';
+  next(); // pass control to the next handler
+});
 
 router.get('/', function(req, res){
-	db.Galery.find({isFavorite: true}).sort({dateOfPlay: 'desc'}).exec(function(err, galeries){
-		res.render('home', {
+  db.Galery.find({isFavorite: true}).sort({dateOfPlay: 'desc'}).exec(function(err, galeries){
+    res.render('home', {
       title: 'Home',
       scripts: 'home.bundle',
       favoriteGaleries: galeries
@@ -20,7 +21,43 @@ router.get('/', function(req, res){
   });	
 });
 
+router.get('/search-results', function(req, res, next){
+  var query = req.query.q || "";
+  var host = req.get('host');
+  var reqPath = 'http://' + path.join(host, '/api/search?q='+query);
+  
+  request(reqPath, function (err, response, body) {
+    if (!err && response.statusCode == 200) {
 
+      var jsonBody = JSON.parse(body);
+
+      if(!jsonBody || !jsonBody.results){
+        res.status(500);
+        return next();
+      }
+
+      var results = jsonBody.results;
+      var topResult;
+
+      if(!Array.isArray(results) || results.length < 1){
+        results = [];
+        topResult = [];
+      }else{
+        topResult = results[0];
+        results.shift();
+      }
+
+      res.render('search-results', {
+        title: 'Teatro cubano - Search results',
+        topResult: topResult,
+        results: results,
+        scripts: 'teatro-cubano.bundle',
+      })
+    }else{
+      next(err);
+    }
+  })
+})
 
 router.get('/teatro-cubano', function(req, res){
   db.Galery.find({tags: "teatro-cubano", isActive: true}).sort({dateOfPlay: 'desc'}).exec(function(err, galeries){
@@ -28,13 +65,11 @@ router.get('/teatro-cubano', function(req, res){
       throw err;
     }
 
-    console.log(galeries);
-
-    res.render('galery-cat', {
+    res.render('teatro-cubano', {
       title: 'Teatro Cubano',
       galeries: galeries,
       active: { teatro_cubano: true },
-      scripts: 'galery-cat.bundle',
+      scripts: 'teatro-cubano.bundle',
     });
   });
 });
@@ -44,7 +79,7 @@ router.get('/danza', function(req, res){
     if(err){
       throw err;
     }
-    res.render('galery-cat', {
+    res.render('danza', {
       title: 'Danza',
       galeries: galeries,
       active: {
@@ -61,8 +96,8 @@ router.get('/musica', function(req, res){
     if(err){
       throw err;
     }
-    res.render('galery-cat', {
-      title: 'Musik',
+    res.render('musica', {
+      title: 'Musica',
       galeries: galeries,
       active: {
         musik: true
@@ -78,8 +113,8 @@ router.get('/teatro', function(req, res){
     if(err){
       throw err;
     }
-    res.render('galery-cat', {
-      title: 'Theater',
+    res.render('teatro', {
+      title: 'Teatro',
       galeries: galeries,
       active: {
         theater: true
@@ -125,8 +160,6 @@ router.get('/galery/:id', function(req, res){
   db.Galery.findOne({_id: req.params.id}, function(err, galery){
     if(err){ return next(err); }
     if(!galery){ return next({status: 400, message: "Galery not found."}); }
-
-    console.log(galery);
 
     res.render('galery', {
       title: 'Galery',

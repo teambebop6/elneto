@@ -1,0 +1,42 @@
+<div class="ui page grid default-content">
+  <div class="two column row">
+    <div class="column centered">
+      <h2>Banco de datos sobre el Teatro Cubano (1948-1995):</h2>
+
+      {{> search}}
+    </div>
+  </div>
+  <div class="row">
+    <div class="column">
+      <!-- TOP RESULTS -->
+
+      <div class="ui inverted segment">
+      <h3>Top result:</h3>
+
+      <p><strong class="ui yellow header">{{topResult.work}}</strong></p>
+      <p>
+        Anio: {{dashIfEmpty topResult.year}}
+      </p>
+      <p>
+        Dirige: {{dashIfEmpty topResult.conductedBy}}
+      </p>
+      <p>
+        Author(es): {{dashIfEmpty topResult.author}}
+      </p>
+    </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="column">
+
+      <h3>Other suggested results:</h3>
+
+      {{#each results}}
+      <p><strong class="ui yellow header">{{this.work}}</strong></p>
+      <p>Anio: {{dashIfEmpty this.year}}</p>
+      <p>Dirige: {{dashIfEmpty this.conductedBy}}</p>
+      <p>Author(es): {{dashIfEmpty this.author}}</p>
+      {{/each}}
+    </div>
+  </div>
+</div>
