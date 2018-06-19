@@ -46,8 +46,15 @@ app.then(function(){
         });
         return response;
       }, 
-      url: '/api/search?q={query}'
+      url: '/api/search?q={query}',
     },
-    minCharacters : 3
+    minCharacters : 3,
+    onSelect: function(selectedItem){
+      if(selectedItem){
+        console.log(selectedItem.title)
+        $('#search-query').val(selectedItem.title);
+        $('#search-form').submit();
+      }
+    },
   });
 });
