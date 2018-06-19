@@ -2,8 +2,12 @@
 	<div class="container row">
 		<div class="center aligned column">
 			<div class="ui inverted basic segment">
-				<p class="copyright">© 2016 | ernst rudin</p>	
-			</div>
-		</div>
-	</div>
+        <p class="copyright">© 2016 | ernst rudin
+        {{#if user}}
+        <a href="/logout"> | logout</a>
+        {{/if}}
+        </p>
+      </div>
+    </div>
+  </div>
 </div>

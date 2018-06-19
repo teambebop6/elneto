@@ -70,6 +70,15 @@ router.get('/login', function (req, res) {
   });
 });
 
+router.get('/logout', function (req, res) {
+
+  req.logout();
+
+  res.render('admin/logout', {
+    title: 'Elneto - Successfully logged out',
+  });
+});
+
 router.post('/login', passport.authenticate('local', {
   successRedirect: '/admin',
   failureRedirect: '/login',
