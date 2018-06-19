@@ -1,14 +1,13 @@
-<form class="ui form" action="/search-results">
+<form class="ui form" action="/search-results" id="search-form">
   <div class="field">
-    <label>Search</label>
-    <div class="ui search teatro-cubano">
+    <div class="ui fluid search teatro-cubano">
       <div class="ui icon input">
-        <input name="q" class="prompt" type="text" placeholder="Buscar Autor, Obra, Anio, Dirige">
+        <input id="search-query" name="q" class="prompt" type="text" placeholder="Buscar Autor, Obra, Anio, Dirige">
         <i class="search icon"></i>
       </div>
       <div class="results"></div>
     </div>
   </div>
 
-  <input class="ui button" type="submit" value="Show results" />
+  <input class="ui button" type="submit" value="resultados" />
 </form>
