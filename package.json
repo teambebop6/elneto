@@ -44,6 +44,7 @@
     "jquery-file-upload-middleware": "^0.1.7",
     "less-loader": "^4.0.5",
     "moment": "^2.19.3",
+    "mongodb": "^3.1.0",
     "mongoose": "^4.5.5",
     "morgan": "^1.7.0",
     "npm-autoinit": "^0.2.0",
