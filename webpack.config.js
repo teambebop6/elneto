@@ -36,6 +36,7 @@ module.exports = {
   },
   entry: {
     'def': './src/assets/js/default',
+    'teatro-cubano': './src/assets/js/teatro-cubano',
     'galery-cat': './src/assets/js/galery-cat',
     'galery': './src/assets/js/galery',
     'home': './src/assets/js/home',

@@ -7,7 +7,6 @@ var handlebars = require('handlebars');
 
 var constants = require('../../utils/constants');
 
-console.log(constants);
 module.exports = router;
 
 router.get('/getThumbTemplate', function(req, res, next){

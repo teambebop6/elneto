@@ -1,0 +1,48 @@
+<div class="ui page grid default-content">
+  <div class="two column row">
+    <div class="column centered">
+      <h2>banco de datos de puestas en escena en la habana de 1945 a 1995</h2>
+
+      {{> search}}
+    </div>
+  </div>
+  <div class="row">
+    <div class="column">
+      <!-- TOP RESULTS -->
+
+      <div class="ui inverted segment">
+      <h3>Top result:</h3>
+
+      <p><strong class="ui yellow header">{{topResult.work}}</strong></p>
+      <p>
+        año: {{dashIfEmpty topResult.year}}
+      </p>
+      <p>
+        dirige: {{dashIfEmpty topResult.conductedBy}}
+      </p>
+      <p>
+        autor, autora: {{dashIfEmpty topResult.author}}
+      </p>
+    </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="column">
+
+      <h3>Other suggested results:</h3>
+
+      {{#each results}}
+      <p><strong class="ui yellow header">{{this.work}}</strong></p>
+      <p>
+        año: {{dashIfEmpty this.year}}
+      </p>
+      <p>
+        dirige: {{dashIfEmpty this.conductedBy}}
+      </p>
+      <p>
+        author(es): {{dashIfEmpty this.author}}
+      </p>
+      {{/each}}
+    </div>
+  </div>
+</div>

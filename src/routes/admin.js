@@ -70,6 +70,15 @@ router.get('/login', function (req, res) {
   });
 });
 
+router.get('/logout', function (req, res) {
+
+  req.logout();
+
+  res.render('admin/logout', {
+    title: 'Elneto - Successfully logged out',
+  });
+});
+
 router.post('/login', passport.authenticate('local', {
   successRedirect: '/admin',
   failureRedirect: '/login',
@@ -150,11 +159,15 @@ upload.on('end', function (fileInfo, req, res) {
         console.log(err);
         return;
       }
+
       // Create thumbs
+      var thumbWidth = 500; // px
+      var thumbHeight = 500; // px
+
       gm(filePath)
-        .resize('240', '240', '^') // ^ designates minimum height
+        .resize(thumbWidth, thumbHeight, '^') // ^ designates minimum height
         .gravity('Center')
-        .crop('240', '160')
+        //.crop('240', '160')
         .write(path.join(thumbFolder, fileInfo.name), function (err) {
           if (err) {
             console.log(err);
@@ -163,7 +176,6 @@ upload.on('end', function (fileInfo, req, res) {
           console.log("Thumbnail successfully generated!");
 
           sizeOf(filePath, function(err, dimensions){
-
 
             var image = {
               src: fileInfo.name,
@@ -182,11 +194,8 @@ upload.on('end', function (fileInfo, req, res) {
 
 
             console.log(galery.images);
-
           });
-
         });
-
     })
   });
 });
