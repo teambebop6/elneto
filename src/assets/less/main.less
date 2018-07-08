@@ -112,8 +112,8 @@
 
    
    .ui.page.grid.default-content{
-     margin-top:7rem;
-     color:#acacac;
+   	margin-top:7rem;
+   	color:#acacac;
    }
    
    .construccion{
@@ -377,44 +377,44 @@
 
 
 
-.menuBar{
-	.transition;
+ .menuBar{
+ 	.transition;
 
-	position: fixed;
-	top: 43vh;
-	width: 100vw;
-	height: 60px;
-	text-align: center;
-	z-index: 100;
+ 	position: fixed;
+ 	top: 43vh;
+ 	width: 100vw;
+ 	height: 60px;
+ 	text-align: center;
+ 	z-index: 100;
 
-	.title{
-		color: white;
-		font-size: 4rem;
-		font-weight: 100;
-		display: inline-block;
-		line-height: normal;
-		margin-right: 6vw;
-	}
-	.menu{
-		font-size: 1.5rem;
-		font-weight: 100;
-		/* align-items: center; */
-		display: inline-flex;
-		flex-direction: row;
-		justify-content: center;
-		text-align: center;
+ 	.title{
+ 		color: white;
+ 		font-size: 4rem;
+ 		font-weight: 100;
+ 		display: inline-block;
+ 		line-height: normal;
+ 		margin-right: 6vw;
+ 	}
+ 	.menu{
+ 		font-size: 1.5rem;
+ 		font-weight: 100;
+ 		/* align-items: center; */
+ 		display: inline-flex;
+ 		flex-direction: row;
+ 		justify-content: center;
+ 		text-align: center;
 
-		a{
-			color: white;
-			font-weight: 100;
-			margin: 0 2rem;
-			max-width: 160px; 
-			position: relative;
-			width: 100%; 
-			white-space: nowrap;
-			.transition;
+ 		a{
+ 			color: white;
+ 			font-weight: 100;
+ 			margin: 0 2rem;
+ 			max-width: 160px; 
+ 			position: relative;
+ 			width: 100%; 
+ 			white-space: nowrap;
+ 			.transition;
 
-			&:hover{
+ 			&:hover{
 				// font-weight: 400;
 				// letter-spacing: 1px;
 			}
@@ -466,19 +466,18 @@
 
 .pageTile_wrapper{
 	position: relative;
-	height: 300px;
-	// top: 60px;
 	max-width: 1000px;
 	margin: auto;
 	color: white;
 	margin-bottom: 5rem;
 
 	.text_content{
+		margin-top: 200px;
 		width: 60%;
-		position: absolute;
-		right: 10%;
-		bottom: 0;
+		position: relative;
 		text-align: right;
+		margin-left: auto;
+		margin-right: 10%;
 
 		.title{
 			font-size: 4rem;
@@ -619,5 +618,118 @@
 			.des{font-size: 12px;}
 		}
 	}
+
+}
+
+
+
+.search.teatro-cubano{
+	position: relative;
+	width: 60%;
+	margin-top: 3rem;
+	margin-left: auto;
+	margin-right: 10%;
+	text-align: right;
+
+	@media only screen and (max-width: 768px){
+		width: 80%;
+	}
+	.searchBar{
+		position: relative;
+		display: inline-block;
+		input{
+			transition: all 0.5s ease;
+			background-color: transparent;
+			border: 0;
+			border-bottom: 1px solid white;
+			line-height: 40px;
+			margin: 10px;
+			padding-right: 30px;
+			min-width: 250px;
+			color: white;
+			&:focus{
+				outline: none;
+				min-width:300px;
+			}
+		}
+		i.search.icon{
+			width: 40px;
+			line-height: 40px;
+			height: 40px;
+			position: absolute;
+			top: 0;
+			margin: 10px;
+			right: 0;
+		}
+	}
+	button.button{
+		display: inline-block;
+		position: relative;
+		transition: all 0.5s ease;
+		&:focus{outline: none;}
+		background-color: transparent;
+		border: 1px solid #d1d1d1;
+		height: 40px;
+		padding: 0 3rem;
+		color:white;
+		cursor: pointer;
+		margin:10px;
+	}
+
+	button::before, button::after{
+		content:"";
+		width: 0;
+		height: 1px;
+		position: absolute;
+		transition: all 0.2s linear;
+		background: #fff;
+	}
+
+	span::before, span::after{
+		content:"";
+		width:1px;
+		height:0;
+		position: absolute;
+		transition: all 0.2s linear;
+		background: #fff;
+	}
+	button:hover::before, button:hover::after{
+		width: 100%;
+	}
+	button:hover span::before, button:hover span::after{
+		height: 100%;
+	}
+	
+	.btn-2::before, .btn-2::after{
+		transition-delay: 0s;
+	}
+	.btn-2 span::before, .btn-2 span::after{
+		transition-delay: 0.2s;
+	}
+	.btn-2::before{
+		right: 0;
+		top: 0;
+	}
+	.btn-2::after{
+		left: 0;
+		bottom: 0;
+	}
+	.btn-2 span::before{
+		left: 0;
+		top: 0;
+	}
+	.btn-2 span::after{
+		right: 0;
+		bottom: 0;
+	}
+	.btn-2:hover::before, .btn-2:hover::after{
+		transition-delay: 0.2s;
+	}
+	.btn-2:hover span::before, .btn-2:hover span::after{
+		transition-delay: 0s;
+	}
+
+
+
 
 }
