@@ -26,6 +26,7 @@ html, body{
 		margin: auto;
 		left: 3%;
 		right: 3%;
+		z-index: 1000000;
 
 		.title{
 			color: #555;
@@ -64,10 +65,104 @@ html, body{
 	img{margin: 10px;}
 }
 
+.mask_top{
+	top: 0;
+	width: 100%;
+	height: 250px;
+	position: fixed;
+	z-index: 1000;
+	background: -moz-linear-gradient(top,  rgba(251,248,245,1) 0%, rgba(251,248,245,0) 100%); 
+	background: -webkit-linear-gradient(top,  rgba(251,248,245,1) 0%,rgba(251,248,245,0) 100%); 
+	background: linear-gradient(to bottom,  rgba(251,248,245,1) 0%,rgba(251,248,245,0) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fbf8f5', endColorstr='#00fbf8f5',GradientType=0 );
+	pointer-events: none;
+}
+
+.mask_bottom{
+	bottom: 0;
+	width: 100%;
+	height: 250px;
+	position: fixed;
+	z-index: 1000;
+	background: -moz-linear-gradient(top,  rgba(251,248,245,0) 0%, rgba(251,248,245,1) 100%);
+	background: -webkit-linear-gradient(top,  rgba(251,248,245,0) 0%,rgba(251,248,245,1) 100%);
+	background: linear-gradient(to bottom,  rgba(251,248,245,0) 0%,rgba(251,248,245,1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00fbf8f5', endColorstr='#fbf8f5',GradientType=0 );
+	pointer-events: none;
+}
+
+.yonny_poem_wrapper{
+
+	position: relative;
+	max-width: 1200px;
+	margin: auto;
+	margin-top: 120px;
+	min-height: 100vh;
+	z-index: 1;
+
+	.poemList{
+		padding-left: 15%;
+
+		@media only screen and (max-width: 768px){
+			width: 80%;
+			padding: 0;
+			margin: auto;
+		}
+
+		ul{
+			list-style: none;;
+			li{
+				a{color: #333;}
+				transition: all 0.5s ease;
+				font-size: 1.3rem;
+				line-height: 1.5;
+				font-weight: 400;
+				margin-bottom: 1.3rem;
+				cursor: pointer;
+
+				&:before{
+					transition: all 0.5s ease;
+					content: '>';
+					width: 0;
+					height: 20px;
+					margin-right: 0;
+					overflow: hidden;
+					display: inline-block;
+				}
+
+				&:hover{
+					&:before{
+						width: 10px;
+						margin-right: 10px;
+					}
+				}
+			}
+		}
+	}
+
+}
+
+.imageWrapper{
+	position: fixed;
+	max-width: 1200px;
+	margin: auto;
+	margin-top: 120px;
+	top: 0;
+	right: 0;
+	left: 0;
 
 
 
-
+	.yonnyImage{
+		position: absolute;
+		right: 15%;
+		top: 0;
+		@media only screen and (max-width: 768px){
+			opacity: .2;
+			left: 15%;
+		}
+	}
+}
 
 
 
