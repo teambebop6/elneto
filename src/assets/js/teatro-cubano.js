@@ -20,7 +20,7 @@ app.then(function(){
   });
 
   // Search API
-  $('.ui.search.teatro-cubano').search({
+  $('.ui.search.teatro-cubano, .teatre-search').search({
     apiSettings: {
       onResponse: function(res) {
         var response = {

@@ -3,14 +3,21 @@
     <div class="title">Teatro Cubano</div>
     <div class="des">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</div>
   </div>
+  
+<form action="/search-results" id="search-form">
+  <!-- Search bar -->
   <div class="search teatro-cubano">
     <div class="des"><i>banco de datos de puestas en escena en la habana de 1945 a 1995</i></div>
-    <div class="searchBar">
+    <div class="searchBar teatre-search">
       <input id="search-query" name="q" class="prompt" type="text" placeholder="Buscar Autor, Obra, Año, Dirige" autocomplete="off">
       <i class="search icon"></i>
     </div>
     <button class="button btn-2" type="submit" value="resultados"><span>resultados</span></button>
+    <!-- search results --> 
+    <div class="results"></div>
   </div>
+</form>
+
 </div>
 
 <div class="albums_wrapper justified-gallery" id="albumList">
@@ -31,7 +38,8 @@
 
       <h2>banco de datos de puestas en escena en la habana de 1945 a 1995</h2>
 
-      {{> search}}
     </div>
   </div>
 </div>
+
+
