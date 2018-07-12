@@ -31,13 +31,15 @@
 
             <div class="two fields">
               <div class="field">
-                <label>Title</label>
+                <!-- Title -->
+                <label>Título</label>
                 <div class="ui underlined input">
                   <input placeholder="Titel" type="text" name="title" value="{{galery.title}}" required>
                 </div>
               </div>
               <div class="field">
-                <label>Date of play:</label>
+                <!-- Date -->
+                <label>Fecha</label>
                 <div class="ui underlined input">
                   <input type="text"id="date_of_play_string" name="date_of_play_string" readonly="readonly" value="{{formatFullDateString galery.dateOfPlay}}" required>
                 </div>
@@ -49,27 +51,34 @@
 
             <div class="two fields">
               <div class="field">
-                <label>Location</label>
+                <!-- Location -->
+                <label>Lugar</label>
                 <div class="ui underlined input">
                   <input type="text" name="location" value="{{galery.location}}">
                 </div>
               </div>
               <div class="field">
-                <label>Author</label>
+                <!-- Authors -->
+                <label>Autor(a)</label>
                 <div class="ui underlined input">
                   <input type="text" name="author" value="{{galery.author}}">
                 </div>
               </div>
             </div>
             <div class="two fields">
+              
               <div class="field">
-                <label>Director</label>
+                <!-- Directors -->
+                <label>Director(a)</label>
                 <div class="ui underlined input">
                   <input type="text" name="director" value="{{galery.director}}">
                 </div>
               </div>
+
+              
               <div class="field">
-                <label>Tags</label>
+                <!-- Tags -->
+                <label>Etiquetas</label>
                 <div class="ui input">
                   <select name="tags" multiple="" class="ui tags dropdown">
                     <option value="">Tags</option>
@@ -79,7 +88,29 @@
                   </select>
                 </div>
               </div>
+
             </div>
+
+            <!-- Additional info -->
+            <div class="two fields">
+              
+              <div class="field">
+                <!-- Info 1 -->
+                <label>Info 1</label>
+                <div class="ui underlined input">
+                  <input type="text" name="info1" value="{{galery.info1}}">
+                </div>
+              </div>
+              
+              <div class="field">
+                <!-- Info 2 -->
+                <label>Info 2</label>
+                <div class="ui underlined input">
+                  <input type="text" name="info2" value="{{galery.info2}}">
+                </div>
+              </div>
+            </div>
+
             <button class="ui hidden button" type="submit">Save</button>
           </div>
         </div>
@@ -110,7 +141,7 @@
   <p class="ui info message no-images-yet-message {{#if galery.images}}hidden{{/if}}">No images uploaded yet!</p>	
   <div class="ui inverted segment">
     <form class="ui inverted form" id="form-images">
-      <div class="ui stackable two column grid images-list">	
+      <div class="ui stackable two column grid images-list" id="sortable-galery-images">	
         {{#each galery.images}}
         {{> admin/galery-thumb-element this}}
         {{/each}}

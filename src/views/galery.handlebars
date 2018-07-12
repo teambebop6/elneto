@@ -5,10 +5,30 @@
 <div class="pageTile_wrapper">
   <div class="text_content">
     <div class="title">{{galery.title}}</div>
-    <div class="des">Date: {{galery.dateOfPlay}}</div>
-    <div class="location">Location: {{galery.location}}</div>
-    <div class="des">Author: {{galery.author}}</div>
-    <div class="des">Director: {{galery.director}}</div>
+
+    <div class="des">
+      {{ formatDate galery.dateOfPlay}}
+    </div>
+
+    <div class="location">
+      {{galery.location}}
+    </div>
+
+    {{#if galery.author}}
+      <div class="des">{{galery.author}}</div>
+    {{/if}}
+
+    {{#if galery.director}}
+      <div class="des">{{galery.director}}</div>
+    {{/if}}
+
+    {{#if galery.info1}}
+      <div class="des">{{galery.info1}}</div>
+    {{/if}}
+
+    {{#if galery.info2}}
+      <div class="des">{{galery.info2}}</div>
+    {{/if}}
   </div>
 </div>
 
@@ -18,13 +38,10 @@
     <a href="/uploads/{{this.src}}" data-size="{{this.width}}x{{this.height}}">
       <img alt="{{this.title}}" src="/uploads/thumbs/{{this.src}}"/>
     </a>
-
     <figcaption itemprop="caption description">{{this.title}}: {{this.description}}</figcaption>
   </figure>
   {{/each}}
 </div>
-
-
 
 
 <!-- Root element of PhotoSwipe. Must have class pswp. -->
