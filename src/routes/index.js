@@ -13,12 +13,31 @@ router.all('/*', function (req, res, next) {
   next(); // pass control to the next handler
 });
 
-router.get('/', function(req, res){
+router.get('/', function(req, res, next){
   db.Galery.find({isFavorite: true}).sort({dateOfPlay: 'desc'}).exec(function(err, galeries){
+    if(err){ return next(err); }
+    if(!galeries){ galeries = []; }
+
+    var titlePics = {}
+    var tags = ['teatro-cubano', 'teatro', 'danza', 'musica', 'yonny'];
+
+    tags.forEach(function(tag){
+      var tagKey = utils.camelCase(tag);
+      titlePics[tagKey] = [];
+
+      galeries.forEach(function(galery){
+        if(galery.tags.indexOf(tag) > -1){
+          titlePics[tagKey].push(galery.titlePicture);
+        }
+      });
+    });
+
+    console.log(titlePics);
+
     res.render('home', {
       title: 'Home',
       scripts: 'home.bundle',
-      favoriteGaleries: galeries
+      titlePics: titlePics,
     });
   });	
 });
@@ -27,7 +46,7 @@ router.get('/search-results', function(req, res, next){
   var query = req.query.q || "";
   var host = req.get('host');
   var reqPath = 'http://' + path.join(host, '/api/search?q='+query);
-  
+
   request(reqPath, function (err, response, body) {
     if (!err && response.statusCode == 200) {
 

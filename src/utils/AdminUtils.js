@@ -1,5 +1,10 @@
 var fs = require('fs');
 
+exports.camelCase = function(string) {
+    return string.replace( /-([a-z])/ig, function( all, letter ) {
+        return letter.toUpperCase();
+    });
+}
 exports.sort_by = function(field, reverse, primer){
 
   var key = primer ? 

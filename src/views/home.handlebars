@@ -1,30 +1,39 @@
 <div id="homePage" class="homePage_wrapper">
-
-
 	<div class="movingImage imageMove">
 		<div class="default active">
-			<img src="/static/images/home1.jpg" />
-			<img src="/static/images/home1.jpg" />
+      {{#each titlePics.teatroCubano }}
+        <img src="/uploads/{{this}}" />
+      {{/each}}
 		</div>
+
 		<div class="teatro-cubano">
-			<img src="http://www.elneto.sternward.com/uploads/thumbs/2e002cd79bdc04b84b0958f7f94bfbec.jpg" />
-			<img src="http://www.elneto.sternward.com/uploads/thumbs/2e002cd79bdc04b84b0958f7f94bfbec.jpg" />
+      {{#each titlePics.teatroCubano }}
+        <img src="/uploads/{{this}}" />
+      {{/each}}
 		</div>
+
 		<div class="danza">
-			<img src="http://www.elneto.sternward.com/uploads/thumbs/f27bb8dcdca05a0ae0461ad3c1bd533f.jpg">
-			<img src="http://www.elneto.sternward.com/uploads/thumbs/f27bb8dcdca05a0ae0461ad3c1bd533f.jpg">
+      {{#each titlePics.danza }}
+        <img src="/uploads/{{this}}" />
+      {{/each}}
 		</div>
+
 		<div class="musica">
-			<img src="https://images.unsplash.com/photo-1511702771955-42b52e1cd168?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=0b8ce1412e0f8646fa9f794963ab897e&auto=format&fit=crop&w=750&q=80">
-			<img src="https://images.unsplash.com/photo-1511702771955-42b52e1cd168?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=0b8ce1412e0f8646fa9f794963ab897e&auto=format&fit=crop&w=750&q=80">
-		</div>
+      {{#each titlePics.musica }}
+        <img src="/uploads/{{this}}" />
+      {{/each}}
+    </div>
+
 		<div class="teatro">
-			<img src="http://www.elneto.sternward.com/uploads/thumbs/9ad37dee76c30595ac21a6b59faa3ca7.jpg">
-			<img src="http://www.elneto.sternward.com/uploads/thumbs/9ad37dee76c30595ac21a6b59faa3ca7.jpg">
-		</div>
+      {{#each titlePics.teatro }}
+        <img src="/uploads/{{this}}" />
+      {{/each}}
+    </div>
+    
 		<div class="yonny">
-			<img src="./../static/images/yonnyPoemImage.jpg">
-			<img src="./../static/images/yonnyPoemImage.jpg">
+      {{#each titlePics.yonny }}
+        <img src="/uploads/{{this}}" />
+      {{/each}}
 		</div>
 	</div>
 
