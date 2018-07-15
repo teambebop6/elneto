@@ -7,6 +7,7 @@ var ImageSchema = new mongoose.Schema({
 	description: String,
 	width: Number,
   height: Number,
+  sort: Number,
 });
 
 var GalerySchema = new mongoose.Schema({
@@ -16,6 +17,8 @@ var GalerySchema = new mongoose.Schema({
 	dateOfPlay: Date,
 	author: String,
 	director: String,
+	info1: String,
+	info2: String,
 	createdOn: Date,
 	tags: [String],
 	isActive: Boolean,
