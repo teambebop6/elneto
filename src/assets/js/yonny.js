@@ -7,14 +7,21 @@ require('../vendor/slick-1.8.1/slick/slick.js');
 app.then(function(){
 
 
-	// $('.yes').click(function(){
-	// 		alert('asdfadsf');
-	// 		// $('.imageWrapper').css('left','150vw');
-	// 		// setTimeout(function() {
-	// 		// 	$('.yonny_poem_wrapper').css('left','100vw');
-	// 		// }, 300);
 
-	// 	})
+	var justifiedGallery = require(['justifiedGallery'], function(){
+		console.log("loaded justified galery22");
+
+		$('#enFotos').justifiedGallery({
+			rowHeight : 230,
+			lastRow : 'nojustify',
+			maxRowHeight: 380,
+			randomize: true,
+			margins : 30
+		});
+	});
+
+
+
 
 
 	$('.responsive').slick({
@@ -25,7 +32,7 @@ app.then(function(){
 		centerMode: true,
 		autoplay: true,
 		autoplaySpeed: 2000,
-		slidesToScroll: 1,
+		slidesToScroll: 3,
 		variableWidth: true
 	});
 

@@ -227,7 +227,23 @@ html, body{
 	
 }
 
+.en_fotos_wrapper{
+	position: relative;
+	margin-top: 100px;
 
+
+	img{
+		transition: all .5s ease;
+		-webkit-filter: grayscale(100%);
+		filter: grayscale(100%);
+
+		&:hover{
+			transition: all .5s ease;
+			-webkit-filter: grayscale(0%);
+			filter: grayscale(0%);
+		}
+	}
+}
 
 
 
