@@ -13,11 +13,12 @@
     <link type="text/css" rel="stylesheet" href="/assets/commons.css" />
     <link type="text/css" rel="stylesheet" href="/assets/yonny.css" />
     <link type="text/css" rel="stylesheet" href="//fast.fonts.net/cssapi/ff2d2c4a-64b2-4789-879c-40facd89a49e.css"/>
-    {{#if head_scripts}}
+ 
+
+       {{#if head_scripts}}
     <!-- custom styles -->
     {{> (head_scripts) }}
     {{/if}}
-    
 </head>
 <body class="yonnyPage">
         <!--[if lt IE 7]>
@@ -28,7 +29,7 @@
 
 
         <div class="menuBar goToTop">
-            <a href="/"><div class="title">elneto <</div></a>
+            <a href="/" class="backToElneto"><div class="title">elneto <</div></a>
             
 
             <div class="mobileOnly menuMobile">
@@ -79,7 +80,7 @@
 
 
 
-
+        <div class="mask"></div>
 
         <!-- YONNY footer -->
         {{> page/footer }}

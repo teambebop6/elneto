@@ -185,6 +185,8 @@ router.get('/galery/:id', function(req, res){
     // Sort them images
     galery.images.sort(utils.sort_by("sort"));
 
+    console.log(galery);
+    console.log(galery.images);
     res.render('galery', {
       title: 'Galery',
       scripts: 'galery.bundle',
