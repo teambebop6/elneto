@@ -27,11 +27,11 @@ app.then(function(){
 	$('.responsive').slick({
 		// dots: true,
 		infinite: true,
-		speed: 500,
+		speed: 5000,
 		// slidesToShow: 5,
 		centerMode: true,
 		autoplay: true,
-		autoplaySpeed: 2000,
+		autoplaySpeed: 10000,
 		slidesToScroll: 3,
 		variableWidth: true
 	});
