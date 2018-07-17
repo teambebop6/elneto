@@ -182,11 +182,19 @@ app.then(function(){
       }
     });
 
-
     var submitFormData= function(){
       // Serialize data of all forms
       var galeryInfoData = JSON.stringify($("#form-galery-info").serializeObject());
-      var imagesData = JSON.stringify($("#form-images").serializeObject());
+
+      var imagesArray = [];
+
+      $.each($('#form-images').find('.galery-thumb-element'), function(i, galery_el){
+        var el = { id: $(galery_el).data("id") };
+        $.extend(el, $(galery_el).find("input").serializeObject());
+        imagesArray.push(el);
+      });
+
+      console.log(imagesArray);
 
       var galery_id = $('#galery-id').val();
 
@@ -203,7 +211,7 @@ app.then(function(){
               url: '/admin/galery/'+galery_id+'/modify',
               type: 'post',
               data: {
-                formData: imagesData,
+                formData: JSON.stringify(imagesArray),
                 action: 'updateGaleryImages'
               },
               success: function(data){
@@ -273,8 +281,6 @@ app.then(function(){
 
     // Initialize tab
     $('.menu .item').tab();
-
-
 
     // Initialize checkboxes
     if($('#is-active').val() == "true"){
@@ -362,6 +368,10 @@ app.then(function(){
         }
       });
 
+    require(['../../vendor/Sortable/Sortable.js'], function(Sortable){
+      var el = document.getElementById('sortable-galery-images');
+      var sortable = Sortable.create(el);
+    });
 
   });
 });

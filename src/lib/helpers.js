@@ -24,7 +24,7 @@ exports.formatDate = function(date){
     return "";
   }
 
-  return date.getDate() + "." + date.getMonth() + "." + date.getFullYear();
+  return ("0" + date.getDate()).slice(-2) + " | " + ("0" + date.getMonth()).slice(-2) + " | " + date.getFullYear();
 }
 
 exports.formatFullDateString = function(date){

@@ -6,17 +6,38 @@ var helpers = require('../lib/helpers')
 var request = require('request');
 var path = require('path');
 
+var utils = require('../utils/AdminUtils');
+
 router.all('/*', function (req, res, next) {
   req.app.locals.layout = 'main';
   next(); // pass control to the next handler
 });
 
-router.get('/', function(req, res){
+router.get('/', function(req, res, next){
   db.Galery.find({isFavorite: true}).sort({dateOfPlay: 'desc'}).exec(function(err, galeries){
+    if(err){ return next(err); }
+    if(!galeries){ galeries = []; }
+
+    var titlePics = {}
+    var tags = ['teatro-cubano', 'teatro', 'danza', 'musica', 'yonny'];
+
+    tags.forEach(function(tag){
+      var tagKey = utils.camelCase(tag);
+      titlePics[tagKey] = [];
+
+      galeries.forEach(function(galery){
+        if(galery.tags.indexOf(tag) > -1){
+          titlePics[tagKey].push(galery.titlePicture);
+        }
+      });
+    });
+
+    console.log(titlePics);
+
     res.render('home', {
       title: 'Home',
       scripts: 'home.bundle',
-      favoriteGaleries: galeries
+      titlePics: titlePics,
     });
   });	
 });
@@ -25,7 +46,7 @@ router.get('/search-results', function(req, res, next){
   var query = req.query.q || "";
   var host = req.get('host');
   var reqPath = 'http://' + path.join(host, '/api/search?q='+query);
-  
+
   request(reqPath, function (err, response, body) {
     if (!err && response.statusCode == 200) {
 
@@ -92,7 +113,7 @@ router.get('/danza', function(req, res){
 });
 
 router.get('/musica', function(req, res){
-  db.Galery.find({tags: "musik", isActive: true}).sort({dateOfPlay: 'desc'}).exec(function(err, galeries){
+  db.Galery.find({tags: "musica", isActive: true}).sort({dateOfPlay: 'desc'}).exec(function(err, galeries){
     if(err){
       throw err;
     }
@@ -109,7 +130,7 @@ router.get('/musica', function(req, res){
 });
 
 router.get('/teatro', function(req, res){
-  db.Galery.find({tags: "theater", isActive: true}).sort({dateOfPlay: 'desc'}).exec(function(err, galeries){
+  db.Galery.find({tags: "teatro", isActive: true}).sort({dateOfPlay: 'desc'}).exec(function(err, galeries){
     if(err){
       throw err;
     }
@@ -161,6 +182,11 @@ router.get('/galery/:id', function(req, res){
     if(err){ return next(err); }
     if(!galery){ return next({status: 400, message: "Galery not found."}); }
 
+    // Sort them images
+    galery.images.sort(utils.sort_by("sort"));
+
+    console.log(galery);
+    console.log(galery.images);
     res.render('galery', {
       title: 'Galery',
       scripts: 'galery.bundle',

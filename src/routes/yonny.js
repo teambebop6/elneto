@@ -16,6 +16,7 @@ router.get('/', function(req, res){
     active: {
       yonny: true
     },
+    scripts: 'yonny.bundle',
   });
 });
 
@@ -25,7 +26,7 @@ router.get('/cuadros', function(req, res){
     active: {
       cuadros: true
     },
-    scripts: 'galery-cat.bundle',
+    scripts: 'yonny.bundle',
   });
 });
 
@@ -35,7 +36,7 @@ router.get('/serie', function(req, res, next){
     active: {
       cuadros: true
     },
-    scripts: 'galery.bundle',
+    scripts: 'yonny.bundle',
     serie: {
       // put some test data here
       title: "Series title",
@@ -74,13 +75,14 @@ router.get('/poemas', function(req, res){
     active: {
       poemas: true
     },
+    scripts: 'yonny.bundle',
   });
 });
 
 router.get('/en-fotos', function(req, res){
   res.render('yonny/en_fotos', {
     title: 'Yonny',
-    scripts: 'galery-cat.bundle',
+    scripts: 'yonny.bundle',
     active: {
       enFotos: true
     },

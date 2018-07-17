@@ -1,5 +1,6 @@
 html, body{
 	background: #FCF8F5;
+	height: auto;
 }
 
 .yonnyPage{
@@ -7,17 +8,38 @@ html, body{
 	.menuMobile input + label span{background: #555}
 	.menuMobile input ~ nav > ul > li > a{color: #555}
 
+	.mask{
+
+		background-color: #FBF8F5;
+	}
+
+	::-moz-selection { 
+		background: rgb(251, 189, 8); 
+	}
+	::selection { 
+		background: rgb(251, 189, 8); 
+	}
+
 	.pageTile_wrapper{
 		color:#555;
 
 	}
 
 	.goToTop{
-		background: transparent;
-		max-width: 1200px;
+		background: -moz-linear-gradient(top,  rgba(251,248,245,1) 0%, rgba(251,248,245,.8) 100%); 
+		background: -webkit-linear-gradient(top,  rgba(251,248,245,1) 0%,rgba(251,248,245,.8) 100%); 
+		background: linear-gradient(to bottom,  rgba(251,248,245,1) 0%,rgba(251,248,245,.8) 100%);
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fbf8f5', endColorstr='#00fbf8f5',GradientType=0 );
+
+
 		margin: auto;
-		left: 3%;
-		right: 3%;
+		z-index: 1000000;
+
+		.backToElneto{
+			left: 6%;
+			position: absolute;
+			white-space: nowrap;
+		}
 
 		.title{
 			color: #555;
@@ -56,9 +78,172 @@ html, body{
 	img{margin: 10px;}
 }
 
+.mask_top{
+	top: 0;
+	width: 100%;
+	height: 250px;
+	position: fixed;
+	z-index: 1000;
+	background: -moz-linear-gradient(top,  rgba(251,248,245,1) 0%, rgba(251,248,245,0) 100%); 
+	background: -webkit-linear-gradient(top,  rgba(251,248,245,1) 0%,rgba(251,248,245,0) 100%); 
+	background: linear-gradient(to bottom,  rgba(251,248,245,1) 0%,rgba(251,248,245,0) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fbf8f5', endColorstr='#00fbf8f5',GradientType=0 );
+	pointer-events: none;
+}
+
+.mask_bottom{
+	bottom: 0;
+	width: 100%;
+	height: 250px;
+	position: fixed;
+	z-index: 1000;
+	background: -moz-linear-gradient(top,  rgba(251,248,245,0) 0%, rgba(251,248,245,1) 100%);
+	background: -webkit-linear-gradient(top,  rgba(251,248,245,0) 0%,rgba(251,248,245,1) 100%);
+	background: linear-gradient(to bottom,  rgba(251,248,245,0) 0%,rgba(251,248,245,1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00fbf8f5', endColorstr='#fbf8f5',GradientType=0 );
+	pointer-events: none;
+}
+
+.yonny_poem_wrapper{
+	left: 0;
+	transition: all 2s ease;
+	position: relative;
+	max-width: 1200px;
+	margin: auto;
+	margin-top: 120px;
+	min-height: 100vh;
+	z-index: 1;
+
+	.poemList{
+		padding-left: 15%;
+
+		@media only screen and (max-width: 768px){
+			width: 80%;
+			padding: 0;
+			margin: auto;
+		}
+
+		ul{
+			list-style: none;;
+			li{
+				a{color: #333;}
+				transition: all 0.5s ease;
+				font-size: 1.2rem;
+				line-height: 1.5;
+				font-weight: 400;
+				margin-bottom: 1.3rem;
+				cursor: pointer;
+
+				&:before{
+					transition: all 0.5s ease;
+					content: '>';
+					width: 0;
+					height: 20px;
+					margin-right: 0;
+					overflow: hidden;
+					display: inline-block;
+				}
+
+				&:hover{
+					&:before{
+						width: 10px;
+						margin-right: 10px;
+					}
+				}
+			}
+		}
+	}
+
+}
+
+.imageWrapper{
+	transition: all 2s ease;
+	position: fixed;
+	max-width: 1200px;
+	margin: auto;
+	margin-top: -212px;
+	top: 50%;
+	right: 0;
+	left: 0;
 
 
 
+	.yonnyImage{
+		position: absolute;
+		right: 15%;
+		top: 0;
+		@media only screen and (max-width: 768px){
+			opacity: .2;
+			left: 15%;
+		}
+	}
+}
+
+
+
+
+.painting_wrapper{
+	.slick-prev, .slick-next{z-index: 1000;}
+	transition: all 2s ease;
+	position: relative;
+	max-width: 1200px;
+	margin: auto;
+	margin-top: 120px;
+	min-height: 100vh;
+	z-index: 1;
+
+	.painting_group{
+		margin: 2rem 6% 4rem; 
+
+		.groupTitle{
+			font-size: 1.5rem;
+			font-weight: bold;
+			&:before{
+				content: '>';
+				width: 0;
+				height: 20px;
+				margin-right: 20px;
+				font-weight: normal;
+				display: inline-block;
+			}
+		}
+
+		.responsive{
+			div{overflow: visible;}
+			div.item{
+				margin: 1.5rem;
+
+				img{
+					cursor: pointer;
+					border: 8px solid #fff;
+					transition: all .3s ease;
+					&:hover{
+						box-shadow: 2px 10px 30px rgba(0,0,0,.3);
+					}
+				}
+			}
+		}
+	}
+	
+}
+
+.en_fotos_wrapper{
+	position: relative;
+	margin-top: 100px;
+
+
+	img{
+		transition: all .5s ease;
+		-webkit-filter: grayscale(100%);
+		filter: grayscale(100%);
+
+		&:hover{
+			transition: all .5s ease;
+			-webkit-filter: grayscale(0%);
+			filter: grayscale(0%);
+		}
+	}
+}
 
 
 

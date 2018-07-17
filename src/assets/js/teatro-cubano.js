@@ -11,7 +11,7 @@ app.then(function(){
     console.log("loaded justified galery");
 
     $('#albumList').justifiedGallery({
-      rowHeight : 280,
+      rowHeight : 230,
       lastRow : 'nojustify',
       maxRowHeight: 380,
       randomize: true,
@@ -20,7 +20,7 @@ app.then(function(){
   });
 
   // Search API
-  $('.ui.search.teatro-cubano').search({
+  $('.ui.search.teatro-cubano, .teatre-search').search({
     apiSettings: {
       onResponse: function(res) {
         var response = {

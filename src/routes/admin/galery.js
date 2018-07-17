@@ -7,6 +7,8 @@ var handlebars = require('handlebars');
 
 var constants = require('../../utils/constants');
 
+var utils = require('../../utils/AdminUtils');
+
 module.exports = router;
 
 router.get('/getThumbTemplate', function(req, res, next){
@@ -134,11 +136,13 @@ router.post('/new', function(req, res){
 
 // Modify galery
 router.get('/:id/modify', function(req, res){
-
-  db.Galery.findOne({_id: req.params.id}, function(err, galery){
-
+  
+  db.Galery.findOne({ _id: req.params.id}).exec(function(err, galery){
     if(err){ throw err; }	
     if(!galery){ return res.redirect('/admin'); }
+
+    // Sort them images
+    galery.images.sort(utils.sort_by('sort'));
 
     if(galery.titlePicture){
 
@@ -184,7 +188,6 @@ router.post('/:id/modify', function(req, res){
 
     // UPDATE GALERY IMAGES 
     else if(data.action == "updateGaleryImages"){
-      console.log("Updating galery images")	
 
       if(data.formData == null || data.formData.length <= 0){
         // formData is empty, do nothing
@@ -192,29 +195,25 @@ router.post('/:id/modify', function(req, res){
       }
 
       // Parse object from json data
-      var formData = JSON.parse(data.formData);
+      var imagesData = JSON.parse(data.formData);
 
-      console.log(formData)
+      console.log(imagesData);
 
-      for(var key in formData){
-        console.log("Key is: " + key);
+      imagesData.forEach(function(imageData){
+        galery.images.some(function(image){
+          if(image.src == imageData.id){
+            // Update properties
+            image.title = imageData.title;
+            image.description = imageData.description;
+            image.sort = imagesData.indexOf(imageData);
 
-        var src = key.substring(key.indexOf("-") + 1, key.length);
-        console.log(src)
-        var propertyName = key.substring(0, key.indexOf("-"));
-        console.log(propertyName)
-
-        galery.images.forEach(function(image){
-          if(image.src == src){
-            console.log('Found matching picture in galery')
-            console.log(image)
-            image[propertyName] = formData[key]
+            return true;
           }
         });
-      }
+      });
 
-      console.log("Galery:")
-      console.log(galery);
+
+      console.log(galery.images);
 
       galery.save(function(err){
         if(err){ res.json({success: false, message: err.message}); return; }
@@ -223,10 +222,10 @@ router.post('/:id/modify', function(req, res){
       res.json({success: true}); return;
     }
 
+
+
     // UPDATE GALERY INFO
     else if(data.action == "updateGaleryInfo"){
-      console.log("Updating galery info")	
-
       if(data.formData == null || data.formData.length <= 0){
         // formData is empty, do nothing
         res.json({success: true, message:"No data provided. Nothing happened."}); return;
@@ -235,14 +234,9 @@ router.post('/:id/modify', function(req, res){
       // Parse object from json data
       var formData = JSON.parse(data.formData);
 
-      console.log(formData)
-
       // Iterate through data
       for(var key in formData){
-        console.log("Key is: " + key);
-
         if(galery[key] !== 'undefined'){
-          console.log("Updating to " + galery[key]);
           galery[key] = formData[key]					
         }		
       }
