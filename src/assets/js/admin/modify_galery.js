@@ -1,6 +1,24 @@
 var app = require('./globals');
 
+require('../../vendor/datepicker/dist/datepicker.min.css');
+
 app.then(function(){
+  // Datepicker
+  require(['datepicker'], function(){
+    console.log("loaded datepicker.");
+    // Datepicker
+    var picker = $('#date_of_play_string');
+
+    picker.datepicker({
+      format: 'DD | MM | yy',
+      date: new Date($('#date_of_play').val()),
+    });
+    $(picker).on('pick.datepicker', function (e) {
+        $('#date_of_play').val(e.date);
+    });
+  });
+
+
   // Refresh rollover events for thumbnails
   var refreshThumb = function(thumb){		
 
@@ -237,20 +255,7 @@ app.then(function(){
       });	
     }
 
-    // Datepicker
-    $( "input[id='date_of_play_string']" ).datepicker({
-      changeMonth: true,
-      changeYear: true,
-      yearRange: '1997:'+(new Date).getFullYear(),
-      altFormat: "yy-mm-dd",
-      dateFormat:"DD, d. MM, yy",
-      altField: "#date_of_play",
-      onSelect: function(dateText) {
-        //$('#form-new').valid();
-      }
-    });
 
-    $.datepicker.setDefaults($.datepicker.regional["de"]);
 
     // Initialize Dropdown
     $('.ui.dropdown.tags').dropdown();

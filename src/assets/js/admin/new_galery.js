@@ -20,7 +20,7 @@ app.then(function(){
     var picker = $('#date_of_play_string');
 
     picker.datepicker({
-      format: 'DD, d. MM, yy',
+      format: 'DD | MM | yy',
       date: this.dateString,
       pick: function(){
         $('#date_of_play').val(picker.datepicker('getDate'));

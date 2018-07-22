@@ -1,9 +1,9 @@
 <div class="ui page grid default-content">
   <div class="two column row">
     <div class="column centered">
-      <h2>banco de datos de puestas en escena en la habana de 1945 a 1995</h2>
-
-      {{> search}}
+      <form action="/search-results" id="search-form">
+        {{> teatre-search-bar}}
+      </form>
     </div>
   </div>
   <div class="row">
@@ -11,19 +11,19 @@
       <!-- TOP RESULTS -->
 
       <div class="ui inverted segment">
-      <h3>Top result:</h3>
+        <h3>Top result:</h3>
 
-      <p><strong class="ui yellow header">{{topResult.work}}</strong></p>
-      <p>
+        <p><strong class="ui yellow header">{{topResult.work}}</strong></p>
+        <p>
         año: {{dashIfEmpty topResult.year}}
-      </p>
-      <p>
+        </p>
+        <p>
         dirige: {{dashIfEmpty topResult.conductedBy}}
-      </p>
-      <p>
+        </p>
+        <p>
         autor, autora: {{dashIfEmpty topResult.author}}
-      </p>
-    </div>
+        </p>
+      </div>
     </div>
   </div>
   <div class="row">
@@ -34,13 +34,13 @@
       {{#each results}}
       <p><strong class="ui yellow header">{{this.work}}</strong></p>
       <p>
-        año: {{dashIfEmpty this.year}}
+      año: {{dashIfEmpty this.year}}
       </p>
       <p>
-        dirige: {{dashIfEmpty this.conductedBy}}
+      dirige: {{dashIfEmpty this.conductedBy}}
       </p>
       <p>
-        author(es): {{dashIfEmpty this.author}}
+      author(es): {{dashIfEmpty this.author}}
       </p>
       {{/each}}
     </div>

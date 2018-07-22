@@ -1,57 +1,61 @@
 <div id="homePage" class="homePage_wrapper">
 	<div class="movingImage imageMove">
-		<div class="default active">
+    <div class="default active">
       {{#each titlePics.teatroCubano }}
-        <img src="/uploads/{{this}}" />
+      <img src="/uploads/{{this}}" />
       {{/each}}
-		</div>
+    </div>
 
-		<div class="teatro-cubano">
+    <div class="teatro-cubano">
       {{#each titlePics.teatroCubano }}
-        <img src="/uploads/{{this}}" />
+      <img src="/uploads/{{this}}" />
       {{/each}}
-		</div>
+    </div>
 
-		<div class="danza">
+    <div class="danza">
       {{#each titlePics.danza }}
-        <img src="/uploads/{{this}}" />
+      <img src="/uploads/{{this}}" />
       {{/each}}
-		</div>
+    </div>
 
-		<div class="musica">
+    <div class="musica">
       {{#each titlePics.musica }}
-        <img src="/uploads/{{this}}" />
+      <img src="/uploads/{{this}}" />
       {{/each}}
     </div>
 
-		<div class="teatro">
+    <div class="teatro">
       {{#each titlePics.teatro }}
-        <img src="/uploads/{{this}}" />
+      <img src="/uploads/{{this}}" />
       {{/each}}
     </div>
-    
-		<div class="yonny">
-      {{#each titlePics.yonny }}
+
+    {{#if isDev }}
+      <div class="yonny">
+        {{#each titlePics.yonny }}
         <img src="/uploads/{{this}}" />
-      {{/each}}
-      
-		</div>
-	</div>
+        {{/each}}
+      </div>
+    {{/if}}
+
+  </div>
 
 
-	<div class="menuBar">
-		<a href="/"><div class="title">elneto • Fotos</div></a>
-		<div class="menu">
-			<a class="item {{#if active.teatro_cubano}}active{{/if}}" href="/teatro-cubano">Teatro Cubano</a>
-			<a class="item {{#if active.danza}}active{{/if}}" href="/danza">Danza</a>
-			<a class="item {{#if active.musik}}active{{/if}}" href="/musica">Música</a>
-			<a id="teatro" class="item {{#if active.theater}}active{{/if}}" href="/teatro">Teatro</a>
+  <div class="menuBar">
+    <a href="/"><div class="title">elneto • Fotos</div></a>
+    <div class="menu">
+      <a class="item {{#if active.teatro_cubano}}active{{/if}}" href="/teatro-cubano">Teatro Cubano</a>
+      <a class="item {{#if active.danza}}active{{/if}}" href="/danza">Danza</a>
+      <a class="item {{#if active.musik}}active{{/if}}" href="/musica">Música</a>
+      <a id="teatro" class="item {{#if active.theater}}active{{/if}}" href="/teatro">Teatro</a>
 
-			<a id="yonny" class="item {{#if active.yonny}}active{{/if}}" href="/yonny">Yonny</a>
+    {{#if isDev }}
+      <a id="yonny" class="item {{#if active.yonny}}active{{/if}}" href="/yonny">Yonny</a>
+    {{/if}}
 
-		</div>
+    </div>
 
-	</div>
+  </div>
 </div>
 
 
