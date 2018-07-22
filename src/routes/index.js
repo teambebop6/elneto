@@ -7,9 +7,11 @@ var request = require('request');
 var path = require('path');
 
 var utils = require('../utils/AdminUtils');
+var env = process.env.NODE_ENV || 'development';
 
 router.all('/*', function (req, res, next) {
   req.app.locals.layout = 'main';
+  req.app.locals.isDev = env === 'development';
   next(); // pass control to the next handler
 });
 
@@ -31,8 +33,6 @@ router.get('/', function(req, res, next){
         }
       });
     });
-
-    console.log(titlePics);
 
     res.render('home', {
       title: 'Home',
@@ -81,7 +81,7 @@ router.get('/search-results', function(req, res, next){
 })
 
 router.get('/teatro-cubano', function(req, res){
-  db.Galery.find({tags: "teatro-cubano", isActive: true}).sort({dateOfPlay: 'desc'}).exec(function(err, galeries){
+  db.Galery.find({tags: "teatro-cubano", isActive: true}).sort({dateOfPlay: 'asc'}).exec(function(err, galeries){
     if(err){
       throw err;
     }
@@ -96,7 +96,7 @@ router.get('/teatro-cubano', function(req, res){
 });
 
 router.get('/danza', function(req, res){
-  db.Galery.find({tags: "danza", isActive: true}).sort({dateOfPlay: 'desc'}).exec(function(err, galeries){
+  db.Galery.find({tags: "danza", isActive: true}).sort({dateOfPlay: 'asc'}).exec(function(err, galeries){
     if(err){
       throw err;
     }
@@ -113,7 +113,7 @@ router.get('/danza', function(req, res){
 });
 
 router.get('/musica', function(req, res){
-  db.Galery.find({tags: "musica", isActive: true}).sort({dateOfPlay: 'desc'}).exec(function(err, galeries){
+  db.Galery.find({tags: "musica", isActive: true}).sort({dateOfPlay: 'asc'}).exec(function(err, galeries){
     if(err){
       throw err;
     }
@@ -130,7 +130,7 @@ router.get('/musica', function(req, res){
 });
 
 router.get('/teatro', function(req, res){
-  db.Galery.find({tags: "teatro", isActive: true}).sort({dateOfPlay: 'desc'}).exec(function(err, galeries){
+  db.Galery.find({tags: "teatro", isActive: true}).sort({dateOfPlay: 'asc'}).exec(function(err, galeries){
     if(err){
       throw err;
     }
@@ -185,8 +185,6 @@ router.get('/galery/:id', function(req, res){
     // Sort them images
     galery.images.sort(utils.sort_by("sort"));
 
-    console.log(galery);
-    console.log(galery.images);
     res.render('galery', {
       title: 'Galery',
       scripts: 'galery.bundle',
