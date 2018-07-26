@@ -4,6 +4,7 @@ var db = require('../../mongodb/db');
 var path = require('path');
 var fs = require('fs');
 var handlebars = require('handlebars');
+var moment = require('moment');
 
 var constants = require('../../utils/constants');
 
@@ -197,8 +198,6 @@ router.post('/:id/modify', function(req, res){
       // Parse object from json data
       var imagesData = JSON.parse(data.formData);
 
-      console.log(imagesData);
-
       imagesData.forEach(function(imageData){
         galery.images.some(function(image){
           if(image.src == imageData.id){
@@ -213,7 +212,6 @@ router.post('/:id/modify', function(req, res){
       });
 
 
-      console.log(galery.images);
 
       galery.save(function(err){
         if(err){ res.json({success: false, message: err.message}); return; }
@@ -241,7 +239,8 @@ router.post('/:id/modify', function(req, res){
         }		
       }
 
-      galery['dateOfPlay'] = formData.date_of_play
+      galery['dateOfPlay'] = moment.utc(formData.date_of_play).format();
+      console.log(galery.dateOfPlay);
 
       galery.save(function(err){
         if(err){ res.json({success: false, message: err.message}); return; }
