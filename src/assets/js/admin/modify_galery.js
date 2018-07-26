@@ -1,5 +1,9 @@
 var app = require('./globals');
 
+var utils = require('../../../lib/helpers');
+
+var moment = require('moment');
+
 require('../../vendor/datepicker/dist/datepicker.min.css');
 
 app.then(function(){
@@ -9,12 +13,18 @@ app.then(function(){
     // Datepicker
     var picker = $('#date_of_play_string');
 
+    var dateofplay = $('#date_of_play').val();
+
+    console.log(dateofplay);
+
+    dateFormat = "DD | MM | yyyy";
+
     picker.datepicker({
-      format: 'DD | MM | yy',
-      date: new Date($('#date_of_play').val()),
+      format: dateFormat,
+      date: moment.utc(dateofplay).format(),
     });
     $(picker).on('pick.datepicker', function (e) {
-        $('#date_of_play').val(e.date);
+      $('#date_of_play').val(moment(e.date).format('L'));
     });
   });
 
