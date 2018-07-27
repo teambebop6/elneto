@@ -12,7 +12,7 @@ app.then(function(){
       rowHeight : 150,
       lastRow : 'nojustify',
       maxRowHeight: 250,
-      randomize: true,
+      randomize: false,
       selector: 'figure, div:not(.spinner)',
       margins : 20
     });
