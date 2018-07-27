@@ -182,7 +182,7 @@ router.get('/galery/:id', function(req, res){
     if(err){ return next(err); }
     if(!galery){ return next({status: 400, message: "Galery not found."}); }
 
-    // Sort them images
+    // Sort them imageso
     galery.images.sort(utils.sort_by("sort"));
 
     res.render('galery', {
