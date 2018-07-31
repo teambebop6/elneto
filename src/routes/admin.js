@@ -52,7 +52,7 @@ passport.use(new LocalStrategy({passReqToCallback: true},
         if (err) {
           return done(err);
         }
-        if (hash == user.password) {
+        if (hash.toString('base64') === user.password) {
           return done(null, user);
         }
 
@@ -131,7 +131,7 @@ function sleep(time) {
 upload.on('end', function (fileInfo, req, res) {
   var filePath = path.join(config.UPLOAD_FOLDER, fileInfo.name);
   console.log("File path is: "+ filePath);
-  
+
   db.Galery.findOne({_id: req.fields.galery_id}, function (err, galery) {
     if (err || !galery) {
       // Delete uploaded files
@@ -153,7 +153,7 @@ upload.on('end', function (fileInfo, req, res) {
 
 
     var thumbFolder = path.join(config.UPLOAD_FOLDER, "thumbs");
-    
+
     adminUtils.ensureDirExists(thumbFolder, function(err){
       if(err){
         console.log(err);
