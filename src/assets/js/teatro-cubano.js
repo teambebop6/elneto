@@ -38,10 +38,9 @@ app.then(function(){
           // add result to category
           response.results.push({
             title: item.work + " (" + item.year + ")",
-            description: "<span>Dirige: " + (item.author || "-") +"</span> \
-              <span class='year'>Anio: " + (item.year || "") +"</span> \
-              <span class='conductedBy'>Dirige: "+ (item.conductedBy || "") +"</span> \
-              <span class='author'>Author(es)" + ": "+ (item.author || "") +"</span>" ,
+            description: "<span class='year'>Anio: " + (item.year || "-") +"</span>, \
+              <span class='conductedBy'>Dirige: "+ (item.conductedBy || "-") +"</span>, \
+              <span class='author'>Author(es)" + ": "+ (item.author || "-") +"</span>" ,
           });
         });
         return response;

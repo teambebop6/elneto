@@ -41,11 +41,11 @@
                 <!-- Date -->
                 <label>Fecha</label>
                 <div class="ui underlined input">
-                  <input type="text"id="date_of_play_string" name="date_of_play_string" readonly="readonly" value="{{formatFullDateString galery.dateOfPlay}}" required>
+                  <input type="text"id="date_of_play_string" name="date_of_play_string" readonly="readonly" value="{{formatDate galery.dateOfPlay}}" required>
                 </div>
               </div>
               <div class="hidden field">
-                <input type="hidden" id="date_of_play" name="date_of_play" value="{{galery.dateOfPlay}}">
+                <input type="hidden" id="date_of_play" name="date_of_play" value="{{formatStandardDate galery.dateOfPlay}}">
               </div>
             </div>
 

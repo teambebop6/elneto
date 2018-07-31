@@ -1,5 +1,6 @@
 var path = require('path');
 var fs = require('fs');
+
 var maskedKeys = ['SESSION_SECRET', 'ADMIN_PASSWORD', 'SMTP_PW']
 
 var hide = function(key){

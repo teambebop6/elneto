@@ -47,13 +47,15 @@ var production = {
   USE_IMAGE_MAGICK : true,
 };
 
-var config = {
-  ROOT: __dirname,
-  DB_HOST: 'localhost',
-  VIEW_FOLDER: path.join(__dirname, 'views'),
-};
-
 module.exports = function (env) {
+
+  var config = {
+    ROOT: __dirname,
+    DB_HOST: 'localhost',
+    VIEW_FOLDER: path.join(__dirname, 'views'),
+    ENV: env,
+  };
+
   switch(env){
     case "development": {
       Object.assign(config, development);

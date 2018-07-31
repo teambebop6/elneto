@@ -1,5 +1,7 @@
 'use strict';
 
+var moment = require('moment');
+
 var monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
 
 var dayNames = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"]
@@ -19,12 +21,16 @@ exports.formatPrice = function(price){
   return "CHF " + (parseFloat(price) / 100).toFixed(2);
 }
 
+exports.formatStandardDate = function(date){
+  return moment(date).format('L');
+}
+
 exports.formatDate = function(date){
   if(!date){
     return "";
   }
 
-  return ("0" + date.getDate()).slice(-2) + " | " + ("0" + date.getMonth()).slice(-2) + " | " + date.getFullYear();
+  return ("0" + date.getDate()).slice(-2) + " | " + ("0" + (date.getMonth()+1)).slice(-2) + " | " + date.getFullYear();
 }
 
 exports.formatFullDateString = function(date){

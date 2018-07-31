@@ -10,9 +10,6 @@ exports.connect = function (config, env) {
     useMongoClient: true,
   }
 
-  console.log("mongodb default options: ");
-  console.log(options);
-
   if (config.db && config.db.user && config.db.pass) {
     options.user = config.db.user;
     options.pass = config.db.pass;
