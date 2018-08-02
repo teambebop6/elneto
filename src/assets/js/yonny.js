@@ -4,9 +4,9 @@ require('../vendor/slick-1.8.1/slick/slick.less');
 require('../vendor/slick-1.8.1/slick/slick-theme.less');
 require('../vendor/slick-1.8.1/slick/slick.js');
 
+
+
 app.then(function(){
-
-
 
 	var justifiedGallery = require(['justifiedGallery'], function(){
 		console.log("loaded justified galery22");
@@ -27,7 +27,7 @@ app.then(function(){
 	$('.responsive').slick({
 		// dots: true,
 		infinite: true,
-		speed: 5000,
+		speed: 1000,
 		// slidesToShow: 5,
 		centerMode: true,
 		autoplay: true,

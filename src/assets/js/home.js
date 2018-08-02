@@ -30,7 +30,7 @@ app.then(function(){
 	function setImagePlacement(){
 		var width = $('.movingImage .active img').width(),
 		height = $('.movingImage .active img').height();
-		$('.movingImage').css('width', windowWidth + width + windowWidth);
+		$('.movingImage').css('width', windowWidth*3 + width*3);
 		$('.movingImage').css('margin-top', -height/2);
 		$('.movingImage img').css('margin-right', windowWidth - width );
 	}
