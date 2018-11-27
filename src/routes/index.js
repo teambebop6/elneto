@@ -151,7 +151,8 @@ router.get('/impressum', function(req, res){
     title: 'Impressum',
     active: {
       impressum: true
-    }
+      },
+      scripts: 'impressum.bundle',
   });
 });
 

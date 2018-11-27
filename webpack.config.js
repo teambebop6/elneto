@@ -40,10 +40,12 @@ module.exports = {
     'galery-cat': './src/assets/js/galery-cat',
     'galery': './src/assets/js/galery',
     'home': './src/assets/js/home',
+    'impressum': './src/assets/js/impressum',
     'yonny': './src/assets/js/yonny',
     'admin/list-galeries': './src/assets/js/admin/list_galeries',
     'admin/modify-galery': './src/assets/js/admin/modify_galery',
     'admin/new-galery': './src/assets/js/admin/new_galery',
+    'admin/yonny/list': './src/assets/js/admin/yonny/list',
   },
   output: {
     path: path.resolve(__dirname, 'public/dist'),
