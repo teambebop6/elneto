@@ -6,7 +6,7 @@ var app = require('./globals');
 //var photoSwipeCss = require("../vendor/photoswipe/dist/photoswipe.css");
 
 app.then(function(){
-  
+
   var justifiedGallery = require(['justifiedGallery'], function(){
     console.log("loaded justified galery");
 
@@ -14,7 +14,7 @@ app.then(function(){
       rowHeight : 230,
       lastRow : 'nojustify',
       maxRowHeight: 380,
-      randomize: true,
+      randomize: false,
       margins : 30
     });
   });
@@ -24,7 +24,7 @@ app.then(function(){
     apiSettings: {
       onResponse: function(res) {
         var response = {
-          results : [] 
+          results : []
         };
 
         // translate API response to work with search
@@ -44,7 +44,7 @@ app.then(function(){
           });
         });
         return response;
-      }, 
+      },
       url: '/api/search?q={query}',
     },
     minCharacters : 3,
