@@ -30,13 +30,13 @@ app.then(function(){
 
 
   // Refresh rollover events for thumbnails
-  var refreshThumb = function(thumb){		
+  var refreshThumb = function(thumb){
 
     // Hide hidden content of galery thumbs
     thumb.find('.info .actions').hide();
 
     var actionsButton = thumb.find('.info .actions .button').first();
-    var icon = actionsButton.find('i').first();	
+    var icon = actionsButton.find('i').first();
 
     actionsButton.mouseover(function(){
       icon.removeClass("square outline");
@@ -47,7 +47,7 @@ app.then(function(){
       icon.removeClass("checkmark box");
     });
 
-    //Show actions and hide states on rollover 
+    //Show actions and hide states on rollover
     thumb.mouseover(function(){
       var actions = thumb.find('.info .actions').first();
       actions.show();
@@ -73,6 +73,9 @@ app.then(function(){
       imageMaxWidth: 1177,
       imageMaxHeight: 1177,
       done: function(e, data){
+
+        console.log(data.result.files)
+
         $.each(data.result.files, function(index, file){
 
           $.get("/admin/galery/getThumbTemplate?src=" + file.name, function(data){
@@ -84,14 +87,14 @@ app.then(function(){
         });
 
         $('.ui.progress').hide();
-        $('.no-images-yet-message').hide();	
+        $('.no-images-yet-message').hide();
       },
       stop: function(e){
         d = new Date();
         $.each($('.images-list').find('.image-thumb'), function(index, element){
           var path = $(element).attr("id").substr(12); // cut off image-thumb- in order to get path
           var imgElement = $(element).find('img');
-          imgElement.attr("src", '/static/images/galery/thumbs/' + path + "?t=" + d.getTime()); 
+          imgElement.attr("src", '/uploads/thumbs/' + path + "?t=" + d.getTime());
         });
       },
       progressall: function (e, data) {
@@ -125,13 +128,13 @@ app.then(function(){
         }
       });
       return o;
-    };    
+    };
 
 
 
     var deletePicture = function(id){
       var confirmDelete = $('#confirmDeleteModal').clone()
-        .html($('#confirmDeleteModal').html().replace(/###placeholder###/g, 
+        .html($('#confirmDeleteModal').html().replace(/###placeholder###/g,
           "this picture")
         );
 
@@ -143,7 +146,7 @@ app.then(function(){
             url: '/admin/galery/'+galery_id+'/deletePicture',
             data: { id: id },
             success : function(data, textStatus, xhr){
-              if(xhr.status == 200){ 
+              if(xhr.status == 200){
                 $('#galery-thumb-' + String(id).replace(/\./g, "\\.")).hide();
               }
             },
@@ -153,7 +156,7 @@ app.then(function(){
           })
         }
       })
-        .modal('show');	
+        .modal('show');
     }
 
     // Delete single galery
@@ -205,7 +208,7 @@ app.then(function(){
     $('#form-images').submit(function(e){
       e.preventDefault();
     }).validate({
-      submitHandler: function(form){	
+      submitHandler: function(form){
         submitFormData();
       }
     });
@@ -262,7 +265,7 @@ app.then(function(){
               .transition('fade right', '3000ms');
           }
         }
-      });	
+      });
     }
 
 
@@ -273,7 +276,7 @@ app.then(function(){
     // Load tags
     var tagsString = $('#galery-tags').val();
     var tags = tagsString.split(",");
-    $('.ui.dropdown.tags').dropdown('set selected', tags); 
+    $('.ui.dropdown.tags').dropdown('set selected', tags);
 
 
     $(window).scroll(function() {
@@ -318,7 +321,7 @@ app.then(function(){
               $('.ui.checkbox.isFavorite label').text("Displayed on home page");
             },
             error: function(err){
-              $('.ui.checkbox.isFavorite').prop('checked', false);	
+              $('.ui.checkbox.isFavorite').prop('checked', false);
               console.log(err);
             }
           });
@@ -333,7 +336,7 @@ app.then(function(){
               $('.ui.checkbox.isFavorite label').text("Not displayed on home page");
             },
             error: function(err){
-              $('.ui.checkbox.isFavorite').prop('checked', true);	
+              $('.ui.checkbox.isFavorite').prop('checked', true);
               console.log(err);
             }
           });
@@ -351,13 +354,13 @@ app.then(function(){
             url: '/admin/galery/modify',
             data: {
               galeryId: galery_id,
-              action: 'setActive'	
+              action: 'setActive'
             },
             success: function(data){
               $('.ui.checkbox.isActive label').text("Active");
             },
             error: function(err){
-              $('.ui.checkbox.isActive').prop('checked', false);	
+              $('.ui.checkbox.isActive').prop('checked', false);
               console.log(err);
             }
           });
@@ -370,20 +373,20 @@ app.then(function(){
             url: '/admin/galery/modify',
             data: {
               galeryId: galery_id,
-              action: 'setInactive'	
+              action: 'setInactive'
             },
             success: function(data){
               $('.ui.checkbox.isActive label').text("Inactive");
             },
             error: function(err){
-              $('.ui.checkbox.isActive').prop('checked', true);	
+              $('.ui.checkbox.isActive').prop('checked', true);
               console.log(err);
             }
           });
         }
       });
 
-    require(['../../vendor/Sortable/Sortable.js'], function(Sortable){
+    require(['sortable'], function(Sortable){
       var el = document.getElementById('sortable-galery-images');
       var sortable = Sortable.create(el);
     });

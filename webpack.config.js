@@ -32,6 +32,7 @@ module.exports = {
       datepicker: path.join(__dirname, 'src/assets/vendor/datepicker/dist/datepicker'),
       'jquery.fileupload': path.join(__dirname, '/public/vendor/jquery.fileupload'),
       'jquery.ui.widget': path.join(__dirname, '/public/vendor/jquery.ui.widget'),
+      'sortable': path.join(__dirname, 'src/assets/vendor/Sortable/Sortable.js')
     }
   },
   entry: {

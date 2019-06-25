@@ -39,7 +39,7 @@ router.get('/', function(req, res, next){
       scripts: 'home.bundle',
       titlePics: titlePics,
     });
-  });	
+  });
 });
 
 router.get('/search-results', function(req, res, next){
@@ -167,8 +167,8 @@ router.post('/getGalery', function(req, res, next){
     var galleria = [];
     galery.images.forEach(function(image){
       galleria.push({
-        image : '/static/images/galery/' + image.src,
-        thumb : '/static/images/galery/thumbs/' + image.src,
+        image : '/uploads/' + image.src,
+        thumb : '/uploads/thumbs/' + image.src,
         description : image.description,
         title : image.title
       });
