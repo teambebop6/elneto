@@ -1,0 +1,43 @@
+<div class="sixteen wide column images">
+
+  <h1 class="ui header">Modify Backup</h1>
+
+  <div class="ui inverted segment">
+    <form class="ui inverted form" id="form-new">
+      <div class="ui grid">
+        <div class="row">
+          <div class="sixteen wide column">
+
+            <input type="hidden" id="backup-id" value="{{backup._id}}"/>
+
+            <div class="two fields">
+              <div class="field">
+                <!-- Title -->
+                <label>Título</label>
+                <div class="ui underlined input">
+                  <input placeholder="Titel" type="text" name="title" value="{{backup.title}}" required>
+                </div>
+              </div>
+              <div class="field">
+                <label>File Name</label>
+                <div class="ui underlined input">
+                  <input placeholder="File name" type="text" name="fileName" value="{{backup.fileName}}" required>
+                </div>
+              </div>
+            </div>
+
+            <div class="field">
+              <label>Description</label>
+              <div class="ui underlined input">
+                <textarea name="description">{{backup.description}}</textarea>
+              </div>
+            </div>
+
+            <button class="ui button" type="submit">Save</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+

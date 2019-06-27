@@ -46,6 +46,9 @@ module.exports = {
     'admin/list-galeries': './src/assets/js/admin/list_galeries',
     'admin/modify-galery': './src/assets/js/admin/modify_galery',
     'admin/new-galery': './src/assets/js/admin/new_galery',
+
+    'admin/list-backups': './src/assets/js/admin/list_backups',
+    'admin/new-backup': './src/assets/js/admin/new_backup',
   },
   output: {
     path: path.resolve(__dirname, 'public/dist'),

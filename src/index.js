@@ -39,7 +39,7 @@ db.connect(config, env);
 
 // Load templating engine
 var exphbs = require('express-handlebars');
-var helpers = require('./lib/helpers'); 
+var helpers = require('./lib/helpers');
 
 // Server
 var debug = require('debug')('elneto');
@@ -56,8 +56,8 @@ var sess = {
 	cookie:{ maxAge:24*60*60*1000 },
 	store: new RedisStore({
 		host: 'localhost',
-		port: config.redis.port	
-	})    	
+		port: config.redis.port
+	})
 }
 app.use(session(sess));
 
@@ -106,6 +106,9 @@ debug('Booting %s', app_name);
 
 //var server = http.createServer(app);
 var server = app.listen(app.get('port'), function(){
+
+  require('./scheduled')(config);
+
   console.log('Express server listening on ' + app.get('host') + ":" + app.get('port'));
 });
 

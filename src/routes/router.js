@@ -18,6 +18,7 @@ router.use('/yonny', require('./yonny'));
 router.use('/', require('./admin'));
 
 router.use('/admin/galery', require('./admin/galery'));
+router.use('/admin/backup', require('./admin/backup'));
 
 // Redirect if last char of url is '/'
 router.use(function (req, res, next) {
