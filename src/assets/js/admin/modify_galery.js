@@ -7,6 +7,15 @@ var moment = require('moment');
 require('../../vendor/datepicker/dist/datepicker.min.css');
 
 app.then(function(){
+
+  $('#categories').dropdown({
+    allowAdditions: true,
+  });
+
+  var catString = $('#galery-categories').val();
+  var categories = catString.split(",");
+  $('#categories').dropdown('set selected', categories);
+
   // Datepicker
   require(['datepicker'], function(){
     console.log("loaded datepicker.");

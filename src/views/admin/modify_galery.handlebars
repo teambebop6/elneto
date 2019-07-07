@@ -1,32 +1,33 @@
 <div class="sixteen wide column images">
 
-	<h1 class="ui header">Modify Galery</h1>
+  <h1 class="ui header">Modify Galery</h1>
 
-	<div class="ui inverted segment">	
-		<form class="ui inverted form" id="form-galery-info">
-			<div class="ui grid">
-				<div class="three column row">
-					<div class="column">
-						<div class="ui slider checkbox isFavorite"> 
-							<input class="hidden" name="fav" type="checkbox">
-							<label>{{#unless galery.isFavorite}}Not displayed{{else}}Displayed{{/unless}} on home page</label>
-						</div>
-					</div>
-					<div class="column">
-						<div class="ui toggle checkbox isActive"> 
-							<input class="hidden" tabindex="0" type="checkbox">
+  <div class="ui inverted segment">
+    <form class="ui inverted form" id="form-galery-info">
+      <div class="ui grid">
+        <div class="three column row">
+          <div class="column">
+            <div class="ui slider checkbox isFavorite">
+              <input class="hidden" name="fav" type="checkbox">
+              <label>{{#unless galery.isFavorite}}Not displayed{{else}}Displayed{{/unless}} on home page</label>
+            </div>
+          </div>
+          <div class="column">
+            <div class="ui toggle checkbox isActive">
+              <input class="hidden" tabindex="0" type="checkbox">
               <label>{{#unless galery.isActive}}Inactive{{else}}Active{{/unless}}</label>
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="sixteen wide column">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="sixteen wide column">
 
             <!-- hidden fields -->
-            <input type="hidden" id="galery-tags" value="{{#each galery.tags}}{{this}}{{#unless @last}},{{/unless}}{{/each}}" />
-            <input type="hidden" id="is-active" value="{{galery.isActive}}" />
-            <input type="hidden" id="galery-id" value="{{galery._id}}" />
-            <input type="hidden" id="is-favorite" value="{{galery.isFavorite}}" />
+            <input type="hidden" id="galery-tags" value="{{#each galery.tags}}{{this}}{{#unless @last}},{{/unless}}{{/each}}"/>
+            <input type="hidden" id="galery-categories" value="{{#each galery.categories}}{{this}}{{#unless @last}},{{/unless}}{{/each}}"/>
+            <input type="hidden" id="is-active" value="{{galery.isActive}}"/>
+            <input type="hidden" id="galery-id" value="{{galery._id}}"/>
+            <input type="hidden" id="is-favorite" value="{{galery.isFavorite}}"/>
 
 
             <div class="two fields">
@@ -41,7 +42,8 @@
                 <!-- Date -->
                 <label>Fecha</label>
                 <div class="ui underlined input">
-                  <input type="text"id="date_of_play_string" name="date_of_play_string" readonly="readonly" value="{{formatDate galery.dateOfPlay}}" required>
+                  <input type="text" id="date_of_play_string" name="date_of_play_string" readonly="readonly"
+                         value="{{formatDate galery.dateOfPlay}}" required>
                 </div>
               </div>
               <div class="hidden field">
@@ -66,7 +68,7 @@
               </div>
             </div>
             <div class="two fields">
-              
+
               <div class="field">
                 <!-- Directors -->
                 <label>Director(a)</label>
@@ -75,7 +77,7 @@
                 </div>
               </div>
 
-              
+
               <div class="field">
                 <!-- Tags -->
                 <label>Etiquetas</label>
@@ -91,9 +93,22 @@
 
             </div>
 
+            <div class="two fields">
+              <div class="field">
+                <label>Categories</label>
+                <select id="categories" name="categories" multiple="" class="ui search fluid dropdown">
+                  {{#if categories }}
+                    {{#each categories}}
+                      <option value="{{this.title}}">{{this.title}}</option>
+                    {{/each}}
+                  {{/if}}
+                </select>
+              </div>
+            </div>
+
             <!-- Additional info -->
             <div class="two fields">
-              
+
               <div class="field">
                 <!-- Info 1 -->
                 <label>Info 1</label>
@@ -101,7 +116,7 @@
                   <input type="text" name="info1" value="{{galery.info1}}">
                 </div>
               </div>
-              
+
               <div class="field">
                 <!-- Info 2 -->
                 <label>Info 2</label>
@@ -138,19 +153,23 @@
   </div>
 
 
-  <p class="ui info message no-images-yet-message {{#if galery.images}}hidden{{/if}}">No images uploaded yet!</p>	
+  <p class="ui info message no-images-yet-message {{#if galery.images}}hidden{{/if}}">No images uploaded yet!</p>
   <div class="ui inverted segment">
     <form class="ui inverted form" id="form-images">
-      <div class="ui stackable two column grid images-list" id="sortable-galery-images">	
+      <div class="ui stackable two column grid images-list" id="sortable-galery-images">
         {{#each galery.images}}
-        {{> admin/galery-thumb-element this}}
+          {{> admin/galery-thumb-element this}}
         {{/each}}
       </div>
       <div class="ui mobile reversed page grid" id="save-changes">
         <div class="row">
           <div class="eight wide column">
-            <div class="ui hidden save success message"><div class="header">Saved</div></div>	
-            <div class="ui hidden save error message"><div class="header">There was an error!</div></div>	
+            <div class="ui hidden save success message">
+              <div class="header">Saved</div>
+            </div>
+            <div class="ui hidden save error message">
+              <div class="header">There was an error!</div>
+            </div>
           </div>
           <div class="eight wide column">
             <button class="ui right floated green button" type="submit">Save changes</button>

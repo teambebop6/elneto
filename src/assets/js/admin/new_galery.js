@@ -4,8 +4,14 @@ require('../../vendor/datepicker/dist/datepicker.css');
 
 app.then(function(){
   // Initialize UI
-  $('.ui.dropdown').dropdown();
+  $('.ui.dropdown').dropdown({
+    allowAdditions: true,
+  });
   $('.ui.error.message').hide();
+
+  $('#categories').dropdown({
+    allowAdditions: true,
+  });
 
   // Closing messages
   $('.message .close').on('click', function() {

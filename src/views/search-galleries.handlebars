@@ -1,0 +1,65 @@
+<!--<div id="searchContainer2" class="search teatro-cubano">-->
+<!--<div class="searchBar teatre-search">-->
+<!--<input id="searchField" name="q"-->
+<!--class="prompt"-->
+<!--type="text"-->
+<!--placeholder="Search Gallery..."-->
+<!--autocomplete="off"-->
+<!--value="{{ keyword }}"-->
+<!-->-->
+<!--<i id="searchButton" class="inverted circular search link icon"></i>-->
+<!--</div>-->
+<!--&lt;!&ndash; search results &ndash;&gt;-->
+<!--<div class="results" style="color: white;">-->
+<!--asdadasda-->
+<!--</div>-->
+<!--</div>-->
+
+<div id="searchContainer2" class="search teatro-cubano">
+  {{#if keyword}}
+    <div class="des"><i>buscar con palabra clave: {{keyword}}</i></div>
+  {{/if}}
+  <div class="searchBar teatre-search">
+    <input id="search-query" name="q" class="prompt" type="text" placeholder="Buscar en la galería ..." autocomplete="off">
+    <i id="searchButton" class="inverted circular search link icon"></i>
+  </div>
+  <!-- search results -->
+  <div class="results"></div>
+</div>
+
+{{#if keyword}}
+  <div class="pageTile_wrapper">
+    <div class="text_content">
+      <div class="title">{{keyword}}</div>
+    </div>
+  </div>
+{{/if}}
+
+
+{{#if galleries }}
+
+  <div class="albums_wrapper justified-gallery" id="albumList">
+    {{#each galleries}}
+      <a href="/galery/{{this._id}}" data-id="{{this._id}}">
+        <img alt="{{this.title}}" src="/uploads/thumbs/{{this.titlePicture}}"/>
+      </a>
+    {{/each}}
+  </div>
+
+{{else if init }}
+
+  <input type="hidden" id="init" value="{{ init }}"/>
+
+{{ else }}
+  <div id="noResult">
+    <span class="results">
+      sin resultados ...
+    </span>
+  </div>
+{{/if}}
+
+
+
+
+
+

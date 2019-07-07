@@ -15,6 +15,7 @@ router.use('/uploads', express.static(config.UPLOAD_FOLDER));
 router.use('/api', require('./api'));
 router.use('/', require('./index'));
 router.use('/yonny', require('./yonny'));
+router.use('/categories', require('./category'));
 router.use('/', require('./admin'));
 
 router.use('/admin/galery', require('./admin/galery'));

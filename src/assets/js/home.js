@@ -4,6 +4,10 @@ app.then(function () {
 
   var windowWidth = $(window).width();
 
+  $('#searchField').on('focus', function () {
+    window.location.href = '/categories/search-galleries/';
+  });
+
   if (windowWidth > 1080) {
     $('.menuBar .menu a').click(function (e) {
       e.preventDefault();
@@ -13,8 +17,7 @@ app.then(function () {
         window.location.assign($a.attr('href'));
       }, 500);
     });
-  }
-  else {
+  } else {
     $('.menuBar .menu a').click(function (e) {
       e.preventDefault();
       var $a = $(this).addClass('active');
