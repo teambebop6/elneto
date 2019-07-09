@@ -32,7 +32,9 @@ module.exports = {
       datepicker: path.join(__dirname, 'src/assets/vendor/datepicker/dist/datepicker'),
       'jquery.fileupload': path.join(__dirname, '/public/vendor/jquery.fileupload'),
       'jquery.ui.widget': path.join(__dirname, '/public/vendor/jquery.ui.widget'),
-      'sortable': path.join(__dirname, 'src/assets/vendor/Sortable/Sortable.js')
+      'sortable': path.join(__dirname, 'src/assets/vendor/Sortable/Sortable.js'),
+      'trumbowyg': path.join(__dirname, 'src/assets/vendor/trumbowyg/trumbowyg.min.js'),
+      'trumbowyg.lang.es': path.join(__dirname, 'src/assets/vendor/trumbowyg/langs/es.js'),
     }
   },
   entry: {
@@ -44,9 +46,13 @@ module.exports = {
     'home': './src/assets/js/home',
     'impressum': './src/assets/js/impressum',
     'yonny': './src/assets/js/yonny',
+    'poemas': './src/assets/js/poemas',
     'admin/list-galeries': './src/assets/js/admin/list_galeries',
     'admin/modify-galery': './src/assets/js/admin/modify_galery',
     'admin/new-galery': './src/assets/js/admin/new_galery',
+
+    'admin/new-poem': './src/assets/js/admin/new_poem',
+    'admin/list-poems': './src/assets/js/admin/list_poems',
 
     'admin/list-backups': './src/assets/js/admin/list_backups',
     'admin/new-backup': './src/assets/js/admin/new_backup',

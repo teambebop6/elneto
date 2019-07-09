@@ -4,6 +4,7 @@ var db = {
 	Galery : require('./galery_model'),
 	Backup : require('./backup_model'),
   Category: require('./category_model'),
+  Poem: require('./poem_model'),
   //Image : require('./image_model')
 };
 

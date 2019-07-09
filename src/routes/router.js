@@ -16,10 +16,12 @@ router.use('/api', require('./api'));
 router.use('/', require('./index'));
 router.use('/yonny', require('./yonny'));
 router.use('/categories', require('./category'));
+router.use('/poems', require('./poem'));
 router.use('/', require('./admin'));
 
 router.use('/admin/galery', require('./admin/galery'));
 router.use('/admin/backup', require('./admin/backup'));
+router.use('/admin/poems', require('./admin/poem'));
 
 // Redirect if last char of url is '/'
 router.use(function (req, res, next) {

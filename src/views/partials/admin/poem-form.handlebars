@@ -1,0 +1,39 @@
+<form id="poem-form" class="ui inverted form" method="POST" action="/admin/poems/">
+  <input type="hidden" name="id" value="{{poem.id}}">
+  <div id="errorMsgBox" class="ui error message">
+
+  </div>
+  <div class="inline field">
+    <div class="ui toggle checkbox">
+      <input type="checkbox" tabindex="0" name="visible" class="hidden" {{#if poem.visible}}checked{{/if}}>
+      <label>Visible</label>
+    </div>
+  </div>
+  <div class="field">
+    <label>Title</label>
+    <div class="ui underlined input">
+      <input placeholder="Titel" type="text" name="title" value="{{poem.title}}" required>
+    </div>
+  </div>
+  <div class="two fields">
+    <div class="field">
+      <label>Year</label>
+      <div class="ui underlined input">
+        <input placeholder="Year" type="text" name="year" value="{{poem.year}}">
+      </div>
+    </div>
+    <div class="field">
+      <label>Author</label>
+      <div class="ui underlined input">
+        <input placeholder="Author" type="text" name="author" value="{{poem.author}}">
+      </div>
+    </div>
+  </div>
+  <div class="field">
+    <label>Poem body</label>
+    <div class="ui underlined input">
+      <textarea id="content" name="content" required>{{poem.content}}</textarea>
+    </div>
+  </div>
+  <button class="ui button" type="submit">Erstellen</button>
+</form>

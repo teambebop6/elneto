@@ -1,26 +1,27 @@
 var express = require('express');
 var router = express.Router();
 
+let db = require('../mongodb/db');
+
 module.exports = router;
 
 // Set hbs layout
-router.get('/*', function(req, res, next){
+router.get('/*', function (req, res, next) {
   req.app.locals.layout = 'yonny';
   next();
 });
 
+// router.get('/', function(req, res){
+//   res.render('yonny/home', {
+//     title: 'Yonny',
+//     active: {
+//       yonny: true
+//     },
+//     scripts: 'yonny.bundle',
+//   });
+// });
 
-router.get('/', function(req, res){
-  res.render('yonny/home', {
-    title: 'Yonny',
-    active: {
-      yonny: true
-    },
-    scripts: 'yonny.bundle',
-  });
-});
-
-router.get('/cuadros', function(req, res){
+router.get('/', function (req, res) {
   res.render('yonny/cuadros', {
     title: 'Yonny',
     active: {
@@ -30,7 +31,7 @@ router.get('/cuadros', function(req, res){
   });
 });
 
-router.get('/serie', function(req, res, next){
+router.get('/serie', function (req, res, next) {
   res.render('yonny/serie', {
     title: 'Yonny serie',
     active: {
@@ -68,9 +69,29 @@ router.get('/serie', function(req, res, next){
   });
 });
 
+router.get('/poemas', function (req, res) {
 
-router.get('/poemas', function(req, res){
-  res.render('yonny/poemas', {
+  const cond = { visible: true };
+
+  db.Poem.find(cond).limit(8).sort({ lastModifiedDate: -1 }).exec(
+    (error, poems) => {
+      const data = poems.map(p => db.Poem.toDTO(p));
+
+      res.render('yonny/poemas', {
+        title: 'Yonny',
+        active: {
+          poemas: true
+        },
+        poems: data,
+        scripts: 'poemas.bundle',
+      });
+
+    });
+
+});
+
+router.get('/poemas-detail', function (req, res) {
+  res.render('yonny/poemas-detail', {
     title: 'Yonny',
     active: {
       poemas: true
@@ -79,7 +100,7 @@ router.get('/poemas', function(req, res){
   });
 });
 
-router.get('/en-fotos', function(req, res){
+router.get('/en-fotos', function (req, res) {
   res.render('yonny/en_fotos', {
     title: 'Yonny',
     scripts: 'yonny.bundle',

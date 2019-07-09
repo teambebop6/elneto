@@ -1,10 +1,10 @@
 /**
  * Created by Henry Huang on 2019/7/6.
  */
-let express = require('express');
-let router = express.Router({});
-let db = require('../mongodb/db');
-let logger = require('../lib/logger');
+const express = require('express');
+const router = express.Router({});
+const db = require('../mongodb/db');
+const logger = require('../lib/logger');
 
 const Category = db.Category;
 const Gallery = db.Galery;

@@ -1,29 +1,55 @@
+<!--<div class="mask_top"></div>-->
+<div id="yonny_poem_wrapper" class="yonny_poem_wrapper">
 
+  <div class="poemList">
+    <ul>
+      {{#each poems}}
+        <li>
+          <a data-id="{{this.id}}"
+             data-title="{{this.title}}"
+             data-content="{{this.content}}"
+             data-year="{{this.year}}"
+             data-author="{{this.author}}"
+          >
+            {{this.title}}
+          </a>
+        </li>
+      {{/each}}
+    </ul>
 
-<div class="mask_top"></div>
-<div class="yonny_poem_wrapper">
+  </div>
 
-	<div class="poemList">
-		<ul>
-			<li><a>IT SEEMS THAT HAPPINESS...</a></li>
-			<li><a>TU CUERPO...</a></li>
-			<li><a>RÉPROBOS</a></li>
-			<li><a>...CON LAS ALMENDRAS</a></li>
-			<li><a>ENTIDAD</a></li>
-			<li><a>SICALIPSIS</a></li>
-			<li><a>SICALIPSIS</a></li>
-			<li><a>SICALIPSIS</a></li>
-			<li><a>SICALIPSIS</a></li>
-			<li><a>SICALIPSIS</a></li>
-			<li><a>SICALIPSIS</a></li>
-		</ul>
+  <div class="imageWrapper">
+    <div class="yonnyImage">
+      <img src="/static/images/yonnyPoemImage.jpg">
+    </div>
+  </div>
 
-	</div>
 </div>
-<div class="imageWrapper">
-	<div class="yonnyImage">
-		<img src="/static/images/yonnyPoemImage.jpg">
-	</div>
+
+<div id="yonny_poem_wrapper_detail" class="yonny_poem_wrapper_detail" style="display: none;">
+
+  <div class="poemDetail">
+    <div id="poemDetailTitle" class="title">
+      IT SEEMS THAT HAPPINESS...
+    </div>
+    <div id="poemDetailContent" class="content">
+
+    </div>
+    <div class="footer">
+      <br>
+      <div>
+        <span id="poemDetailYear"></span> ( &copy; <span id="poemDetailAuthor"></span> )
+      </div>
+      <br>
+      <div id="backContainer">
+        <a href="#" id="backLink"><<</a>
+      </div>
+    </div>
+
+  </div>
+
 </div>
 
-<div class="mask_bottom"></div>
+
+<!--<div class="mask_bottom"></div>-->
