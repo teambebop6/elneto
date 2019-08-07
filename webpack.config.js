@@ -91,11 +91,13 @@ module.exports = {
   },
   optimization: {
     splitChunks: {
+      minSize: 1,
+      maxSize: 0,
       cacheGroups: {
         commons: {
           name: "commons",
           chunks: "initial",
-          minChunks: 2,
+          minChunks: 1,
         }
       }
     },

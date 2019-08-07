@@ -1,5 +1,5 @@
-require('../less/yonny.less');
 var app = require("./globals");
+require('../less/yonny.less');
 require('../vendor/slick-1.8.1/slick/slick.less');
 require('../vendor/slick-1.8.1/slick/slick-theme.less');
 require('../vendor/slick-1.8.1/slick/slick.js');
