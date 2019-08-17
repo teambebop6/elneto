@@ -3,7 +3,7 @@
  */
 const mongoose = require('mongoose');
 
-Photo = new (mongoose.Schema) ({
+Photo = new (mongoose.Schema)({
   title: String,
   link: String,
   order: {
@@ -47,7 +47,9 @@ CuadoSchema.statics.toDTO = ({ _id: id, title, photos, visible, order, creationD
   return {
     id,
     title,
-    photos,
+    photos: photos.map(p => {
+      return { title: p.title, link: p.link }
+    }),
     visible,
     order,
     creationDate,

@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+const logger = require('../lib/logger');
 
 let db = require('../mongodb/db');
 
@@ -11,24 +12,28 @@ router.get('/*', function (req, res, next) {
   next();
 });
 
-// router.get('/', function(req, res){
-//   res.render('yonny/home', {
-//     title: 'Yonny',
-//     active: {
-//       yonny: true
-//     },
-//     scripts: 'yonny.bundle',
-//   });
-// });
-
 router.get('/', function (req, res) {
-  res.render('yonny/cuadros', {
-    title: 'Yonny',
-    active: {
-      cuadros: true
-    },
-    scripts: 'yonny.bundle',
+
+  db.Cuadro.find({visible: true}).sort({ creationDate: 'asc' }).exec((err, cuadros) => {
+
+    if (err) {
+      logger.error("Find cuadros failed", err);
+      cuadros = [];
+    }
+
+    const cuadroObjects = cuadros.map( c => db.Cuadro.toDTO(c));
+
+    res.render('yonny/cuadros', {
+      title: 'Yonny',
+      active: {
+        cuadros: true
+      },
+      cuadros: cuadroObjects,
+      scripts: 'yonny.bundle',
+    });
+
   });
+
 });
 
 router.get('/serie', function (req, res, next) {

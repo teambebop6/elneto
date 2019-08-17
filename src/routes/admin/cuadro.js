@@ -194,9 +194,11 @@ router.post('/delete-photo/:id', (req, res) => {
       return err;
     }
 
-    cuadro.photos = cuadro.photos.filter((el) => {
-      return el.link !== postData.photoId;
-    });
+    if (cuadro.photos) {
+      cuadro.photos = cuadro.photos.filter((el) => {
+        return el.link !== postData.photoId;
+      });
+    }
 
     var errors = {};
     // Delete uploaded files
@@ -333,14 +335,16 @@ router.delete('/', (req, res) => {
     // Delete associated images
     logger.info(cuadro.photos.length + " photos to delete...");
 
-    cuadro.photos.forEach((photo) => {
-      const filename = photos.link;
+    if (cuadro.photos) {
+      cuadro.photos.forEach((photo) => {
+        const filename = photo.link;
 
-      // Call child process to delete image
-      logger.info("Deleting " + filename);
+        // Call child process to delete image
+        logger.info("Deleting " + filename);
 
-      deleteImage(req.config.UPLOAD_FOLDER, filename);
-    });
+        deleteImage(req.config.UPLOAD_FOLDER, filename);
+      });
+    }
   });
 });
 
