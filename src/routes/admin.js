@@ -2,17 +2,14 @@ var express = require('express');
 var router = express.Router();
 var db = require('../mongodb/db');
 var passport = require('passport');
-var helpers = require('../lib/helpers')
+var helpers = require('../lib/helpers');
 var crypto = require('crypto');
 var path = require('path');
 var gm = require('gm');
 var adminUtils = require('../utils/AdminUtils');
-
+var fs = require('fs');
 
 var sizeOf = require('image-size');
-
-
-
 
 var env = process.env.NODE_ENV || 'development';
 // Load config
@@ -22,10 +19,9 @@ if (config.USE_IMAGE_MAGICK) {
   gm = gm.subClass({imageMagick: true});
 }
 
-
-
 // File upload middleware
 var upload = require('jquery-file-upload-middleware');
+var uploadCuadros = require('jquery-file-upload-middleware');
 
 // Passport login middleware
 passport.serializeUser(function (user, done) {
@@ -105,11 +101,10 @@ router.get('/admin', function (req, res) {
 // File Upload
 upload.configure({
   uploadDir: config.UPLOAD_FOLDER,
-  //uploadDir: __dirname + '/../public/uploads',
   uploadUrl: '/uploads'
 });
 
-router.use('/admin/upload', upload.fileHandler());
+router.use('/admin/upload/:target?', upload.fileHandler());
 
 upload.on('begin', function (fileInfo) {
   // Create crypto filename
@@ -130,74 +125,140 @@ function sleep(time) {
 
 upload.on('end', function (fileInfo, req, res) {
   var filePath = path.join(config.UPLOAD_FOLDER, fileInfo.name);
+
+  var { target } = req.params;
+
   console.log("File path is: "+ filePath);
 
-  db.Galery.findOne({_id: req.fields.galery_id}, function (err, galery) {
-    if (err || !galery) {
-      // Delete uploaded files
-      fs.unlink(filePath, function (err) {
-        if (err) {
-          console.log(err);
-          return;
-        }
-      });
+  if (target === 'cuadro') {
 
-      if (err) {
-        console.log(err);
-        return;
-      }
-      else {
-        console.log("There was an error uploading the file!");
-      }
-    }
+    db.Cuadro.findOne({_id: req.fields.cuadro_id}, function (err, cuadro) {
 
-
-    var thumbFolder = path.join(config.UPLOAD_FOLDER, "thumbs");
-
-    adminUtils.ensureDirExists(thumbFolder, function(err){
-      if(err){
-        console.log(err);
-        return;
-      }
-
-      // Create thumbs
-      var thumbWidth = 500; // px
-      var thumbHeight = 500; // px
-
-      gm(filePath)
-        .resize(thumbWidth, thumbHeight, '^') // ^ designates minimum height
-        .gravity('Center')
-        //.crop('240', '160')
-        .write(path.join(thumbFolder, fileInfo.name), function (err) {
+      if (err || !cuadro) {
+        // Delete uploaded files
+        fs.unlink(filePath, function (err) {
           if (err) {
             console.log(err);
             return;
           }
-          console.log("Thumbnail successfully generated!");
-
-          sizeOf(filePath, function(err, dimensions){
-
-            var image = {
-              src: fileInfo.name,
-              width: parseInt(dimensions.width),
-              height: parseInt(dimensions.height),
-            }
-            console.log(image);
-            // Add new picture to galery
-            galery.images.push(image);
-
-            if (galery.images.length == 1) {
-              galery.titlePicture = fileInfo.name;
-            }
-
-            galery.save();
-
-
-            console.log(galery.images);
-          });
         });
-    })
-  });
+
+        if (err) {
+          console.log(err);
+          return;
+        }
+        else {
+          console.log("There was an error uploading the file!");
+        }
+      }
+
+      var thumbFolder = path.join(config.UPLOAD_FOLDER, "thumbs");
+
+      adminUtils.ensureDirExists(thumbFolder, function(err){
+        if(err){
+          console.log(err);
+          return;
+        }
+
+        // Create thumbs
+        var thumbWidth = 500; // px
+        var thumbHeight = 500; // px
+
+        gm(filePath)
+          .resize(thumbWidth, thumbHeight, '^') // ^ designates minimum height
+          .gravity('Center')
+          //.crop('240', '160')
+          .write(path.join(thumbFolder, fileInfo.name), function (err) {
+            if (err) {
+              console.log(err);
+              return;
+            }
+            console.log("Thumbnail successfully generated!");
+
+            sizeOf(filePath, function(err, dimensions){
+
+              var photo = {
+                link: fileInfo.name,
+              };
+              console.log(photo);
+              // Add new picture to galery
+              cuadro.photos.push(photo);
+
+              cuadro.save();
+              console.log(cuadro.images);
+            });
+          });
+      })
+    });
+
+
+  } else {
+
+    db.Galery.findOne({_id: req.fields.galery_id}, function (err, galery) {
+      if (err || !galery) {
+        // Delete uploaded files
+        fs.unlink(filePath, function (err) {
+          if (err) {
+            console.log(err);
+            return;
+          }
+        });
+
+        if (err) {
+          console.log(err);
+          return;
+        }
+        else {
+          console.log("There was an error uploading the file!");
+        }
+      }
+
+      var thumbFolder = path.join(config.UPLOAD_FOLDER, "thumbs");
+
+      adminUtils.ensureDirExists(thumbFolder, function(err){
+        if(err){
+          console.log(err);
+          return;
+        }
+
+        // Create thumbs
+        var thumbWidth = 500; // px
+        var thumbHeight = 500; // px
+
+        gm(filePath)
+          .resize(thumbWidth, thumbHeight, '^') // ^ designates minimum height
+          .gravity('Center')
+          //.crop('240', '160')
+          .write(path.join(thumbFolder, fileInfo.name), function (err) {
+            if (err) {
+              console.log(err);
+              return;
+            }
+            console.log("Thumbnail successfully generated!");
+
+            sizeOf(filePath, function(err, dimensions){
+
+              var image = {
+                src: fileInfo.name,
+                width: parseInt(dimensions.width),
+                height: parseInt(dimensions.height),
+              };
+              console.log(image);
+              // Add new picture to galery
+              galery.images.push(image);
+
+              if (galery.images.length === 1) {
+                galery.titlePicture = fileInfo.name;
+              }
+              galery.save();
+              console.log(galery.images);
+            });
+          });
+      })
+    });
+
+  }
+
 });
 
 module.exports = router;

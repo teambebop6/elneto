@@ -1,0 +1,19 @@
+<form id="cuadro-form" class="ui inverted form" method="POST" action="/admin/cuadros/">
+  <input type="hidden" name="id" value="{{cuadro.id}}">
+  <div id="errorMsgBox" class="ui error message">
+
+  </div>
+  <div class="inline field">
+    <div class="ui toggle checkbox">
+      <input type="checkbox" tabindex="0" name="visible" class="hidden" {{#if cuadro.visible}}checked{{/if}}>
+      <label>Visible</label>
+    </div>
+  </div>
+  <div class="field">
+    <label>Title</label>
+    <div class="ui underlined input">
+      <input placeholder="Titel" type="text" name="title" value="{{cuadro.title}}" required>
+    </div>
+  </div>
+  <button class="ui button" type="submit">Erstellen</button>
+</form>

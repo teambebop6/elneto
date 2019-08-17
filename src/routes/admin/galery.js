@@ -197,6 +197,7 @@ router.get('/:id/modify', (req, res) => {
           galery: galeryObject,
           categories,
           body_scripts: 'modify-galery.bundle',
+          active: { list_galeries: true },
           tags: constants.tags,
         });
       })
@@ -206,6 +207,7 @@ router.get('/:id/modify', (req, res) => {
           title: 'Manage galery',
           galery: galeryObject,
           body_scripts: 'modify-galery.bundle',
+          active: { list_galeries: true },
           tags: constants.tags,
         });
       });

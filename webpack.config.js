@@ -54,6 +54,10 @@ module.exports = {
     'admin/new-poem': './src/assets/js/admin/new_poem',
     'admin/list-poems': './src/assets/js/admin/list_poems',
 
+    'admin/new-cuadro': './src/assets/js/admin/new_cuadro',
+    'admin/modify-cuadro': './src/assets/js/admin/modify_cuadro',
+    'admin/list-cuadros': './src/assets/js/admin/list_cuadros',
+
     'admin/list-backups': './src/assets/js/admin/list_backups',
     'admin/new-backup': './src/assets/js/admin/new_backup',
   },
@@ -92,7 +96,6 @@ module.exports = {
   optimization: {
     splitChunks: {
       minSize: 1,
-      maxSize: 0,
       cacheGroups: {
         commons: {
           name: "commons",

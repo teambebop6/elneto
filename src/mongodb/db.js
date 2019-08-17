@@ -5,6 +5,7 @@ var db = {
 	Backup : require('./backup_model'),
   Category: require('./category_model'),
   Poem: require('./poem_model'),
+  Cuadro: require('./cuadro_model'),
   //Image : require('./image_model')
 };
 
