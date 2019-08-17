@@ -1,16 +1,18 @@
 <div class="sixteen wide column">
 
-	<div class="ui error message" style="display:none;">
-		<i class="close icon"></i>
-		<div class="header"></div>
-		<p class="message"></p>
-	</div>
+  <div class="ui error message" style="display:none;">
+    <i class="close icon"></i>
+    <div class="header"></div>
+    <p class="message"></p>
+  </div>
 
-	<h2 class="ui inverted header">Create new backup:</h2>
-	<div class="ui inverted segment">
-		<form id="form-new" class="ui inverted form" method="POST" action="/admin/backup/">
-			{{> admin/backup-form }}
-			<button class="ui button" type="submit">Erstellen</button>
-		</form>
-	</div>
+  <h2 class="ui inverted header">Making backup ...</h2>
+
+  <div class="ui inverted progress" id="progress">
+    <div class="bar">
+      <div class="progress"></div>
+    </div>
+    <div class="label">Making backup file ...</div>
+  </div>
+
 </div>

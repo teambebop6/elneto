@@ -1,10 +1,15 @@
 <div class="column">
   <h2 class="ui left floated inverted header">Manage Backups</h2>
-  <!--<a class="ui inverted basic button" href="/admin/backup/new">-->
-    <!--<i class="plus icon"></i>-->
-    <!--Create new-->
-  <!--</a>-->
-
+  <a id="createBackup" class="ui inverted basic button">
+    <i class="ambulance icon"></i>
+    backup soon
+  </a>
+  <div class="ui inverted progress" id="progress" style="display: none">
+    <div class="bar">
+      <div class="progress"></div>
+    </div>
+    <div class="label">Making backup file ...</div>
+  </div>
 
   <table class="ui inverted table">
     <thead>

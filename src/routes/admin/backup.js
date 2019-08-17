@@ -42,56 +42,26 @@ router.get('/new', function (req, res) {
     title: 'Create new backup',
     body_scripts: 'new-backup.bundle',
     active: { list_backups: true },
-    css: ['new-galery'],
   });
 });
 
 // POST, create new backup
 router.post('/new', function (req, res) {
 
-  db.Counter.findOne({ _id: 'backup' }, function (err, counter) {
-    if (err) {
-      return res.json({ success: false, message: err });
-    }
+  console.log('Trigger backup job at ' + new Date());
+  backupHelpers.createBackupedFileAndSaveDB(
+    req.config.UPLOAD_FOLDER,
+    req.config.UPLOAD_FOLDER + '/backup'
+  )
+    .then((fileName) => {
+      console.log("Generated backuped file " + fileName);
+      res.status(200).send({})
+    })
+    .catch((error) => {
+      console.error("Errror when generate backuped file", error);
+      res.status(500).send({ error })
+    })
 
-    // Autoincrement of id
-    if (!counter) {
-
-      counter = new db.Counter({
-        _id: "backup",
-        seq: 0
-      });
-    }
-    counter.seq++;
-    counter.save(function (err) {
-
-      // Create new backup
-      var srcFileName = req.body.fileName;
-      var backup = new db.Backup({
-        _id: counter.seq,
-        title: req.body.title,
-        description: req.body.description,
-        creationDate: new Date()
-      });
-
-      createBackupedFile(req.config.UPLOAD_FOLDER,
-        req.config.UPLOAD_FOLDER + '/backup', srcFileName).then((fileName) => {
-
-        backup.fileName = fileName;
-        backup.save(function (err) {
-          if (err) {
-            return res.json({ success: false, message: err.message });
-          }
-
-          res.json({ success: true, backup_id: counter.seq });
-        });
-
-      }).catch((err) => {
-        return res.json({ success: false, message: err.message });
-      });
-
-    });
-  });
 });
 
 // Modify backup

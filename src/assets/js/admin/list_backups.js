@@ -40,5 +40,33 @@ app.then(function () {
 
   $('.ui.checkbox').checkbox();
 
+  $("#createBackup").on('click', function (e) {
+    e.preventDefault();
+    if (confirm('Backup now ?')) {
+      $("#progress").progress({
+        percent: 1
+      });
+      setInterval(function () {
+        $("#progress").progress('increment');
+      }, 500);
+      $("#createBackup").addClass("disabled");
+      $("#progress").show();
+      $.ajax({
+        method: 'POST',
+        url: '/admin/backup/new',
+        success: function (result) {
+          $("#progress").progress('finish');
+          setTimeout(function () {
+            window.location.href = "/admin/backup";
+          }, 1000);
+        },
+        error: function (xhr) {
+          console.log(xhr.status + " " + xhr.statusText);
+          $("#progress").progress('set error');
+          $("#createBackup").removeClass("disabled");
+        }
+      })
+    }
+  });
 });
 
