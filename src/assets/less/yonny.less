@@ -5,7 +5,8 @@
 
 .yonnyPage {
 
-  background: rgb(251, 189, 8);
+  //background: rgb(251, 189, 8);
+  background: #FCDAA9;
 
   .menuMobile input ~ nav {
     background: #FCF8F5
@@ -33,16 +34,17 @@
   }
 
   .pageTile_wrapper {
-    color: #555;
+    //color: #555;
+    color: #333;
   }
 
-  .pageTile_wrapper.poemas {
-    color: white;
-
-    .des {
-      font-weight: 100;
-    }
-  }
+  //.pageTile_wrapper.poemas {
+  //  color: white;
+  //
+  //  .des {
+  //    font-weight: 100;
+  //  }
+  //}
 
   .goToTop {
     background: transparent;
@@ -94,33 +96,37 @@
 
     a {
       color: #555;
+
+      &:hover:before, &.active:before {
+        backface-visibility: hidden;
+        border-color: #333;
+        transition: width 350ms ease-in-out;
+        width: 100%;
+      }
+
     }
 
     a.active:before {
       border-color: #555;
     }
 
-    a:hover {
-      border-color: #555;
-    }
-
   }
 
-  .menuBar.poemas {
-
-    a {
-      color: white;
-    }
-
-    a.active:before {
-      border-color: white;
-    }
-
-    a:hover {
-      border-color: white;
-    }
-
-  }
+  //.menuBar.poemas {
+  //
+  //  a {
+  //    color: white;
+  //  }
+  //
+  //  a.active:before {
+  //    border-color: white;
+  //  }
+  //
+  //  a:hover {
+  //    border-color: white;
+  //  }
+  //
+  //}
 
   .menuBar.yonnyMenu {
     position: relative;
@@ -173,7 +179,8 @@
 
 .yonny_poem_wrapper, .yonny_poem_wrapper_detail {
 
-  color: white;
+  //color: white;
+  color: #333;
   font-weight: 300;
 
   left: 0;
@@ -198,7 +205,8 @@
 
       li {
         a {
-          color: white;
+          //color: white;
+          color: #333;
           font-weight: 300;
         }
 
@@ -240,17 +248,20 @@
     }
 
     .content {
-      color: white;
+      //color: white;
+      color: #333;
       margin-top: 60px;
     }
 
     .footer {
-      color: white;
+      //color: white;
+      color: #333;
 
       #backContainer {
         //margin-top: 50px;
         #backLink {
-          color: white;
+          //color: white;
+          color: #333;
         }
       }
     }
