@@ -179,13 +179,15 @@ upload.on('end', function (fileInfo, req, res) {
 
               var photo = {
                 link: fileInfo.name,
+                width: parseInt(dimensions.width),
+                height: parseInt(dimensions.height),
               };
               console.log(photo);
               // Add new picture to galery
               cuadro.photos.push(photo);
 
               cuadro.save();
-              console.log(cuadro.images);
+              console.log(cuadro.photos);
             });
           });
       })

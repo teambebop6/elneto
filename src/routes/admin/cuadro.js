@@ -111,24 +111,18 @@ router.post('/modify/:id', (req, res) => {
       // Parse object from json data
       const photosData = JSON.parse(data.formData);
 
-      // photosData.forEach((photoData) => {
-      //
-      //   cuadro.photos.some((photo) => {
-      //
-      //     if (photo.link === photoData.id) {
-      //       // Update properties
-      //       photo.title = photoData.title;
-      //       return true;
-      //     }
-      //   });
-      // });
-
-      cuadro.photos = photosData.map( pd => {
-        return {
-          title: pd.title,
-          link: pd.id
-        }
+      const photos = [];
+      cuadro.photos.forEach((p) => {
+        photosData.forEach( pd => {
+          if (p.link === pd.id) {
+            Object.assign(p, {
+              title: pd.title
+            });
+            photos.push(p);
+          }
+        });
       });
+      cuadro.photos = photos;
 
       cuadro.save((err) => {
         if (err) {
