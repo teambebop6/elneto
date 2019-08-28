@@ -2,24 +2,14 @@
  * Created by Henry Huang on 2019/7/6.
  */
 const mongoose = require('mongoose');
-
-Photo = new (mongoose.Schema)({
-  title: String,
-  link: String,
-  width: Number,
-  height: Number,
-  order: {
-    type: Number,
-    default: new Date().getTime()
-  },
-});
+const PhotoSchema = require('./schema/photo_schema');
 
 const CuadoSchema = new mongoose.Schema({
   _id: Number,
   title: {
     type: String,
   },
-  photos: [Photo],
+  photos: [PhotoSchema],
   visible: {
     type: Boolean,
     default: false
@@ -50,7 +40,15 @@ CuadoSchema.statics.toDTO = ({ _id: id, title, photos, visible, order, creationD
     id,
     title,
     photos: photos.map(p => {
-      return { title: p.title, link: p.link, width: p.width, height: p.height }
+      return {
+        title: p.title,
+        link: p.link,
+        width: p.width,
+        height: p.height,
+        size: p.size,
+        technik: p.technik,
+        comments: p.comments,
+      }
     }),
     visible,
     order,

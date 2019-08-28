@@ -169,7 +169,7 @@ app.then(function(){
 
       $.each($('#form-images').find('.cuadro-thumb-element'), function(i, cuadro_el){
         var el = { id: $(cuadro_el).data("id") };
-        $.extend(el, $(cuadro_el).find("input").serializeObject());
+        $.extend(el, $(cuadro_el).find("input,textarea").serializeObject());
         imagesArray.push(el);
       });
 

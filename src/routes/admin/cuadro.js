@@ -11,6 +11,24 @@ const path = require('path');
 const handlebars = require('handlebars');
 
 const Cuadro = db.Cuadro;
+const YonnyFoto = db.YonnyFoto;
+
+const m = (name) => {
+  if (name === 'Cuadro') {
+    return Cuadro;
+  } else if (name === 'YonnyFoto') {
+    return YonnyFoto;
+  }
+};
+
+const mergePhotoInfo = (pre, {title, size, technik, comments}) => {
+  Object.assign(pre, {
+    title,
+    size,
+    technik,
+    comments: comments ? comments.trim() : null
+  });
+};
 
 router.get('/getThumbTemplate', (req, res, next) => {
   const link = req.query.link;
@@ -20,7 +38,7 @@ router.get('/getThumbTemplate', (req, res, next) => {
   }
 
   fs.readFile(path.join(req.config.VIEW_FOLDER,
-    '/partials/admin/cuadro-thumb-element.handlebars'), 'utf8',
+    '/partials/admin/common-thumb-element.handlebars'), 'utf8',
     function (err, content) {
       const template = handlebars.compile(content);
       res.write(template({ link }));
@@ -41,9 +59,11 @@ router.get('/modify/:id', (req, res, next) => {
       return next(Error(`Cannot find cuadro with id = ${id}`));
     }
 
+    const dto = Cuadro.toDTO(cuadro);
+
     res.render('admin/modify_cuadro', {
       title: 'Update cuadro',
-      cuadro: Cuadro.toDTO(cuadro),
+      cuadro: dto,
       body_scripts: 'modify-cuadro.bundle',
       active: { list_cuadros: true, modify: true },
     });
@@ -115,9 +135,7 @@ router.post('/modify/:id', (req, res) => {
       cuadro.photos.forEach((p) => {
         photosData.forEach( pd => {
           if (p.link === pd.id) {
-            Object.assign(p, {
-              title: pd.title
-            });
+            mergePhotoInfo(p, pd);
             photos.push(p);
           }
         });
