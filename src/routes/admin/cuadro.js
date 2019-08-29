@@ -10,6 +10,8 @@ const fs = require('fs');
 const path = require('path');
 const handlebars = require('handlebars');
 
+const sort = require('../../utils/sort');
+
 const Cuadro = db.Cuadro;
 const YonnyFoto = db.YonnyFoto;
 
@@ -184,8 +186,23 @@ router.post('/modify/:id', (req, res) => {
   });
 });
 
-router.post('/change-order', (req, res) => {
-  // TODO
+router.post('/change-order/:id', (req, res) => {
+  const { direction } = req.body;
+  const id = req.params.id;
+
+  Cuadro.findOne({_id: id}).exec((err, cuadro) => {
+    if (err) {
+      return res.json({ success: false, message: err.message });
+    }
+    sort(cuadro, Cuadro, direction === 'up')
+      .then(() => {
+        return res.json({ success: true });
+      })
+      .catch((err) => {
+        return res.status(500).json({ success: false, message: err.message });
+      })
+  })
+
 });
 
 router.post('/delete-photo/:id', (req, res) => {

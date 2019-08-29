@@ -14,7 +14,7 @@ router.get('/*', function (req, res, next) {
 
 router.get('/', function (req, res) {
 
-  db.Cuadro.find({visible: true}).sort({ creationDate: 'asc' }).exec((err, cuadros) => {
+  db.Cuadro.find({visible: true}).sort({ order: 'desc' }).exec((err, cuadros) => {
 
     if (err) {
       logger.error("Find cuadros failed", err);

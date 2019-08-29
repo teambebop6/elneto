@@ -3,6 +3,15 @@ var app = require('./globals');
 app.then(function () {
   console.log("Loaded globals.");
 
+  var resetButtonsState = function () {
+    $(".changeOrderUp").removeClass("disabled");
+    $(".changeOrderDown").removeClass("disabled");
+    $(".changeOrderUp:first").addClass("disabled");
+    $(".changeOrderDown:last").addClass("disabled");
+    console.log("1111");
+  };
+  resetButtonsState();
+
   // Delete cuadro
   $(".deleteCuadro").click(function () {
     var id = $(this).data("id");
@@ -23,7 +32,8 @@ app.then(function () {
           url: '/admin/cuadros',
           data: { id: id },
           success: function () {
-            $('#cuadro_' + id).hide();
+            $('#cuadro_' + id).remove();
+            resetButtonsState();
           },
           error: function ({ error }) {
             console.error(error);
@@ -59,6 +69,33 @@ app.then(function () {
       switchVisible($(this).data('id'), false);
     }
   });
+
+
+  var sort = function (id, direction) {
+
+    $.ajax({
+      method: 'POST',
+      url: '/admin/cuadros/change-order/' + id,
+      data: { direction },
+      success: function (result) {
+        window.location.href = "/admin/cuadros/";
+      },
+      error: function (xhr) {
+        console.log(xhr.status + " " + xhr.statusText);
+      }
+    })
+
+  };
+
+  $(".changeOrderUp").click(function () {
+    var id = $(this).data("id");
+    sort(id, 'up')
+  });
+
+  $(".changeOrderDown").click(function () {
+    var id = $(this).data("id");
+    sort(id, 'down')
+  })
 
 });
 
