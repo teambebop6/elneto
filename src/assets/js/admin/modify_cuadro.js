@@ -54,6 +54,7 @@ app.then(function(){
       disableImageResize: false,
       imageMaxWidth: 1177,
       imageMaxHeight: 1177,
+      sequentialUploads: true,
       done: function(e, data){
 
         console.log(data.result.files);
