@@ -8,7 +8,6 @@ app.then(function () {
     $(".changeOrderDown").removeClass("disabled");
     $(".changeOrderUp:first").addClass("disabled");
     $(".changeOrderDown:last").addClass("disabled");
-    console.log("1111");
   };
   resetButtonsState();
 

@@ -7,18 +7,30 @@ const logger = require('../lib/logger');
 
 /**
  * a and b should has order field
- * @param a
- * @param b
+ * @param object
+ * @param anotherObject
+ * @param toLarger
  */
-const swap = (a, b) => {
+const swap = (object, anotherObject, toLarger = true) => {
 
-  const orderForA = a.order;
-  const orderForB = b.order;
+  let orderForA = object.order;
+  let orderForB = anotherObject.order;
 
-  logger.info(`swap order ${a._id}.${orderForA} <=> ${b._id}.${orderForB}`);
+  if (!orderForA) {
+    orderForA = new Date().getTime();
+  }
+  if (!orderForB) {
+    if (toLarger) {
+      orderForB = orderForA + 1;
+    } else {
+      orderForB = orderForA - 1;
+    }
+  }
 
-  a.order = orderForB;
-  b.order = orderForA;
+  logger.info(`swap order ${object._id}.${orderForA} <=> ${anotherObject._id}.${orderForB}`);
+
+  object.order = orderForB;
+  anotherObject.order = orderForA;
 
 };
 
@@ -61,7 +73,7 @@ module.exports = (object, model, toLarger) => {
       }
       if (objects && objects[0]) {
         const other = objects[0];
-        swap(object, other);
+        swap(object, other, toLarger);
         // save both
         Promise.all([object.save(), other.save()])
           .then(resolve)

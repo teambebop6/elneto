@@ -51,7 +51,7 @@ router.get('/search-galleries/:keyword?', (req, res) => {
   }
 
   Gallery.find(cond).sort({
-    dateOfPlay: 'asc',
+    order: 'desc',
   }).exec((error, galleries) => {
     res.render('search-galleries', {
       title: 'Search Galleries',

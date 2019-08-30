@@ -1,97 +1,102 @@
 <div class="column">
-	<h2 class="ui left floated inverted header">Manage Galeries</h2>
-	<a class="ui inverted basic button" href="/admin/galery/new">
-	  <i class="plus icon"></i>
-	  Create new
-	</a>
+  <h2 class="ui left floated inverted header">Manage Galeries</h2>
+  <a class="ui inverted basic button" href="/admin/galery/new">
+    <i class="plus icon"></i>
+    Create new
+  </a>
 
 
-	<table class="ui inverted table">
-	  <thead>
-	    <tr>
-	      <th></th>
-	      <th>Título</th>
-	      <th>Fecha</th>
-	      <th>Lugar</th>
-	      <th>Autor(a)</th>
-	      <th>Director(a)</th>
-	      <th style="min-width:125px;">Actions</th>
-	      <th></th>
-	    </tr>
-	  </thead>
-	  <tbody>
-		<div class="ui list clearfix">
-		{{#each galeries}}
-		    <tr id="galery_{{this._id}}" class="galery-listing">
-		      <td>
+  <table class="ui inverted table">
+    <thead>
+    <tr>
+      <th></th>
+      <th>Título</th>
+      <th>Fecha</th>
+      <th>Lugar</th>
+      <th>Autor(a)</th>
+      <th>Director(a)</th>
+      <th style="min-width:125px;">Actions</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <div class="ui list clearfix">
+      {{#each galeries}}
+        <tr id="galery_{{this._id}}" class="galery-listing">
+          <td>
             {{#unless this.isActive}}
-            <i class="eye slash outline icon" title="Inactive"></i>
+              <i class="eye slash outline icon" title="Inactive"></i>
             {{/unless}}
           </td>
-		      <td>{{this.title}}</td>
-		      <td>{{formatDate this.dateOfPlay}}</td>
-		      <td>{{this.location}}</td>
-		      <td>{{this.author}}</td>
-		      <td>{{this.director}}</td>
-		      <td>
-			<a href="/admin/galery/{{this._id}}/modify" class="ui inverted yellow icon button">
-				<i class="edit icon"></i>
-			</a>
-      <a data-id="{{this._id}}" class="ui inverted red icon button deleteGalery">
-				<i class="delete icon"></i>
-			</a>
-			</td>
-			<td>
-		     <div class="ui fitted checkbox">
-					 <input class="hidden" tabindex="0" type="checkbox">
-					 <label></label>
-		     </div>
-		    </tr>
-		{{/each}}
-	  </tbody>
-	 </table>
-		
-		{{#if galeries}}
-		<div class="ui right floated inverted compact menu">
-			<div class="ui simple dropdown item">
-				Select action
-				<i class="dropdown icon"></i>
-				<div class="menu">
-					<div class="item" id="deleteSelected">Delete selected</div>
-				</div>
-			</div>
-		</div>	
-		{{/if}}
-	</div>
-</div>
+          <td>{{this.title}}</td>
+          <td>{{formatDate this.dateOfPlay}}</td>
+          <td>{{this.location}}</td>
+          <td>{{this.author}}</td>
+          <td>{{this.director}}</td>
+          <td>
+            <a class="ui positive icon button changeOrderUp" data-id="{{this._id}}">
+              <i class="angle up icon"></i>
+            </a>
+            <a class="ui orange icon button changeOrderDown" data-id="{{this._id}}">
+              <i class="angle down icon"></i>
+            </a>
+            <a href="/admin/galery/{{this._id}}/modify" class="ui inverted yellow icon button">
+              <i class="edit icon"></i>
+            </a>
+            <a data-id="{{this._id}}" class="ui inverted red icon button deleteGalery">
+              <i class="delete icon"></i>
+            </a>
+          </td>
+          <td>
+            <div class="ui fitted checkbox">
+              <input class="hidden" tabindex="0" type="checkbox">
+              <label></label>
+            </div>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
 
+  {{#if galeries}}
+    <div class="ui right floated inverted compact menu">
+      <div class="ui simple dropdown item">
+        Select action
+        <i class="dropdown icon"></i>
+        <div class="menu">
+          <div class="item" id="deleteSelected">Delete selected</div>
+        </div>
+      </div>
+    </div>
+  {{/if}}
+</div>
+</div>
 
 
 <!-- Delete Modal -->
 <div class="ui basic modal confirm delete" id="deleteModalTemplate">
-	<i class="close icon"></i>
-  	<div class="header">
-    		Bestätigung Löschvorgang
-  	</div>
-  	<div class="image content">
-    		<div class="image">
-      			<i class="archive icon"></i>
-    		</div>
-    		<div class="description">
-      			<p>Are you sure to delete ###placeholder###?</p>
-    		</div>
-  	</div>
-  	<div class="actions">
-    		<div class="two fluid ui inverted buttons">
-      			<div class="ui deny red basic inverted button">
-				<i class="remove icon"></i>
-				Cancel
-      			</div>
-      			<div class="ui approve green basic inverted button">
-				<i class="checkmark icon"></i>
-				Yes, I want to delete ###placeholder###!
-      			</div>
-    		</div>
-	</div>
+  <i class="close icon"></i>
+  <div class="header">
+    Bestätigung Löschvorgang
+  </div>
+  <div class="image content">
+    <div class="image">
+      <i class="archive icon"></i>
+    </div>
+    <div class="description">
+      <p>Are you sure to delete ###placeholder###?</p>
+    </div>
+  </div>
+  <div class="actions">
+    <div class="two fluid ui inverted buttons">
+      <div class="ui deny red basic inverted button">
+        <i class="remove icon"></i>
+        Cancel
+      </div>
+      <div class="ui approve green basic inverted button">
+        <i class="checkmark icon"></i>
+        Yes, I want to delete ###placeholder###!
+      </div>
+    </div>
+  </div>
 </div>
 

@@ -7,8 +7,8 @@ const handlebars = require('handlebars');
 const moment = require('moment');
 const categoriesHelper = require('../../lib/categoriesHelper');
 const constants = require('../../utils/constants');
-let logger = require('../../lib/logger');
-
+const logger = require('../../lib/logger');
+const sort = require('../../utils/sort');
 const utils = require('../../utils/AdminUtils');
 
 module.exports = router;
@@ -27,7 +27,7 @@ router.get('/getThumbTemplate', (req, res) => {
 
 router.get('/', function (req, res) {
   // Fetch trips
-  db.Galery.find({ title: { $exists: true } }).sort({ dateOfPlay: 'asc' }).exec(
+  db.Galery.find({ title: { $exists: true } }).sort({ order: 'desc' }).exec(
     function (err, galeries) {
       if (err) {
         console.log(err);
@@ -215,6 +215,25 @@ router.get('/:id/modify', (req, res) => {
   });
 });
 
+router.post('/change-order/:id', (req, res) => {
+  const { direction } = req.body;
+  const id = req.params.id;
+
+  db.Galery.findOne({_id: id}).exec((err, galery) => {
+    if (err) {
+      return res.json({ success: false, message: err.message });
+    }
+    sort(galery, db.Galery, direction === 'up')
+      .then(() => {
+        return res.json({ success: true });
+      })
+      .catch((err) => {
+        return res.status(500).json({ success: false, message: err.message });
+      })
+  })
+
+});
+
 // POST, modify galery
 router.post('/:id/modify', (req, res) => {
   db.Galery.findOne({ _id: req.params.id }, (err, galery) => {
@@ -319,7 +338,6 @@ router.post('/:id/modify', (req, res) => {
       }
 
       galery['dateOfPlay'] = new moment(formData.date_of_play).utc().format();
-      console.log(galery.dateOfPlay);
 
       galery.save((err) => {
         if (err) {

@@ -25,7 +25,11 @@ const GalerySchema = new mongoose.Schema({
   isActive: Boolean,
   isFavorite: Boolean,
   images: [ImageSchema],
-  titlePicture: String
+  titlePicture: String,
+  order: {
+    type: Number,
+    default: new Date().getTime()
+  },
 });
 
 GalerySchema.statics.toDTO = (dbObject) => {

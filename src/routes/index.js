@@ -16,11 +16,11 @@ router.all('/*', function (req, res, next) {
 });
 
 router.get('/', function(req, res, next){
-  db.Galery.find({isFavorite: true}).sort({dateOfPlay: 'desc'}).exec(function(err, galeries){
+  db.Galery.find({isFavorite: true}).sort({order: 'desc'}).exec(function(err, galeries){
     if(err){ return next(err); }
     if(!galeries){ galeries = []; }
 
-    var titlePics = {}
+    var titlePics = {};
     var tags = ['teatro-cubano', 'teatro', 'danza', 'musica', 'yonny'];
 
     tags.forEach(function(tag){
@@ -81,7 +81,7 @@ router.get('/search-results', function(req, res, next){
 })
 
 router.get('/teatro-cubano', function(req, res){
-  db.Galery.find({tags: "teatro-cubano", isActive: true}).sort({dateOfPlay: 'asc'}).exec(function(err, galeries){
+  db.Galery.find({tags: "teatro-cubano", isActive: true}).sort({order: 'desc'}).exec(function(err, galeries){
     if(err){
       throw err;
     }
@@ -113,7 +113,7 @@ router.get('/danza', function(req, res){
 });
 
 router.get('/musica', function(req, res){
-  db.Galery.find({tags: "musica", isActive: true}).sort({dateOfPlay: 'asc'}).exec(function(err, galeries){
+  db.Galery.find({tags: "musica", isActive: true}).sort({order: 'desc'}).exec(function(err, galeries){
     if(err){
       throw err;
     }
