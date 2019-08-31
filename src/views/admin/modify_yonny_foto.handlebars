@@ -1,14 +1,14 @@
 <div class="sixteen wide column images">
 
-  <h1 class="ui inverted header">Modify Cuadro</h1>
+  <h1 class="ui inverted header">Modify Yonny Foto</h1>
 
   <div class="ui inverted segment">
-    <form class="ui inverted form" id="form-cuadro-info">
+    <form class="ui inverted form" id="form-yonny-foto-info">
       <div class="ui grid">
         <div class="three column row">
           <div class="column">
             <div class="ui toggle checkbox">
-              <input type="checkbox" tabindex="0" name="visible" class="hidden" {{#if cuadro.visible}}checked{{/if}}>
+              <input type="checkbox" tabindex="0" name="visible" class="hidden" {{#if yonnyFoto.visible}}checked{{/if}}>
               <label>Visible</label>
             </div>
           </div>
@@ -17,13 +17,13 @@
           <div class="sixteen wide column">
 
             <!-- hidden fields -->
-            <input type="hidden" id="cuadro-id" value="{{ cuadro.id }}"/>
+            <input type="hidden" id="yonny-foto-id" value="{{ yonnyFoto.id }}"/>
 
             <div class="field">
               <!-- Title -->
               <label>Título</label>
               <div class="ui underlined input">
-                <input placeholder="Titel" type="text" name="title" value="{{cuadro.title}}" required>
+                <input placeholder="Titel" type="text" name="title" value="{{yonnyFoto.title}}" required>
               </div>
             </div>
 
@@ -40,7 +40,7 @@
       <div class="field">
         <label for="fileupload">Upload Fotos</label>
         <!-- The file input field used as target for the file upload widget -->
-        <input id="fileupload" type="file" name="files[]" data-url="/admin/upload/cuadro" multiple>
+        <input id="fileupload" type="file" name="files[]" data-url="/admin/upload/yonny-foto" multiple>
 
         <!-- The global progress bar -->
         <div class="ui progress">
@@ -53,13 +53,13 @@
     </form>
   </div>
 
-  <p class="ui info message no-images-yet-message {{#if cuadro.photos}}hidden{{/if}}">No fotos uploaded yet!</p>
+  <p class="ui info message no-images-yet-message {{#if yonnyFoto.photos}}hidden{{/if}}">No fotos uploaded yet!</p>
   <div class="ui inverted segment">
     <form class="ui inverted form" id="form-images">
 
-      <div class="ui stackable two column grid images-list" id="sortable-cuadro-images">
-        {{#each cuadro.photos}}
-          {{> admin/cuadro-thumb-element this}}
+      <div class="ui stackable two column grid images-list" id="sortable-yonny-foto-images">
+        {{#each yonnyFoto.photos}}
+          {{> admin/yonny-foto-thumb-element this}}
         {{/each}}
       </div>
 

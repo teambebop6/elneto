@@ -21,7 +21,6 @@ if (config.USE_IMAGE_MAGICK) {
 
 // File upload middleware
 var upload = require('jquery-file-upload-middleware');
-var uploadCuadros = require('jquery-file-upload-middleware');
 
 // Passport login middleware
 passport.serializeUser(function (user, done) {
@@ -130,7 +129,70 @@ upload.on('end', function (fileInfo, req, res) {
 
   console.log("File path is: "+ filePath);
 
-  if (target === 'cuadro') {
+  if (target === 'yonny-foto') {
+
+    db.YonnyFoto.findOne({_id: req.fields.yonny_foto_id}, function (err, yonnyFoto) {
+
+      if (err || !yonnyFoto) {
+        // Delete uploaded files
+        fs.unlink(filePath, function (err) {
+          if (err) {
+            console.log(err);
+            return;
+          }
+        });
+
+        if (err) {
+          console.log(err);
+          return;
+        }
+        else {
+          console.log("There was an error uploading the file!");
+        }
+      }
+
+      var thumbFolder = path.join(config.UPLOAD_FOLDER, "thumbs");
+
+      adminUtils.ensureDirExists(thumbFolder, function(err){
+        if(err){
+          console.log(err);
+          return;
+        }
+
+        // Create thumbs
+        var thumbWidth = 500; // px
+        var thumbHeight = 500; // px
+
+        gm(filePath)
+          .resize(thumbWidth, thumbHeight, '^') // ^ designates minimum height
+          .gravity('Center')
+          //.crop('240', '160')
+          .write(path.join(thumbFolder, fileInfo.name), function (err) {
+            if (err) {
+              console.log(err);
+              return;
+            }
+            console.log("Thumbnail successfully generated!");
+
+            sizeOf(filePath, function(err, dimensions){
+
+              var photo = {
+                link: fileInfo.name,
+                width: parseInt(dimensions.width),
+                height: parseInt(dimensions.height),
+              };
+              console.log(photo);
+              // Add new picture to galery
+              yonnyFoto.photos.push(photo);
+
+              yonnyFoto.save();
+              console.log(yonnyFoto.photos);
+            });
+          });
+      })
+    });
+
+  } else if (target === 'cuadro') {
 
     db.Cuadro.findOne({_id: req.fields.cuadro_id}, function (err, cuadro) {
 

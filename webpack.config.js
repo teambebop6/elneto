@@ -58,6 +58,10 @@ module.exports = {
     'admin/modify-cuadro': './src/assets/js/admin/modify_cuadro',
     'admin/list-cuadros': './src/assets/js/admin/list_cuadros',
 
+    'admin/new-yonny-foto': './src/assets/js/admin/new_yonny_foto',
+    'admin/modify-yonny-foto': './src/assets/js/admin/modify_yonny_foto',
+    'admin/list-yonny-fotos': './src/assets/js/admin/list_yonny_fotos',
+
     'admin/list-backups': './src/assets/js/admin/list_backups',
     'admin/new-backup': './src/assets/js/admin/new_backup',
   },

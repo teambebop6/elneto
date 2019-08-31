@@ -15,15 +15,45 @@ const sort = require('../../utils/sort');
 const Cuadro = db.Cuadro;
 const YonnyFoto = db.YonnyFoto;
 
-const m = (name) => {
-  if (name === 'Cuadro') {
+const getType = (req) => {
+
+  if (req.query.m) {
+    return req.query.m;
+  }
+
+  if (req.baseUrl === '/admin/cuadros') {
+    return 'c';
+  } else if (req.baseUrl === '/admin/yonny-fotos') {
+    return 'yf';
+  }
+
+  return null;
+
+};
+
+const model = (name) => {
+  if (name === 'c') {
     return Cuadro;
-  } else if (name === 'YonnyFoto') {
+  } else if (name === 'yf') {
     return YonnyFoto;
   }
 };
 
-const mergePhotoInfo = (pre, {title, size, technik, comments}) => {
+const active = (m, other) => {
+  const active = {
+    [m === 'c' ? 'list_cuadros' : 'list_yonny_fotos']: true,
+  };
+  if (other) {
+    Object.assign(active, other);
+  }
+  return active;
+};
+
+const str = (m, c, yf) => {
+  return m === 'c' ? c : yf;
+};
+
+const mergePhotoInfo = (pre, { title, size, technik, comments }) => {
   Object.assign(pre, {
     title,
     size,
@@ -34,16 +64,19 @@ const mergePhotoInfo = (pre, {title, size, technik, comments}) => {
 
 router.get('/getThumbTemplate', (req, res, next) => {
   const link = req.query.link;
+  const m = getType(req) || 'c';
 
   if (!link) {
     return next();
   }
 
-  fs.readFile(path.join(req.config.VIEW_FOLDER,
-    '/partials/admin/common-thumb-element.handlebars'), 'utf8',
+  const file = m === 'c' ? '/partials/admin/cuadro-thumb-element.handlebars' : '/partials/admin/yonny-foto-thumb-element.handlebars';
+  fs.readFile(path.join(req.config.VIEW_FOLDER, file), 'utf8',
     function (err, content) {
       const template = handlebars.compile(content);
-      res.write(template({ link }));
+      res.write(template({
+        link,
+      }));
       res.end();
     });
 });
@@ -51,77 +84,90 @@ router.get('/getThumbTemplate', (req, res, next) => {
 router.get('/modify/:id', (req, res, next) => {
 
   const { id } = req.params;
-  logger.debug(`Load view for cuadro update with id = ${id}`);
+  const m = getType(req) || 'c';
 
-  Cuadro.findOne({ _id: id }, (err, cuadro) => {
+  logger.debug(`Load view for item update with id = ${id} with model ${m}`);
+
+  model(m).findOne({ _id: id }, (err, item) => {
     if (err) {
       return next(err);
     }
-    if (!cuadro) {
-      return next(Error(`Cannot find cuadro with id = ${id}`));
+    if (!item) {
+      return next(Error(`Cannot find item with id = ${id}`));
     }
 
-    const dto = Cuadro.toDTO(cuadro);
+    const dto = model(m).toDTO(item);
 
-    res.render('admin/modify_cuadro', {
-      title: 'Update cuadro',
-      cuadro: dto,
-      body_scripts: 'modify-cuadro.bundle',
-      active: { list_cuadros: true, modify: true },
+    res.render(str(m, 'admin/modify_cuadro', 'admin/modify_yonny_foto'), {
+      title: str(m, 'Update cuadro', 'Update Yonny Foto'),
+      [m === 'c' ? 'cuadro' : 'yonnyFoto']: dto,
+      body_scripts: str(m, 'modify-cuadro.bundle', 'modify-yonny-foto.bundle'),
+      active: active(m, {
+        modify: true
+      }),
     });
 
   });
-
 });
 
 router.get('/new', (req, res) => {
-  res.render('admin/new_cuadro', {
-    title: 'Create new cuadro',
-    body_scripts: 'new-cuadro.bundle',
-    active: { list_cuadros: true, create: true },
+
+  const m = getType(req) || 'c';
+
+  res.render(str(m, 'admin/new_cuadro', 'admin/new_yonny_foto'), {
+    title: str(m, 'Create new cuadro', 'Create new Yonny Foto'),
+    body_scripts: str(m, 'new-cuadro.bundle', 'new-yonny-foto.bundle'),
+    active: active(m, {
+      create: true
+    }),
   });
 });
 
 router.get('/', (req, res) => {
 
-  Cuadro.find({}).sort({ order: 'desc' }).exec((err, cuadros) => {
+  const m = getType(req) || 'c';
+
+  model(m).find({}).sort({ order: 'desc' }).exec((err, items) => {
     if (err) {
       logger.info(err);
       return;
     }
 
-    const cuadroObjects = cuadros.map((cuadro) => {
-      const t = cuadro.toObject();
-      t['creationDate'] = moment.utc(cuadro.creationDate).format();
+    const itemObjects = items.map((item) => {
+      const t = item.toObject();
+      t['creationDate'] = moment.utc(item.creationDate).format();
       return t;
     });
 
-    res.render('admin/list_cuadros', {
-      title: 'Manage Cuadros',
-      custom_js: 'admin/list-cuadros.bundle',
-      cuadros: cuadroObjects,
-      active: { list_cuadros: true },
-      body_scripts: 'list-cuadros.bundle',
+    res.render(str(m, 'admin/list_cuadros', 'admin/list_yonny_fotos'), {
+      title: str(m, 'Manage Cuadros', 'Manage Yonny Fotos'),
+      [m === 'c' ? 'cuadros' : 'yonnyFotos']: items,
+      active: active(m),
+      body_scripts: str(m, 'list-cuadros.bundle', 'list-yonny-fotos.bundle')
     });
   });
 
 });
 
 router.post('/modify/:id', (req, res) => {
-  Cuadro.findOne({ _id: req.params.id }, (err, cuadro) => {
+
+  const m = getType(req) || 'c';
+
+  model(m).findOne({ _id: req.params.id }, (err, item) => {
     if (err) {
       res.json({ success: false, message: err.message });
       return;
     }
-    if (!cuadro) {
-      res.json({ success: false, message: "Cuadro does not exist!" });
+    if (!item) {
+      res.json({ success: false, message: "Item does not exist!" });
       return;
     }
 
     const data = req.body;
 
     // UPDATE Cuadro photos
-    if (data.action === "updateCuadroPhotos") {
+    if (data.action === "updateCuadroPhotos" || data.action
+      === "updateYonnyFotoPhotos") {
 
       if (data.formData == null || data.formData.length <= 0) {
         // formData is empty, do nothing
@@ -134,17 +180,17 @@ router.post('/modify/:id', (req, res) => {
       const photosData = JSON.parse(data.formData);
 
       const photos = [];
-      cuadro.photos.forEach((p) => {
-        photosData.forEach( pd => {
+      item.photos.forEach((p) => {
+        photosData.forEach(pd => {
           if (p.link === pd.id) {
             mergePhotoInfo(p, pd);
             photos.push(p);
           }
         });
       });
-      cuadro.photos = photos;
+      item.photos = photos;
 
-      cuadro.save((err) => {
+      item.save((err) => {
         if (err) {
           return res.json({ success: false, message: err.message });
         }
@@ -154,7 +200,8 @@ router.post('/modify/:id', (req, res) => {
     }
 
     // UPDATE CUADRO INFO
-    else if (data.action === "updateCuadroInfo") {
+    else if (data.action === "updateCuadroInfo" || data.action
+      === "updateYonnyFotoInfo") {
 
       if (data.formData == null || data.formData.length <= 0) {
         // formData is empty, do nothing
@@ -168,12 +215,12 @@ router.post('/modify/:id', (req, res) => {
 
       // Iterate through data
       for (let key in formData) {
-        if (cuadro[key] !== 'undefined') {
-          cuadro[key] = formData[key]
+        if (item[key] !== 'undefined') {
+          item[key] = formData[key]
         }
       }
 
-      cuadro.save((err) => {
+      item.save((err) => {
         if (err) {
           return res.json({ success: false, message: err.message });
         }
@@ -187,14 +234,17 @@ router.post('/modify/:id', (req, res) => {
 });
 
 router.post('/change-order/:id', (req, res) => {
+
+  const m = getType(req) || 'c';
+
   const { direction } = req.body;
   const id = req.params.id;
 
-  Cuadro.findOne({_id: id}).exec((err, cuadro) => {
+  model(m).findOne({ _id: id }).exec((err, item) => {
     if (err) {
       return res.json({ success: false, message: err.message });
     }
-    sort(cuadro, Cuadro, direction === 'up')
+    sort(item, model(m), direction === 'up')
       .then(() => {
         return res.json({ success: true });
       })
@@ -207,8 +257,11 @@ router.post('/change-order/:id', (req, res) => {
 
 router.post('/delete-photo/:id', (req, res) => {
 
+  const m = getType(req) || 'c';
+
+  const itemId = req.params.id;
   const postData = {
-    cuadroId: req.params.id,
+    [m === 'c' ? 'cuadroId' : 'yonnyFotoId']: itemId,
     photoId: req.body.id,
   };
 
@@ -218,13 +271,13 @@ router.post('/delete-photo/:id', (req, res) => {
     return res.status(400).json();
   }
 
-  Cuadro.findOne({ _id: postData.cuadroId }, (err, cuadro) => {
+  model(m).findOne({ _id: itemId }, (err, item) => {
     if (err) {
       return err;
     }
 
-    if (cuadro.photos) {
-      cuadro.photos = cuadro.photos.filter((el) => {
+    if (item.photos) {
+      item.photos = item.photos.filter((el) => {
         return el.link !== postData.photoId;
       });
     }
@@ -245,7 +298,7 @@ router.post('/delete-photo/:id', (req, res) => {
         }
       });
 
-    cuadro.save((err) => {
+    item.save((err) => {
       if (err) {
         return err;
       }
@@ -258,47 +311,54 @@ router.post('/delete-photo/:id', (req, res) => {
 
 router.post('/', (req, res) => {
 
+  const m = getType(req) || 'c';
+  const module = model(m);
+
   const body = req.body;
   const { id } = body;
 
   if (id) {
-    logger.debug(`update cuadro (id=${id}) ${JSON.stringify(body)}`);
+    logger.debug(`update item (id=${id}, m=${m}) ${JSON.stringify(body)}`);
   } else {
-    logger.debug(`create cuadro ${JSON.stringify(body)}`);
+    logger.debug(`create item (m=${m}) ${JSON.stringify(body)}`);
   }
 
   try {
-    Cuadro.validate(body);
+    module.validate(body);
   } catch (e) {
     return buildResponseAndReturn({
       res,
-      error: e
+      error: e,
+      module
     })
   }
 
   if (id) {
     // update
 
-    updateCuadro(id, body)
-      .then(() => buildResponseAndReturn({ res }))
-      .catch((error) => buildResponseAndReturn({ res, error }));
+    updateItem(id, body, module)
+      .then(() => buildResponseAndReturn({ res, module }))
+      .catch((error) => buildResponseAndReturn({ res, error, module }));
 
   } else {
     // create
 
-    db.Counter.findOne({ _id: 'cuadro' }, (error, counter) => {
+    const _id = m === 'c' ? 'cuadro' : 'yonnyFoto';
+
+    db.Counter.findOne({ _id }, (error, counter) => {
 
       if (error) {
         return buildResponseAndReturn({
           res,
-          error
+          error,
+          module
         })
       }
 
       // Autoincrement of id
       if (!counter) {
         counter = new db.Counter({
-          _id: "cuadro",
+          _id,
           seq: 0
         });
       }
@@ -308,64 +368,72 @@ router.post('/', (req, res) => {
         if (err) {
           return buildResponseAndReturn({
             res,
-            error: err
+            error: err,
+            module
           })
         }
 
         const now = new Date();
-        const cuadro = new Cuadro({
+        const item = new module({
           _id: counter.seq,
           title: body.title,
           visible: body.visible,
           order: now.getTime()
         });
 
-        cuadro.save((err, { _doc: p }) => {
+        item.save((err, { _doc: p }) => {
           if (err) {
             return buildResponseAndReturn({
               res,
-              error: err
+              error: err,
+              module
             })
           }
-          return buildResponseAndReturn({ res, data: p });
+          return buildResponseAndReturn({
+            res,
+            data: p,
+            module
+          });
         })
       })
     });
-
   }
 
 });
 
 router.delete('/', (req, res) => {
 
+  const m = getType(req) || 'c';
+  const module = model(m);
+
   if (!req.body.id) {
     return res.status(400).json({ message: "Missing cuadro id." });
   }
 
-  Cuadro.findOne({ _id: req.body.id }, (err, cuadro) => {
+  module.findOne({ _id: req.body.id }, (err, item) => {
 
     if (err) {
       return res.json(err)
     }
 
-    if (!cuadro) {
-      return res.status(400).json({ message: "Cuadro does not exist!" });
+    if (!item) {
+      return res.status(400).json({ message: "Item does not exist!" });
     }
 
-    cuadro.remove((err) => {
+    item.remove((err) => {
 
       if (err) {
         return res.json(err);
       }
 
-      res.json({ success: true, message: "Cuadro deleted successfully!" });
+      res.json({ success: true, message: "Item deleted successfully!" });
     });
 
     // Delete associated images
-    logger.info(cuadro.photos.length + " photos to delete...");
+    logger.info(item.photos.length + " photos to delete...");
 
-    if (cuadro.photos) {
-      cuadro.photos.forEach((photo) => {
+    if (item.photos) {
+      item.photos.forEach((photo) => {
         const filename = photo.link;
 
         // Call child process to delete image
@@ -378,13 +446,24 @@ router.delete('/', (req, res) => {
 });
 
 router.patch('/visible', (req, res) => {
+
+  const m = getType(req) || 'c';
+  const module = model(m);
+
   const { id, visible } = req.body;
-  updateCuadro(id, { visible })
+  updateItem(id, { visible }, module)
     .then(() => {
-      return buildResponseAndReturn({ res })
+      return buildResponseAndReturn({
+        res,
+        module
+      })
     })
     .catch((e) => {
-      return buildResponseAndReturn({ res, error: e })
+      return buildResponseAndReturn({
+        res,
+        error: e,
+        module
+      })
     })
 });
 
@@ -427,14 +506,15 @@ const buildResponseAndReturn = ({ res, data, error, module = Cuadro }) => {
   })
 };
 
-const updateCuadro = (id, updateData) => {
+const updateItem = (id, updateData, model) => {
   return new Promise((resolve, reject) => {
-    Cuadro.findOne({ _id: id }).exec((err, cuadro) => {
+    model.findOne({ _id: id }).exec((err, item) => {
+
       if (err) {
         reject(err);
       }
-      if (!cuadro) {
-        reject(new Error('Cuadro does not exist!'))
+      if (!item) {
+        reject(new Error('Item does not exist!'))
       }
 
       if (!updateData || updateData.length <= 0) {
@@ -442,14 +522,14 @@ const updateCuadro = (id, updateData) => {
         reject(new Error('No data provided. Nothing happened.'));
       }
 
-      // Cuadro object from json data
+      // Item object from json data
 
       // Iterate through data
       for (let key in updateData) {
-        cuadro[key] = updateData[key]
+        item[key] = updateData[key]
       }
 
-      cuadro.save((err) => {
+      item.save((err) => {
         if (err) {
           reject(err);
         }

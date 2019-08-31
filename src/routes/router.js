@@ -23,6 +23,7 @@ router.use('/admin/galery', require('./admin/galery'));
 router.use('/admin/backup', require('./admin/backup'));
 router.use('/admin/poems', require('./admin/poem'));
 router.use('/admin/cuadros', require('./admin/cuadro'));
+router.use('/admin/yonny-fotos', require('./admin/cuadro'));
 
 // Redirect if last char of url is '/'
 router.use(function (req, res, next) {
