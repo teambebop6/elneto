@@ -1,64 +1,86 @@
-<div class="en_fotos_wrapper">
+<div class="painting_wrapper" style="margin-top: 100px;">
 
+  {{#each yonnyFotos}}
 
-	<div class="albums_wrapper justified-gallery" id="enFotos">
-			<!-- 	{{#each galeries}}
-	<a href="/galery/{{this._id}}" data-id="{{this._id}}">
-		<img alt="{{this.title}}" src="/uploads/thumbs/{{this.titlePicture}}"/>
-	</a>
-	{{/each}} -->
+    <div class="painting_group">
+      <div class="groupTitle"> {{ this.title }} </div>
+      <div class="responsive my-gallery">
+        {{#each this.photos}}
+          <figure>
+            <a href="/uploads/{{this.link}}" data-size="{{this.width}}x{{this.height}}">
+              <img alt="{{this.title}}" src="/uploads/thumbs/{{this.link}}" height="300px"/>
+            </a>
+          </figure>
+        {{/each}}
+      </div>
+    </div>
 
-	<a href="/" data-id="">
-		<img alt="000" src="https://images.unsplash.com/photo-1531674590200-f5e4c43f31de?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=44c88230f10a563c9dd67d6456dc1c35&auto=format&fit=crop&w=800&q=60"/>
-	</a>
+  {{/each}}
 
-	<a href="/" data-id="">
-		<img alt="111" src="https://images.unsplash.com/photo-1531658045967-24bb08a28e1d?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=0b94b00c72a9206f8abe5e8ee93dab6f&auto=format&fit=crop&w=800&q=60"/>
-	</a>
+  <!-- Root element of PhotoSwipe. Must have class pswp. -->
+  <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
 
-	<a href="/" data-id="">
-		<img alt="222" src="https://images.unsplash.com/photo-1531681058598-a93f27e054ad?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=1e5006247340d0749161b7f806ade67d&auto=format&fit=crop&w=800&q=60"/>
-	</a>
+    <!-- Background of PhotoSwipe.
+      It's a separate element, as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
 
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
 
-	<a href="/" data-id="">
-		<img alt="333" src="https://images.unsplash.com/photo-1531592314932-72e9d087e8c3?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=5c057c974dc22ff1f691e41be0011376&auto=format&fit=crop&w=800&q=60"/>
-	</a>
+      <!-- Container that holds slides. PhotoSwipe keeps only 3 slides in DOM to save memory. -->
+      <!-- don't modify these 3 pswp__item elements, data is added later on. -->
+      <div class="pswp__container">
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+      </div>
 
+      <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+      <div class="pswp__ui pswp__ui--hidden">
 
-	<a href="/" data-id="">
-		<img alt="444" src="https://images.unsplash.com/photo-1531512073830-ba890ca4eba2?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=8105ed8f913b06ed6e746048568ce2dd&auto=format&fit=crop&w=800&q=60"/>
-	</a>
+        <div class="pswp__top-bar">
 
+          <!--  Controls are self-explanatory. Order can be changed. -->
 
-	<a href="/" data-id="">
-		<img alt="555" src="https://images.unsplash.com/photo-1531650501148-996193a674e3?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=b2aa1d6e2093cae0543d0b7a27f84d0d&auto=format&fit=crop&w=800&q=60"/>
-	</a>
+          <div class="pswp__counter"></div>
 
+          <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
 
-	<a href="/" data-id="">
-		<img alt="666" src="https://images.unsplash.com/photo-1531624566487-d589f54c65a7?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=c1d2aaf1b8529214fc6b27942484f53a&auto=format&fit=crop&w=800&q=60"/>
-	</a>
+          <button class="pswp__button pswp__button--share" title="Share"></button>
 
+          <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
 
-	<a href="/" data-id="">
-		<img alt="777" src="https://images.unsplash.com/photo-1531574840286-d8d45c1dd989?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=4366864ae66d3b9591c2b5bf108213bd&auto=format&fit=crop&w=800&q=60"/>
-	</a>
+          <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
 
+          <!-- Preloader demo https://codepen.io/dimsemenov/pen/yyBWoR -->
+          <!-- element will get class pswp__preloader--active when preloader is running -->
+          <div class="pswp__preloader">
+            <div class="pswp__preloader__icn">
+              <div class="pswp__preloader__cut">
+                <div class="pswp__preloader__donut"></div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-	<a href="/" data-id="">
-		<img alt="888" src="https://images.unsplash.com/photo-1531606644142-067d6ab5f5fc?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=8b0415138de748646d7d3afecc7f5e8d&auto=format&fit=crop&w=800&q=60"/>
-	</a>
+        <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+          <div class="pswp__share-tooltip"></div>
+        </div>
 
+        <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+        </button>
 
-	<a href="/" data-id="">
-		<img alt="999" src="https://images.unsplash.com/photo-1531643439684-b25b6c766747?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=5e7953e4874d4602b93ca1fa1ceae9b1&auto=format&fit=crop&w=800&q=60"/>
-	</a>
+        <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+        </button>
 
-	<a href="/" data-id="">
-		<img alt="10" src="https://images.unsplash.com/photo-1531637485122-60753ffac1b7?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=b55152bd39cb12759012e1a556de2d26&auto=format&fit=crop&w=800&q=60"/>
-	</a>
+        <div class="pswp__caption">
+          <div class="pswp__caption__center"></div>
+        </div>
 
-</div>
+      </div>
+
+    </div>
+
+  </div>
 
 </div>
