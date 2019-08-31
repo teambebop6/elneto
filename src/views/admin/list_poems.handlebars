@@ -9,7 +9,6 @@
     <thead>
     <tr>
       <th>Título</th>
-      <th>Autora</th>
       <th>Erstellungsdatum</th>
       <th>Visible</th>
       <th style="min-width:125px;">Actions</th>
@@ -20,7 +19,6 @@
       {{#each poems}}
         <tr id="poem_{{this._id}}" class="poems-listing">
           <td>{{this.title}}</td>
-          <td>{{this.author}}</td>
           <td>{{this.creationDate}}</td>
           <td>
             <div id="poem_{{this._id}}_visible" class="ui toggle checkbox">
