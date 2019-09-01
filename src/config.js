@@ -54,6 +54,13 @@ module.exports = function (env) {
     DB_HOST: 'localhost',
     VIEW_FOLDER: path.join(__dirname, 'views'),
     ENV: env,
+    REMOTE_UPLOAD: {
+      TYPE: '', // aws-s3 or qiniu
+      END_POINT: '',
+      ACCESS_KEY: '',
+      SECRET_KEY: '',
+      BUCKET:''
+    }
   };
 
   switch(env){

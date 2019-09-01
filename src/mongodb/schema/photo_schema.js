@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 PhotoSchema = new (mongoose.Schema)({
   title: String,
   link: String,
+  linkThumb: String,
   width: Number,
   height: Number,
   size: Number,
