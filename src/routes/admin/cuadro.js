@@ -11,6 +11,7 @@ const path = require('path');
 const handlebars = require('handlebars');
 
 const sort = require('../../utils/sort');
+const RemoteUpload = require('../../utils/RemoteUpload');
 
 const Cuadro = db.Cuadro;
 const YonnyFoto = db.YonnyFoto;
@@ -64,17 +65,20 @@ const mergePhotoInfo = (pre, { title, size, technik, comments }) => {
 
 router.get('/getThumbTemplate', (req, res, next) => {
   const link = req.query.link;
+  const id = req.query.id;
   const m = getType(req) || 'c';
 
   if (!link) {
     return next();
   }
 
-  const file = m === 'c' ? '/partials/admin/cuadro-thumb-element.handlebars' : '/partials/admin/yonny-foto-thumb-element.handlebars';
+  const file = m === 'c' ? '/partials/admin/cuadro-thumb-element.handlebars'
+    : '/partials/admin/yonny-foto-thumb-element.handlebars';
   fs.readFile(path.join(req.config.VIEW_FOLDER, file), 'utf8',
     function (err, content) {
       const template = handlebars.compile(content);
       res.write(template({
+        id,
         link,
       }));
       res.end();
@@ -182,7 +186,7 @@ router.post('/modify/:id', (req, res) => {
       const photos = [];
       item.photos.forEach((p) => {
         photosData.forEach(pd => {
-          if (p.link === pd.id) {
+          if (p.id === pd.id) {
             mergePhotoInfo(p, pd);
             photos.push(p);
           }
@@ -276,36 +280,38 @@ router.post('/delete-photo/:id', (req, res) => {
       return err;
     }
 
+    let photoToRemove = null;
     if (item.photos) {
       item.photos = item.photos.filter((el) => {
-        return el.link !== postData.photoId;
+        if (el.id === postData.photoId) {
+          photoToRemove = el;
+        }
+        return el.id !== postData.photoId;
       });
     }
 
-    var errors = {};
-    // Delete uploaded files
-    fs.unlink(
-      path.join(req.config.UPLOAD_FOLDER, postData.photoId),
-      (err) => {
+    if (photoToRemove) {
+      new RemoteUpload(req.config)
+        .remove({
+          fileUrl: photoToRemove.link,
+          thumbFileUrl: photoToRemove.linkThumb
+        })
+        .then(() => {
+          item.save((err) => {
+            if (err) {
+              return err;
+            }
+            res.status(200).json({});
+          });
+        })
+    } else {
+      item.save((err) => {
         if (err) {
-          errors.original = err.message;
+          return err;
         }
+        res.status(200).json({});
       });
-    fs.unlink(path.join(req.config.UPLOAD_FOLDER, 'thumbs', postData.photoId),
-      (err) => {
-        if (err) {
-          errors.thumb = err.message;
-        }
-      });
-
-    item.save((err) => {
-      if (err) {
-        return err;
-      }
-
-      res.status(200).json(errors);
-    });
-
+    }
   });
 });
 
@@ -434,12 +440,7 @@ router.delete('/', (req, res) => {
 
     if (item.photos) {
       item.photos.forEach((photo) => {
-        const filename = photo.link;
-
-        // Call child process to delete image
-        logger.info("Deleting " + filename);
-
-        deleteImage(req.config.UPLOAD_FOLDER, filename);
+        deleteImage2(req.config, photo.link, photo.linkThumb);
       });
     }
   });
@@ -466,6 +467,18 @@ router.patch('/visible', (req, res) => {
       })
     })
 });
+
+const deleteImage2 = (config, url, thumbUrl) => {
+  new RemoteUpload(config)
+    .remove({
+      fileUrl: url,
+      thumbFileUrl: thumbUrl
+    })
+    .then(() => {
+      logger.info(`Deleted ${url}`);
+      logger.info(`Deleted ${thumbUrl}`);
+    })
+};
 
 const deleteImage = (dirname, filename) => {
 

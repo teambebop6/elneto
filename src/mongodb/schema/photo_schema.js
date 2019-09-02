@@ -4,6 +4,7 @@
 const mongoose = require('mongoose');
 
 PhotoSchema = new (mongoose.Schema)({
+  id: String,
   title: String,
   link: String,
   linkThumb: String,

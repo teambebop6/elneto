@@ -7,8 +7,8 @@
       <div class="responsive my-gallery">
         {{#each this.photos}}
           <figure>
-            <a href="/uploads/{{this.link}}" data-size="{{this.width}}x{{this.height}}">
-              <img alt="{{this.title}}" src="/uploads/thumbs/{{this.link}}" height="300px"/>
+            <a href="{{this.link}}" data-size="{{this.width}}x{{this.height}}">
+              <img alt="{{this.title}}" src="{{this.linkThumb}}" height="300px"/>
             </a>
           </figure>
         {{/each}}

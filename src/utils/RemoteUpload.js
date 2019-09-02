@@ -8,6 +8,8 @@ const gm = require('gm');
 const path = require('path');
 const url = require('url');
 
+const logger = require('../lib/logger');
+
 const genFileInfo = (fileFullName) => {
 
   const rootPath = path.dirname(fileFullName);
@@ -63,7 +65,7 @@ class RemoteUpload {
 
     return new Promise((resolve, reject) => {
 
-      console.log(`Uploading ${fileName}`);
+      logger.info(`Uploading ${fileName}`);
 
       if (this.type === 'qiniu') {
         this
@@ -138,6 +140,25 @@ class RemoteUpload {
           }
         });
     })
+  }
+
+  remove({ fileUrl, thumbFileUrl }) {
+    // remove file
+    // remove thumbFileUrl
+    return new Promise((resolve, reject) => {
+      // TODO
+      logger.info(`Deleting ${fileUrl}`);
+      logger.info(`Deleting ${thumbFileUrl}`);
+      resolve();
+    })
+  }
+
+  removeForAWS({ fileUrl, thumbFile }) {
+
+  }
+
+  removeForQiniu({ fileUrl, thumbFile }) {
+
   }
 
 }

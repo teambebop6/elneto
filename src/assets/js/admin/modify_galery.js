@@ -64,7 +64,7 @@ app.then(function(){
     thumb.mouseout(function(){
       thumb.find('.actions').hide();
     });
-  }
+  };
 
   $('.image-thumb').each(function(){
     refreshThumb($(this));

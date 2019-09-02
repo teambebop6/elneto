@@ -45,7 +45,6 @@ app.then(function(){
     var cuadro_id = $('#cuadro-id').val();
 
     console.log(cuadro_id);
-    console.log("asdasd");
 
     $('#fileupload').fileupload({
       dataType: 'json',
@@ -54,32 +53,27 @@ app.then(function(){
       disableImageResize: false,
       imageMaxWidth: 1177,
       imageMaxHeight: 1177,
-      sequentialUploads: true,
       done: function(e, data){
 
-        console.log(data.result.files);
+        console.log(data.result);
 
-        $.each(data.result.files, function(index, file){
-
-          $.get("/admin/cuadros/getThumbTemplate?link=" + file.name, function(data){
-            var thumb = $('<div/>').html(data).find('> div');
-
-            refreshThumb(thumb); // Bind mouseover events
-            thumb.appendTo($('.images-list'));
-          });
+        $.get("/admin/cuadros/getThumbTemplate?link=" + data.result.thumbUrl + "&id=" + data.result.id, function(data){
+          var thumb = $('<div/>').html(data).find('> div');
+          refreshThumb(thumb); // Bind mouseover events
+          thumb.appendTo($('.images-list'));
         });
 
         $('.ui.progress').hide();
         $('.no-images-yet-message').hide();
       },
-      stop: function(e){
-        d = new Date();
-        $.each($('.images-list').find('.image-thumb'), function(index, element){
-          var path = $(element).attr("id").substr(12); // cut off image-thumb- in order to get path
-          var imgElement = $(element).find('img');
-          imgElement.attr("src", '/uploads/thumbs/' + path + "?t=" + d.getTime());
-        });
-      },
+      // stop: function(e){
+      //   d = new Date();
+      //   $.each($('.images-list').find('.image-thumb'), function(index, element){
+      //     var path = $(element).attr("id").substr(12); // cut off image-thumb- in order to get path
+      //     var imgElement = $(element).find('img');
+      //     imgElement.attr("src", '/uploads/thumbs/' + path + "?t=" + d.getTime());
+      //   });
+      // },
       progressall: function (e, data) {
 
         $('.ui.progress').show();
@@ -128,7 +122,8 @@ app.then(function(){
             data: { id: id },
             success : function(data, textStatus, xhr){
               if(xhr.status === 200){
-                $('#cuadro-thumb-' + String(id).replace(/\./g, "\\.")).hide();
+                console.log('#cuadro-thumb-' + String(id));
+                $('#cuadro-thumb-' + String(id)).hide();
               }
             },
             error : function(xhr){
@@ -147,7 +142,6 @@ app.then(function(){
 
     $('#form-cuadro-info').submit(function(e){
       e.preventDefault();
-      console.log("???!!!")
     }).validate({
       submitHandler: function(form){
         submitFormData();
