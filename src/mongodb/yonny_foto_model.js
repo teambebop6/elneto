@@ -41,8 +41,10 @@ YonnyFotoSchema.statics.toDTO = ({ _id: id, title, photos, visible, order, creat
     title,
     photos: photos.map(p => {
       return {
+        id: p.id,
         title: p.title,
         link: p.link,
+        linkThumb: p.linkThumb,
         width: p.width,
         height: p.height,
         size: p.size,

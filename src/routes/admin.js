@@ -385,6 +385,30 @@ router.post('/admin/upload2/:target?', multer.fields([{ name: 'files' }]),
                 });
               }
             })
+          } if (target === 'yonny-foto') {
+
+            db.YonnyFoto.findOne({ _id: req.body.yonny_foto_id }, (err, yonnyFoto) => {
+              if (err || !yonnyFoto) {
+                res.status(500).json({
+                  error: 'Error! Please retry!'
+                })
+              } else {
+                const photo = {
+                  id: urls.id,
+                  link: urls.url,
+                  linkThumb: urls.thumbUrl,
+                  width: parseInt(dimensions.width),
+                  height: parseInt(dimensions.height),
+                };
+                console.log(photo);
+                // Add new picture to galery
+                yonnyFoto.photos.push(photo);
+                yonnyFoto.save().then(() => {
+                  res.json(urls);
+                });
+              }
+            })
+
           } else {
             // TODO
             res.json(urls);

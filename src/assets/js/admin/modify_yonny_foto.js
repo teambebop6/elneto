@@ -53,32 +53,27 @@ app.then(function(){
       disableImageResize: false,
       imageMaxWidth: 1177,
       imageMaxHeight: 1177,
-      sequentialUploads: true,
       done: function(e, data){
 
-        console.log(data.result.files);
+        console.log(data.result);
 
-        $.each(data.result.files, function(index, file){
-
-          $.get("/admin/yonny-fotos/getThumbTemplate?link=" + file.name, function(data){
-            var thumb = $('<div/>').html(data).find('> div');
-
-            refreshThumb(thumb); // Bind mouseover events
-            thumb.appendTo($('.images-list'));
-          });
+        $.get("/admin/yonny-fotos/getThumbTemplate?link=" + data.result.thumbUrl + "&id=" + data.result.id, function(data){
+          var thumb = $('<div/>').html(data).find('> div');
+          refreshThumb(thumb); // Bind mouseover events
+          thumb.appendTo($('.images-list'));
         });
 
         $('.ui.progress').hide();
         $('.no-images-yet-message').hide();
       },
-      stop: function(e){
-        d = new Date();
-        $.each($('.images-list').find('.image-thumb'), function(index, element){
-          var path = $(element).attr("id").substr(12); // cut off image-thumb- in order to get path
-          var imgElement = $(element).find('img');
-          imgElement.attr("src", '/uploads/thumbs/' + path + "?t=" + d.getTime());
-        });
-      },
+      // stop: function(e){
+      //   d = new Date();
+      //   $.each($('.images-list').find('.image-thumb'), function(index, element){
+      //     var path = $(element).attr("id").substr(12); // cut off image-thumb- in order to get path
+      //     var imgElement = $(element).find('img');
+      //     imgElement.attr("src", '/uploads/thumbs/' + path + "?t=" + d.getTime());
+      //   });
+      // },
       progressall: function (e, data) {
 
         $('.ui.progress').show();
@@ -127,7 +122,8 @@ app.then(function(){
             data: { id: id },
             success : function(data, textStatus, xhr){
               if(xhr.status === 200){
-                $('#yonny-foto-thumb-' + String(id).replace(/\./g, "\\.")).hide();
+                console.log('#yonny-foto-thumb-' + String(id));
+                $('#yonny-foto-thumb-' + String(id)).hide();
               }
             },
             error : function(xhr){
@@ -168,9 +164,12 @@ app.then(function(){
 
       $.each($('#form-images').find('.yonny-foto-thumb-element'), function(i, yf_el){
         var el = { id: $(yf_el).data("id") };
+        console.log(el);
         $.extend(el, $(yf_el).find("input,textarea").serializeObject());
         imagesArray.push(el);
       });
+
+      console.log(JSON.stringify(imagesArray, null, 2));
 
       var yf_id = $('#yonny-foto-id').val();
 

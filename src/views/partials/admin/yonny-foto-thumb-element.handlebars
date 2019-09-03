@@ -1,14 +1,13 @@
 {{#if this}}
 
-<div class="column yonny-foto-thumb-element" id="yonny-foto-thumb-{{this.link}}" data-id="{{this.link}}">
+<div class="column yonny-foto-thumb-element" id="yonny-foto-thumb-{{this.id}}" data-id="{{this.id}}">
   <div class="ui grid">
-    <div class="six wide center aligned column image-thumb" id="image-thumb-{{this.link}}">
-      <img class="ui small image" src="/uploads/thumbs/{{this.link}}" />
-
+    <div class="six wide center aligned column image-thumb" id="image-thumb-{{this.id}}">
+      <img class="ui small image" src="{{this.link}}" />
       <div class="info">
         <div class="actions">
 
-          <a href="javascript:;" class="deletePicture" data-id="{{this.link}}">
+          <a href="javascript:;" class="deletePicture" data-id="{{this.id}}">
             <i class="ui trash icon"></i>
           </a>
 
@@ -19,26 +18,26 @@
       <div class="field">
         <label for="title">Title</label>
         <div class="ui inverted input">
-          <input name="title" id="title-{{this.link}}" placeholder="Title" type="text" value="{{this.title}}">
+          <input name="title" id="title-{{this.id}}" placeholder="Title" type="text" value="{{this.title}}">
         </div>
       </div>
       <div class="two fields">
         <div class="field">
           <label for="title">Size</label>
           <div class="ui inverted input">
-            <input name="size" id="size-{{this.link}}" placeholder="Size" type="number" value="{{this.size}}">
+            <input name="size" id="size-{{this.id}}" placeholder="Size" type="number" value="{{this.size}}">
           </div>
         </div>
         <div class="field">
           <label for="title">Technik</label>
           <div class="ui inverted input">
-            <input name="technik" id="technik-{{this.link}}" placeholder="Technik" type="text" value="{{this.technik}}">
+            <input name="technik" id="technik-{{this.id}}" placeholder="Technik" type="text" value="{{this.technik}}">
           </div>
         </div>
       </div>
       <div class="field">
         <label>Comments</label>
-        <input name="comments" id="comments-{{this.link}}" placeholder="Comments" type="text" value="{{this.comments}}">
+        <input name="comments" id="comments-{{this.id}}" placeholder="Comments" type="text" value="{{this.comments}}">
       </div>
     </div>
   </div>
