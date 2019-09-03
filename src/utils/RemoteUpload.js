@@ -3,10 +3,8 @@
  */
 const AWS = require('aws-sdk');
 const qiniu = require('qiniu');
-const gm = require('gm');
 
 const path = require('path');
-const url = require('url');
 
 const logger = require('../lib/logger');
 
@@ -28,8 +26,12 @@ const genFileInfo = (fileFullName) => {
 
 class RemoteUpload {
 
-  constructor({ REMOTE_UPLOAD: config }) {
-    this.init(config);
+  constructor({ REMOTE_UPLOAD: config, REMOTE_UPLOAD_AWS: configAWS, FORCE_AWS }) {
+    if (FORCE_AWS) {
+      this.init(configAWS);
+    } else {
+      this.init(config);
+    }
   }
 
   init({ TYPE, END_POINT, ACCESS_KEY, SECRET_KEY, BUCKET }) {
@@ -74,11 +76,8 @@ class RemoteUpload {
             stream,
             mimeType
           })
-          .then((url) => {
-            resolve({
-              url,
-              thumbUrl: url + '?imageView2/1/w/300/h/300'
-            })
+          .then((urls) => {
+            resolve(urls)
           })
           .catch(reject);
       } else {
@@ -87,11 +86,8 @@ class RemoteUpload {
           stream,
           mimeType
         })
-          .then((url) => {
-            resolve({
-              url,
-              thumbUrl: url + '?imageView2/1/w/300/h/300'
-            })
+          .then((urls) => {
+            resolve(urls)
           })
           .catch(reject);
       }
@@ -109,11 +105,16 @@ class RemoteUpload {
         ContentType: mimeType
       };
 
-      this.S3.putObject(params, (err, res) => {
+      this.S3.upload(params, (err, res) => {
         if (err) {
+          logger.error(err);
           reject(err);
         } else {
-          resolve(url.resolve(this.endPoint, fileName));
+          const fileNameEncoded = encodeURIComponent(fileName);
+          resolve({
+            url: `${this.endPoint}/${this.bucket}/${fileNameEncoded}`,
+            thumbUrl: `${this.endPoint}/${this.bucket}-thumbs/${fileNameEncoded}`
+          });
         }
       });
 
@@ -131,10 +132,15 @@ class RemoteUpload {
         putExtra,
         (respErr, respBody, respInfo) => {
           if (respErr) {
+            logger.error(respErr);
             reject(respErr);
           }
           if (respInfo.statusCode === 200) {
-            resolve(url.resolve(this.endPoint, fileName));
+            const url = `${this.endPoint}/${fileName}`;
+              resolve({
+                url,
+                thumbUrl: url + '?imageView2/1/w/300/h/300'
+              });
           } else {
             reject(respBody);
           }
