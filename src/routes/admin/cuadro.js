@@ -184,8 +184,8 @@ router.post('/modify/:id', (req, res) => {
       const photosData = JSON.parse(data.formData);
 
       const photos = [];
-      item.photos.forEach((p) => {
-        photosData.forEach(pd => {
+      photosData.forEach(pd => {
+        item.photos.forEach((p) => {
           if (p.id === pd.id) {
             mergePhotoInfo(p, pd);
             photos.push(p);

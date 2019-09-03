@@ -313,8 +313,8 @@ router.post('/:id/modify', (req, res) => {
       //   });
       // });
       const images = [];
-      galery.images.forEach((p) => {
-        imagesData.forEach(pd => {
+      imagesData.forEach(pd => {
+        galery.images.forEach((p) => {
           if (p.id === pd.id) {
             mergeImageInfo(p, pd);
             images.push(p);
