@@ -1,14 +1,5 @@
 const mongoose = require('mongoose');
-
-const ImageSchema = new mongoose.Schema({
-  _id: Number,
-  src: String,
-  title: String,
-  description: String,
-  width: Number,
-  height: Number,
-  sort: Number,
-});
+const PhotoSchema = require('./schema/photo_schema');
 
 const GalerySchema = new mongoose.Schema({
   _id: Number,
@@ -24,7 +15,7 @@ const GalerySchema = new mongoose.Schema({
   categories: [String],
   isActive: Boolean,
   isFavorite: Boolean,
-  images: [ImageSchema],
+  images: [PhotoSchema],
   titlePicture: String,
   order: {
     type: Number,

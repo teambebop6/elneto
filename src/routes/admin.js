@@ -410,8 +410,28 @@ router.post('/admin/upload2/:target?', multer.fields([{ name: 'files' }]),
             })
 
           } else {
-            // TODO
-            res.json(urls);
+
+            db.Galery.findOne({ _id: req.body.galery_id }, (err, galery) => {
+              if (err || !galery) {
+                res.status(500).json({
+                  error: 'Error! Please retry!'
+                })
+              } else {
+                const photo = {
+                  id: urls.id,
+                  link: urls.url,
+                  linkThumb: urls.thumbUrl,
+                  width: parseInt(dimensions.width),
+                  height: parseInt(dimensions.height),
+                };
+                console.log(photo);
+                // Add new picture to galery
+                galery.images.push(photo);
+                galery.save().then(() => {
+                  res.json(urls);
+                });
+              }
+            })
           }
         })
         .catch((error) => {

@@ -13,14 +13,25 @@ const utils = require('../../utils/AdminUtils');
 
 module.exports = router;
 
+const mergeImageInfo = (pre, { title, size, technik, comments }) => {
+  Object.assign(pre, {
+    title,
+    comments: comments ? comments.trim() : null
+  });
+};
+
 router.get('/getThumbTemplate', (req, res) => {
-  const src = req.query.src;
+  const link = req.query.link;
+  const id = req.query.id;
 
   fs.readFile(path.join(req.config.VIEW_FOLDER,
     '/partials/admin/galery-thumb-element.handlebars'), 'utf8',
     function (err, content) {
       const template = handlebars.compile(content);
-      res.write(template({ src: src }));
+      res.write(template({
+        link,
+        id
+      }));
       res.end();
     });
 });
@@ -93,6 +104,7 @@ router.get('/new', function (req, res) {
         title: 'Create new galery',
         body_scripts: 'new-galery.bundle',
         categories,
+        active: { list_galeries: true },
         css: ['new-galery'],
       });
     })
@@ -101,6 +113,7 @@ router.get('/new', function (req, res) {
       res.render('admin/new_galery', {
         title: 'Create new galery',
         body_scripts: 'new-galery.bundle',
+        active: { list_galeries: true },
         css: ['new-galery'],
       });
     });
@@ -219,7 +232,7 @@ router.post('/change-order/:id', (req, res) => {
   const { direction } = req.body;
   const id = req.params.id;
 
-  db.Galery.findOne({_id: id}).exec((err, galery) => {
+  db.Galery.findOne({ _id: id }).exec((err, galery) => {
     if (err) {
       return res.json({ success: false, message: err.message });
     }
@@ -251,7 +264,7 @@ router.post('/:id/modify', (req, res) => {
     // SET TITLE PICTURE
     if (data.action === "setTitlePicture") {
       // Set title picture
-      if (!data.titlePicture) {
+      if (!data.titlePictureId) {
         res.json({ success: false, message: "Title picture not found. " });
         return;
       }
@@ -262,30 +275,20 @@ router.post('/:id/modify', (req, res) => {
         categoriesHelper.addCategories(categories);
       }
 
-      db.Galery.findOneAndUpdate({ 'images.src': data.titlePicture },
-        {
-          '$set':
-            { 'titlePicture': data.titlePicture }
-        },
-        { upsert: true }, (err, galery) => {
-          if (err) {
-            res.json({ success: false, message: err.message });
-            return;
-          }
-          if (!galery) {
-            return res.json({
-              success: false,
-              message: "Image does not exist in this galery!"
-            });
-          }
-        });
+      galery.images.forEach((image) => {
+        if (image.id === data.titlePictureId) {
+          galery.titlePicture = image.link;
+        }
+      });
 
-      res.json({ success: true });
-      return;
-    }
+      galery.save((err) => {
+        if (err) {
+          return res.json({ success: false, message: err.message });
+        }
+        return res.json({ success: true });
+      });
 
-    // UPDATE GALERY IMAGES
-    else if (data.action === "updateGaleryImages") {
+    } else if (data.action === "updateGaleryImages") {
 
       if (data.formData == null || data.formData.length <= 0) {
         // formData is empty, do nothing
@@ -296,30 +299,42 @@ router.post('/:id/modify', (req, res) => {
       // Parse object from json data
       const imagesData = JSON.parse(data.formData);
 
-      imagesData.forEach((imageData) => {
-        galery.images.some((image) => {
-          if (image.src === imageData.id) {
-            // Update properties
-            image.title = imageData.title;
-            image.description = imageData.description;
-            image.sort = imagesData.indexOf(imageData);
-
-            return true;
+      // imagesData.forEach((imageData) => {
+      //   galery.images.some((image) => {
+      //     if (image.id === imageData.id) {
+      //       // Update properties
+      //       image.title = imageData.title;
+      //       image.description = imageData.description;
+      //       image.sort = imagesData.indexOf(imageData);
+      //
+      //
+      //       return true;
+      //     }
+      //   });
+      // });
+      const images = [];
+      galery.images.forEach((p) => {
+        imagesData.forEach(pd => {
+          if (p.id === pd.id) {
+            mergeImageInfo(p, pd);
+            images.push(p);
           }
         });
       });
+      galery.images = images;
+
+      if (!galery.titlePicture && images[0]) {
+        galery.titlePicture = images[0].link
+      }
 
       galery.save((err) => {
         if (err) {
           return res.json({ success: false, message: err.message });
         }
+        return res.json({ success: true });
       });
 
-      return res.json({ success: true });
-    }
-
-    // UPDATE GALERY INFO
-    else if (data.action === "updateGaleryInfo") {
+    } else if (data.action === "updateGaleryInfo") {
       if (data.formData == null || data.formData.length <= 0) {
         // formData is empty, do nothing
         return res.json(
@@ -343,12 +358,10 @@ router.post('/:id/modify', (req, res) => {
         if (err) {
           return res.json({ success: false, message: err.message });
         }
+        return res.json({ success: true });
       });
-
-      return res.json({ success: true });
     }
 
-    return res.json({ success: false, message: "Nothing happened." });
   });
 });
 

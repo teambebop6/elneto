@@ -35,10 +35,10 @@
 <div class="albums_wrapper justified-gallery my-gallery" id="albumSelf">
   {{#each galery.images}}
   <figure>
-    <a href="/uploads/{{this.src}}" data-size="{{this.width}}x{{this.height}}">
-      <img alt="{{this.title}}" src="/uploads/thumbs/{{this.src}}"/>
+    <a href="{{this.link}}" data-size="{{this.width}}x{{this.height}}">
+      <img alt="{{this.title}}" src="{{this.linkThumb}}"/>
     </a>
-    <figcaption itemprop="caption description">{{this.title}}: {{this.description}}</figcaption>
+    <figcaption itemprop="caption description">{{this.title}}: {{this.comments}}</figcaption>
   </figure>
   {{/each}}
 </div>
@@ -47,7 +47,7 @@
 <!-- Root element of PhotoSwipe. Must have class pswp. -->
 <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
 
-  <!-- Background of PhotoSwipe. 
+  <!-- Background of PhotoSwipe.
     It's a separate element, as animating opacity is faster than rgba(). -->
     <div class="pswp__bg"></div>
 
@@ -91,7 +91,7 @@
         </div>
 
         <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
-          <div class="pswp__share-tooltip"></div> 
+          <div class="pswp__share-tooltip"></div>
         </div>
 
         <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">

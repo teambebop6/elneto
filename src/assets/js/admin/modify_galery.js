@@ -74,10 +74,12 @@ app.then(function(){
   require(['jquery.fileupload'], function(){
     // Fileupload
     var galery_id = $('#galery-id').val();
+
+    console.log(galery_id);
+
     $('#fileupload').fileupload({
       dataType: 'json',
       formData: {galery_id: galery_id },
-      sequentialUploads: true,
       disableImageResize: false,
       imageMaxWidth: 1177,
       imageMaxHeight: 1177,
@@ -86,27 +88,23 @@ app.then(function(){
 
         console.log(data.result.files)
 
-        $.each(data.result.files, function(index, file){
-
-          $.get("/admin/galery/getThumbTemplate?src=" + file.name, function(data){
-            var thumb = $('<div/>').html(data).find('> div');
-
-            refreshThumb(thumb); // Bind mouseover events
-            thumb.appendTo($('.images-list'));
-          });
+        $.get("/admin/galery/getThumbTemplate?link=" + data.result.thumbUrl + "&id=" + data.result.id, function(data){
+          var thumb = $('<div/>').html(data).find('> div');
+          refreshThumb(thumb); // Bind mouseover events
+          thumb.appendTo($('.images-list'));
         });
 
         $('.ui.progress').hide();
         $('.no-images-yet-message').hide();
       },
-      stop: function(e){
-        d = new Date();
-        $.each($('.images-list').find('.image-thumb'), function(index, element){
-          var path = $(element).attr("id").substr(12); // cut off image-thumb- in order to get path
-          var imgElement = $(element).find('img');
-          imgElement.attr("src", '/uploads/thumbs/' + path + "?t=" + d.getTime());
-        });
-      },
+      // stop: function(e){
+      //   d = new Date();
+      //   $.each($('.images-list').find('.image-thumb'), function(index, element){
+      //     var path = $(element).attr("id").substr(12); // cut off image-thumb- in order to get path
+      //     var imgElement = $(element).find('img');
+      //     imgElement.attr("src", '/uploads/thumbs/' + path + "?t=" + d.getTime());
+      //   });
+      // },
       progressall: function (e, data) {
 
         $('.ui.progress').show();
@@ -156,8 +154,9 @@ app.then(function(){
             url: '/admin/galery/'+galery_id+'/deletePicture',
             data: { id: id },
             success : function(data, textStatus, xhr){
-              if(xhr.status == 200){
-                $('#galery-thumb-' + String(id).replace(/\./g, "\\.")).hide();
+              if(xhr.status === 200){
+                console.log('#galery-thumb-' + String(id));
+                $('#galery-thumb-' + String(id)).hide();
               }
             },
             error : function(xhr){
@@ -175,14 +174,14 @@ app.then(function(){
     })
 
     // Set title picture of galery
-    var setTitlePicture = function(imgSrc){
+    var setTitlePicture = function(id){
       var galery_id = $('#galery-id').val();
       $.ajax({
         type: "post",
         url: "/admin/galery/"+galery_id+"/modify",
         data: {
           action: "setTitlePicture",
-          titlePicture: imgSrc
+          titlePictureId: id
         },
         success: function(data){
           if(data.success){
@@ -190,7 +189,7 @@ app.then(function(){
             // Remove existing labels
             $('.isTitlePicture').remove();
 
-            var info = $('#image-thumb-' + String(imgSrc).replace(/\./g, "\\.")).find('.info');
+            var info = $('#image-thumb-' + id).find('.info');
             var isTitleElement = $('<p class="isTitlePicture">').html('<i class="icon checkmark box"></i>Current title picture');
             console.log(isTitleElement);
             isTitleElement.appendTo(info.find('.states').first());
