@@ -5,7 +5,7 @@ const express = require('express');
 const router = express.Router();
 const db = require('../../mongodb/db');
 const logger = require('../../lib/logger');
-const moment = require('moment');
+const dateUtils = require('../../utils/dateUtils');
 
 const Poem = db.Poem;
 
@@ -68,7 +68,7 @@ router.get('/', function (req, res) {
 
       const poemObjects = poems.map((poem) => {
         const t = poem.toObject();
-        t['creationDate'] = moment.utc(poem.creationDate).format();
+        t['creationDate'] = dateUtils.format(poem.creationDate);
         return t;
       });
 

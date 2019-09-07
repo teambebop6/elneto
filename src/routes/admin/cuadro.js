@@ -5,13 +5,13 @@ const express = require('express');
 const router = express.Router();
 const db = require('../../mongodb/db');
 const logger = require('../../lib/logger');
-const moment = require('moment');
 const fs = require('fs');
 const path = require('path');
 const handlebars = require('handlebars');
 
 const sort = require('../../utils/sort');
 const RemoteUpload = require('../../utils/RemoteUpload');
+const dateUtils = require('../../utils/dateUtils');
 
 const Cuadro = db.Cuadro;
 const YonnyFoto = db.YonnyFoto;
@@ -139,7 +139,7 @@ router.get('/', (req, res) => {
 
     const itemObjects = items.map((item) => {
       const t = item.toObject();
-      t['creationDate'] = moment.utc(item.creationDate).format();
+      t['creationDate'] = dateUtils.format(item.creationDate);
       return t;
     });
 

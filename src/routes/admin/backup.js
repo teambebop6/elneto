@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const moment = require('moment');
 const fs = require('fs');
 const rimraf = require('rimraf');
 const StreamZip = require('node-stream-zip');
 const db = require('../../mongodb/db');
 const logger = require('../../lib/logger');
+const dateUtils = require('../../utils/dateUtils');
 const BackupDB = require('../../tasks/BackupDB');
 const RestoreDB = require('../../tasks/RestoreDB');
 
@@ -83,9 +83,9 @@ router.get('/', (req, res) => {
 
     const backupObjects = backups.map((backup) => {
       const t = backup.toObject();
-      t.creationDate = moment.utc(backup.creationDate).format();
+      t.creationDate = dateUtils.format(backup.creationDate);
       if (t.lastRestoredDate) {
-        t.lastRestoredDate = moment.utc(backup.lastRestoredDate).format();
+        t.lastRestoredDate = dateUtils.format(backup.lastRestoredDate);
       }
       return t;
     });

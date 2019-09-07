@@ -2,8 +2,6 @@ var app = require('./globals');
 
 var utils = require('../../../lib/helpers');
 
-var moment = require('moment');
-
 app.then(function(){
 
   $('.ui.checkbox').checkbox();

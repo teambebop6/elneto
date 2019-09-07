@@ -73,7 +73,7 @@ class RemoteUpload {
 
     return new Promise((resolve, reject) => {
 
-      logger.info(`Uploading ${fileName}`);
+      logger.info(`Uploading ${fileName} to ${this.type}`);
 
       if (this.type === 'qiniu') {
         this

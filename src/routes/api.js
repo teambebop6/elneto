@@ -4,7 +4,7 @@ var router = express.Router();
 var User = require('../mongodb/user_model');
 var SearchEntries = require('../mongodb/searchEntry_model');
 
-if(process.env.NODE_ENV == "development"){
+if(process.env.NODE_ENV === "development"){
   router.post('/user/create', function(req, res, next){
     console.log("received request");
     console.log(req.body);
@@ -58,8 +58,8 @@ router.get('/search', function(req, res, next){
       SearchEntries.find({ $text: { $search: query } }, { score: { $meta: "textScore" } }).sort({
         score:{ $meta: "textScore" }
       }).exec(function(err, results){
-        if(err){ 
-          return res.json(err); 
+        if(err){
+          return res.json(err);
         } else {
           res.json({
             results: results,
