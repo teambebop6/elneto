@@ -11,6 +11,68 @@ const RestoreDB = require('../../tasks/RestoreDB');
 
 module.exports = router;
 
+const createBackup = (config, originalBackupName) => {
+
+  if (originalBackupName && originalBackupName.startsWith('Automatic Backup')) {
+    logger.info('Automatic backup file does not need create backup');
+    return Promise.resolve();
+  }
+
+  return new Promise((resolve, reject) => {
+
+    BackupDB(config)
+      .then((backupInfoMeta) => {
+
+        logger.info('Created backup file');
+        logger.info(JSON.stringify(backupInfoMeta, null, 2));
+
+        db.Counter.findOne({ _id: 'backup' }, (error, counter) => {
+          if (error) {
+            logger.error(error);
+            reject(error);
+          }
+
+          // Autoincrement of id
+          if (!counter) {
+            counter = new db.Counter({
+              _id: "backup",
+              seq: 0
+            });
+          }
+          counter.seq++;
+          counter.save((error) => {
+
+            if (error) {
+              logger.error(error);
+              reject(error);
+            }
+
+            const backup = new db.Backup({
+              _id: counter.seq,
+              title: originalBackupName ? `Automatic Backup for ${originalBackupName}` : 'backup' + counter.seq,
+              fileName: backupInfoMeta.backupZipFile,
+              filePath: backupInfoMeta.backupZipFilePath,
+              fileHash: backupInfoMeta.backupZipFile,
+              creationDate: new Date()
+            });
+
+            backup.save((error) => {
+              if (error) {
+                logger.error(error);
+                reject(error);
+              }
+              resolve();
+            });
+          });
+        });
+      })
+      .catch((error) => {
+        logger.error("Error when generate backup file", error);
+        reject(error);
+      });
+  })
+};
+
 router.get('/', (req, res) => {
 
   db.Backup.find({}).sort({ creationDate: 'desc' }).exec((err, backups) => {
@@ -40,63 +102,18 @@ router.get('/', (req, res) => {
 });
 
 // POST, create new backup
-router.post('/new', (req, res, next) => {
-  BackupDB(req.config)
-    .then((backupInfoMeta) => {
+router.post('/new', (req, res) => {
 
-      logger.info('Created backup file');
-      logger.info(JSON.stringify(backupInfoMeta, null, 2));
-
-      db.Counter.findOne({ _id: 'backup' }, (error, counter) => {
-        if (error) {
-          logger.error(error);
-          return res.status(500).send({
-            error
-          });
-        }
-
-        // Autoincrement of id
-        if (!counter) {
-          counter = new db.Counter({
-            _id: "backup",
-            seq: 0
-          });
-        }
-        counter.seq++;
-        counter.save((error) => {
-
-          if (error) {
-            logger.error(error);
-            return res.status(500).send({
-              error
-            });
-          }
-
-          const backup = new db.Backup({
-            _id: counter.seq,
-            title: 'backup' + counter.seq,
-            fileName: backupInfoMeta.backupZipFile,
-            filePath: backupInfoMeta.backupZipFilePath,
-            fileHash: backupInfoMeta.backupZipFile,
-            creationDate: new Date()
-          });
-
-          backup.save((error) => {
-            if (error) {
-              logger.error(error);
-              return res.status(500).send({
-                error
-              });
-            }
-            return res.status(200).send({});
-          });
-        });
-      });
+  createBackup(req.config)
+    .then(() => {
+      res.status(200).json({});
     })
     .catch((error) => {
-      logger.error("Error when generate backup file", error);
-      return res.status(500).send({ error })
+      res.status(500).send({
+        error
+      });
     });
+
 });
 
 // Download backup
@@ -175,20 +192,33 @@ router.post('/:id/restore', (req, res) => {
       return res.redirect('/admin/backup');
     }
 
-    RestoreDB(backup.filePath)
+    // create backup for current state
+    const originalBackupName = backup.title;
+    createBackup(req.config, originalBackupName)
       .then(() => {
-        backup.lastRestoredDate = Date();
-        backup.save((error) => {
-          if (error) {
-            logger.error(error);
-            // restore success, but save restore time failed, reply success response
-          }
-          return res.status(200).json({});
-        });
+        logger.info(`Create Automatic Backup for ${originalBackupName} done, then start restore`);
+        RestoreDB(backup.filePath)
+          .then(() => {
+            backup.lastRestoredDate = Date();
+            backup.save((error) => {
+              if (error) {
+                logger.error(error);
+                // restore success, but save restore time failed, reply success response
+              }
+              return res.status(200).json({});
+            });
+          })
+          .catch((error) => {
+            return res.status(500).json({ success: false, error });
+          });
+
       })
       .catch((error) => {
-        return res.status(500).json({ success: false, error });
+        res.status(500).send({
+          error
+        });
       });
+
   });
 });
 
