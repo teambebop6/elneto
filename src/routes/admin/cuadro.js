@@ -429,19 +429,23 @@ router.delete('/', (req, res) => {
     item.remove((err) => {
 
       if (err) {
-        return res.json(err);
+        return res.status(500).json(err);
       }
 
-      res.json({ success: true, message: "Item deleted successfully!" });
+      res.status(200).json({ success: true, message: "Item deleted successfully!" });
     });
 
     // Delete associated images
     logger.info(item.photos.length + " photos to delete...");
 
     if (item.photos) {
+      const fileUrls = [];
+      const thumbFileUrls = [];
       item.photos.forEach((photo) => {
-        deleteImage2(req.config, photo.link, photo.linkThumb);
+        fileUrls.push(photo.link);
+        thumbFileUrls.push(photo.linkThumb);
       });
+      deleteImage2(req.config, fileUrls, thumbFileUrls)
     }
   });
 });
@@ -468,16 +472,17 @@ router.patch('/visible', (req, res) => {
     })
 });
 
-const deleteImage2 = (config, url, thumbUrl) => {
+const deleteImage2 = (config, fileUrls, thumbFileUrls) => {
   new RemoteUpload(config)
     .remove({
-      fileUrl: url,
-      thumbFileUrl: thumbUrl
+      fileUrls,
+      thumbFileUrls,
     })
     .then(() => {
-      logger.info(`Deleted ${url}`);
-      logger.info(`Deleted ${thumbUrl}`);
+      logger.info(`Deleted ${JSON.stringify(fileUrls)}`);
+      logger.info(`Deleted ${JSON.stringify(thumbFileUrls)}`);
     })
+    .catch(logger.error)
 };
 
 const deleteImage = (dirname, filename) => {

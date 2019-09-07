@@ -9,6 +9,7 @@ const categoriesHelper = require('../../lib/categoriesHelper');
 const constants = require('../../utils/constants');
 const logger = require('../../lib/logger');
 const sort = require('../../utils/sort');
+const RemoteUpload = require('../../utils/RemoteUpload');
 const utils = require('../../utils/AdminUtils');
 
 module.exports = router;
@@ -474,6 +475,19 @@ const deleteImage = (dirname, filename) => {
   }
 };
 
+const deleteImage2 = (config, fileUrls, thumbFileUrls) => {
+  new RemoteUpload(config)
+    .remove({
+      fileUrls,
+      thumbFileUrls,
+    })
+    .then(() => {
+      logger.info(`Deleted ${JSON.stringify(fileUrls)}`);
+      logger.info(`Deleted ${JSON.stringify(thumbFileUrls)}`);
+    })
+    .catch(logger.error)
+};
+
 // POST, delete galery
 router.post('/delete', (req, res) => {
   if (!req.body.id) {
@@ -500,12 +514,15 @@ router.post('/delete', (req, res) => {
     // Delete associated images
     console.log(galery.images.length + " images to delete...");
 
-    galery.images.forEach((image) => {
-      const filename = image.src;
+    if (galery.images) {
+      const fileUrls = [];
+      const thumbFileUrls = [];
+      galery.images.forEach((photo) => {
+        fileUrls.push(photo.link);
+        thumbFileUrls.push(photo.linkThumb);
+      });
+      deleteImage2(req.config, fileUrls, thumbFileUrls)
+    }
 
-      // Call child process to delete image
-      console.log("Deleting " + filename);
-      deleteImage(req.config.UPLOAD_FOLDER, filename);
-    });
   });
 });

@@ -24,6 +24,12 @@ const genFileInfo = (fileFullName) => {
   }
 };
 
+const parseFileKey = (endPoint, bucket, url) => {
+  let temp = url.substring(endPoint.length, url.length);
+  const fileKey = temp.substring(bucket.length + 2, temp.length);
+  return decodeURIComponent(fileKey);
+};
+
 class RemoteUpload {
 
   constructor({ REMOTE_UPLOAD: config, REMOTE_UPLOAD_AWS: configAWS, FORCE_AWS }) {
@@ -137,10 +143,10 @@ class RemoteUpload {
           }
           if (respInfo.statusCode === 200) {
             const url = `${this.endPoint}/${fileName}`;
-              resolve({
-                url,
-                thumbUrl: url + '?imageView2/1/w/300/h/300'
-              });
+            resolve({
+              url,
+              thumbUrl: url + '?imageView2/1/w/300/h/300'
+            });
           } else {
             reject(respBody);
           }
@@ -148,23 +154,70 @@ class RemoteUpload {
     })
   }
 
-  remove({ fileUrl, thumbFileUrl }) {
-    // remove file
-    // remove thumbFileUrl
+  remove({ fileUrls, thumbFileUrls }) {
+
+    if (this.type === 'qiniu') {
+      return this.removeForQiniu({ fileUrls, thumbFileUrls });
+    } else {
+      return this.removeForAWS({ fileUrls, thumbFileUrls });
+    }
+
+  }
+
+  removeForAWS({ fileUrls, thumbFileUrls }) {
+
+    const normalBucket = this.bucket;
+    const thumbBucket = `${this.bucket}-thumbs`;
+
+    const normalParams = {
+      Bucket: normalBucket,
+      Delete: {
+        Objects: fileUrls.map((fileUrl) => {
+          logger.info(`Will remove ${fileUrl}`);
+          return {
+            Key: parseFileKey(this.endPoint, normalBucket, fileUrl)
+          }
+        }),
+        Quiet: true
+      }
+    };
+
+    const thumbParams = {
+      Bucket: thumbBucket,
+      Delete: {
+        Objects: thumbFileUrls.map((fileUrl) => {
+          logger.info(`Will remove ${fileUrl}`);
+          return {
+            Key: parseFileKey(this.endPoint, thumbBucket, fileUrl)
+          }
+        }),
+        Quiet: true
+      }
+    };
+
     return new Promise((resolve, reject) => {
-      // TODO
-      logger.info(`Deleting ${fileUrl}`);
-      logger.info(`Deleting ${thumbFileUrl}`);
-      resolve();
+
+      this.S3.deleteObjects(normalParams, (err) => {
+        if (err) {
+          logger.error(err);
+          reject(err);
+        } else {
+          this.S3.deleteObjects(thumbParams, (err) => {
+            if (err) {
+              logger.error(err);
+              reject(err);
+            }
+            resolve();
+          })
+        }
+      });
     })
-  }
-
-  removeForAWS({ fileUrl, thumbFile }) {
 
   }
 
-  removeForQiniu({ fileUrl, thumbFile }) {
-
+  removeForQiniu({ fileUrls, thumbFileUrls }) {
+    logger.warn('Remove for Qiniu is not supported now.');
+    return Promise.resolve();
   }
 
 }
