@@ -16,6 +16,7 @@
     <tr>
       <th>Título</th>
       <th>Erstellungsdatum</th>
+      <th>Erholungszeit</th>
       <th style="min-width:125px;">Actions</th>
     </tr>
     </thead>
@@ -25,13 +26,14 @@
         <tr id="backup_{{this._id}}" class="backup-listing">
           <td>{{this.title}}</td>
           <td>{{this.creationDate}}</td>
+          <td>{{this.lastRestoredDate}}</td>
           <td>
+            <a href="/admin/backup/{{this._id}}/restore" class="ui inverted grey icon button">
+              <i class="redo icon"></i>
+            </a>
             <a href="/admin/backup/{{this._id}}/download" class="ui inverted yellow icon button">
               <i class="download icon"></i>
             </a>
-            <!--<a href="/admin/backup/{{this._id}}/modify" class="ui inverted yellow icon button">-->
-              <!--<i class="edit icon"></i>-->
-            <!--</a>-->
             <a data-id="{{this._id}}" class="ui inverted red icon button deleteBackup">
               <i class="delete icon"></i>
             </a>

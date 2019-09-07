@@ -39,7 +39,7 @@ var production = {
   DEBUG_ERROR : true,
   DEBUG_CLIENT : false,
   DB_PORT: '27017',
-  DB_NAME: process.env.DB_NAME || (process.env.ELNETO_ENV == "dev") ? "elneto_dev" : "elneto",
+  DB_NAME: process.env.DB_NAME || (process.env.ELNETO_ENV === "dev") ? "elneto_dev" : "elneto",
   APP_PORT : 20082,
   redis : {
     port: '6379'

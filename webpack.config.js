@@ -64,6 +64,7 @@ module.exports = {
 
     'admin/list-backups': './src/assets/js/admin/list_backups',
     'admin/new-backup': './src/assets/js/admin/new_backup',
+    'admin/restore-backup': './src/assets/js/admin/restore_backup',
   },
   output: {
     path: path.resolve(__dirname, 'public/dist'),
