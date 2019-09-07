@@ -8,29 +8,21 @@ require('../../vendor/datepicker/dist/datepicker.min.css');
 
 app.then(function(){
 
-  $('#categories').dropdown({
-    allowAdditions: true,
-  });
-
-  var catString = $('#galery-categories').val();
-  var categories = catString.split(",");
-  $('#categories').dropdown('set selected', categories);
-
   // Datepicker
   require(['datepicker'], function(){
     console.log("loaded datepicker.");
     // Datepicker
     var picker = $('#date_of_play_string');
 
-    var dateofplay = $('#date_of_play').val();
+    var dateOfPlay = $('#date_of_play').val();
 
-    console.log(dateofplay);
+    console.log(dateOfPlay);
 
     dateFormat = "DD | MM | yyyy";
 
     picker.datepicker({
       format: dateFormat,
-      date: moment.utc(dateofplay).format(),
+      date: moment(dateOfPlay, dateFormat).format(),
     });
     $(picker).on('pick.datepicker', function (e) {
       $('#date_of_play').val(moment(e.date).format('L'));

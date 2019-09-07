@@ -12,7 +12,6 @@ const GalerySchema = new mongoose.Schema({
   info2: String,
   createdOn: Date,
   tags: [String],
-  categories: [String],
   isActive: Boolean,
   isFavorite: Boolean,
   images: [PhotoSchema],
@@ -24,7 +23,7 @@ const GalerySchema = new mongoose.Schema({
 });
 
 GalerySchema.statics.toDTO = (dbObject) => {
-  return dbObject.toObject();
+  return Object.toObject();
 };
 
 module.exports = mongoose.model('Galery', GalerySchema);

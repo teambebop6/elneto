@@ -9,10 +9,6 @@ app.then(function(){
   });
   $('.ui.error.message').hide();
 
-  $('#categories').dropdown({
-    allowAdditions: true,
-  });
-
   // Closing messages
   $('.message .close').on('click', function() {
     $(this)
@@ -55,7 +51,7 @@ app.then(function(){
           success: function(result){
             if(result.success){
               window.location.href = "/admin/galery/" + result.galery_id + "/modify";
-            }else{	
+            }else{
               $('.ui.error.message .message').html(result.message);
               $('.ui.error.message .header').html(result.header || "Error!");
               $('.ui.error.message').show();
