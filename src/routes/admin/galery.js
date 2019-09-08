@@ -20,6 +20,24 @@ const mergeImageInfo = (pre, { title, size, technik, comments }) => {
   });
 };
 
+const reCreateIndex = () => {
+
+  logger.info("start re-create index for galery at backend ...");
+  db.Galery.collection.dropIndexes();
+
+  db.Galery.collection.createIndex({
+    "$**": "text"
+  }, {
+    default_language: 'spanish',
+    background: true
+  }, (err) => {
+    if (err) {
+      logger.error("re-create index for galery collection failed");
+      logger.error(err);
+    }
+  });
+};
+
 router.get('/getThumbTemplate', (req, res) => {
   const link = req.query.link;
   const id = req.query.id;
@@ -88,6 +106,8 @@ router.post('/modify', (req, res) => {
         return;
       }
 
+      reCreateIndex();
+
       return res.json(
         { success: true, message: "Sucessfully set galery state to active" }
       );
@@ -147,9 +167,10 @@ router.post('/new', (req, res) => {
           return res.json({ success: false, message: err.message });
         }
 
+        reCreateIndex();
+
         res.json({ success: true, galery_id: counter.seq });
       });
-
     });
   });
 });
@@ -256,20 +277,6 @@ router.post('/:id/modify', (req, res) => {
 
       // Parse object from json data
       const imagesData = JSON.parse(data.formData);
-
-      // imagesData.forEach((imageData) => {
-      //   galery.images.some((image) => {
-      //     if (image.id === imageData.id) {
-      //       // Update properties
-      //       image.title = imageData.title;
-      //       image.description = imageData.description;
-      //       image.sort = imagesData.indexOf(imageData);
-      //
-      //
-      //       return true;
-      //     }
-      //   });
-      // });
       const images = [];
       imagesData.forEach(pd => {
         galery.images.forEach((p) => {
@@ -289,6 +296,7 @@ router.post('/:id/modify', (req, res) => {
         if (err) {
           return res.json({ success: false, message: err.message });
         }
+        reCreateIndex();
         return res.json({ success: true });
       });
 
@@ -310,12 +318,14 @@ router.post('/:id/modify', (req, res) => {
         }
       }
 
-      galery['dateOfPlay'] = dateUtils.parse(formData.date_of_play, 'MM/DD/YYYY');
+      galery['dateOfPlay'] = dateUtils.parse(formData.date_of_play,
+        'MM/DD/YYYY');
 
       galery.save((err) => {
         if (err) {
           return res.json({ success: false, message: err.message });
         }
+        reCreateIndex();
         return res.json({ success: true });
       });
     }
@@ -357,6 +367,7 @@ router.post('/:id/deletePicture', (req, res) => {
       if (err) {
         return err;
       }
+      reCreateIndex();
       res.status(200).json({});
     });
 
@@ -401,28 +412,6 @@ router.post('/:id/unsetFavorite', (req, res) => {
   });
 });
 
-const deleteImage = (dirname, filename) => {
-  const taskPath = path.resolve(__dirname, '../../tasks/deleteImage.js');
-  const childProcess = require('child_process').fork(taskPath);
-
-  childProcess.on('message', (message) => {
-    console.log(message);
-  });
-  childProcess.on('error', (error) => {
-    console.error(error.stack)
-  });
-  childProcess.on('exit', () => {
-    console.log(filename + ' done.');
-  });
-
-  if (filename) {
-    childProcess.send({
-      dirname: dirname,
-      filename: filename
-    });
-  }
-};
-
 const deleteImage2 = (config, fileUrls, thumbFileUrls) => {
   new RemoteUpload(config)
     .remove({
@@ -455,7 +444,7 @@ router.post('/delete', (req, res) => {
       if (err) {
         return res.json(err);
       }
-
+      reCreateIndex();
       res.json({ success: true, message: "Galery deleted successfully!" });
     });
 
@@ -471,6 +460,5 @@ router.post('/delete', (req, res) => {
       });
       deleteImage2(req.config, fileUrls, thumbFileUrls)
     }
-
   });
 });

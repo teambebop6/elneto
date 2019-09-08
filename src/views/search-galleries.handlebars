@@ -1,13 +1,8 @@
 <div id="searchContainer2" class="search teatro-cubano">
-  {{#if keyword}}
-    <div class="des"><i>buscar con palabra clave: {{keyword}}</i></div>
-  {{/if}}
   <div class="searchBar teatre-search">
     <input id="search-query" name="q" class="prompt" type="text" placeholder="Buscar en la galería ..." autocomplete="off">
     <i id="searchButton" class="inverted circular search link icon"></i>
   </div>
-  <!-- search results -->
-  <div class="results"></div>
 </div>
 
 {{#if keyword}}
@@ -29,11 +24,11 @@
     {{/each}}
   </div>
 
-{{else if init }}
+  {{#if init }}
+    <input type="hidden" id="init" value="{{ init }}"/>
+  {{/if}}
 
-  <input type="hidden" id="init" value="{{ init }}"/>
-
-{{ else }}
+{{ else if keyword}}
   <div id="noResult">
     <span class="results">
       sin resultados ...

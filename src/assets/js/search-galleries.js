@@ -6,63 +6,71 @@ app.then(function () {
     $('#search-query').focus();
   }
 
-  var justifiedGallery = require(['justifiedGallery'], function () {
-    console.log("loaded justified galery");
+  var bindGalleriesEvents = function () {
 
-    $('#albumList').justifiedGallery({
-      rowHeight: 230,
-      lastRow: 'nojustify',
-      maxRowHeight: 380,
-      randomize: false,
-      margins: 30
+    require(['justifiedGallery'], function () {
+      console.log("loaded justified galery");
+
+      $('#albumList').justifiedGallery({
+        rowHeight: 230,
+        lastRow: 'nojustify',
+        maxRowHeight: 380,
+        randomize: false,
+        margins: 30
+      });
     });
-  });
+
+  };
+
+  bindGalleriesEvents();
+
+  var resetGalleriesHtml = function (galleries) {
+
+    let html = '';
+    if (galleries) {
+      galleries.forEach(function (gallery) {
+        html = html + (
+          `
+                <a href="/galery/${gallery._id}" data-id="${gallery._id}">
+        <img alt="${gallery.title}" src="${gallery.titlePicture}"/>
+      </a>
+          `
+        )
+      })
+    }
+
+    $('#albumList').html(html);
+    bindGalleriesEvents();
+  };
 
   $('#searchButton').on('click', function () {
-    var keyword = $('#searchField').val();
+    var keyword = $('#search-query').val();
     if (keyword) {
-      var url = `/categories/search-galleries/${keyword}`;
-      window.location.href = url;
+      window.location.href = `/query/galery?q=${keyword}`;
     }
   });
 
-  $('.ui.search.teatro-cubano, .teatre-search').search({
-    apiSettings: {
-      onResponse: function(res) {
-
-        $('#noResult').hide();
-
-        var response = {
-          results : []
-        };
-
-        // translate API response to work with search
-        if (res.data) {
-          $.each(res.data, function(index, item) {
-            var maxResults = 20;
-
-            if(index >= maxResults) {
-              return false;
-            }
-
-            // add result to category
-            response.results.push({
-              title: item.title
-            });
-          });
+  // use timeout to avoid search too frequently
+  var triggerOnChangeEvent;
+  $('#search-query').on('input', function () {
+    if (triggerOnChangeEvent) {
+      clearTimeout(triggerOnChangeEvent);
+    }
+    var query = $(this).val();
+    var qCond = query ? `?q=${query}` : '';
+    triggerOnChangeEvent = setTimeout(function () {
+      $.ajax({
+        method: 'GET',
+        url: `/query/plain/galery${qCond}`,
+        success : function(result){
+          resetGalleriesHtml(result.data);
+        },
+        error : function(xhr){
+          console.error(xhr.status + " " + xhr.statusText);
         }
-        return response;
-      },
-      url: '/categories/search?keyword={query}',
-    },
-    minCharacters : 1,
-    onSelect: function(selectedItem){
-      if(selectedItem){
-        console.log(selectedItem.title)
-        var url = `/categories/search-galleries/${selectedItem.title}`;
-        window.location.href = url;
-      }
-    },
+      })
+
+    }, 500);
   });
 
 });

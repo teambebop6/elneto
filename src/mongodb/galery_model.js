@@ -23,7 +23,7 @@ const GalerySchema = new mongoose.Schema({
 });
 
 GalerySchema.statics.toDTO = (dbObject) => {
-  return Object.toObject();
+  return dbObject.toObject();
 };
 
 module.exports = mongoose.model('Galery', GalerySchema);
