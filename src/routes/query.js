@@ -6,132 +6,175 @@ const router = express.Router({});
 const db = require('../mongodb/db');
 const logger = require('../lib/logger');
 
-const Gallery = db.Galery;
+const convertNullIfLenghtIsZeo = (array) => array ? array.length > 0 ? array : null : null;
 
-const getModel = (type) => {
-  // TODO only support galery now
-  if (type === 'galery') {
-    return db.Galery;
-  } else if (type === 'poem') {
-    return db.Poem;
-  } else if (type === 'cuadro') {
-    return db.Cuadro;
-  } else if (type === 'yonny-foto') {
-    return db.YonnyFoto
-  } else {
-    return db.Galery;
-  }
-};
-
-const getDefaultCond = (type) => {
-  if (type === 'galery') {
-    return {
-      isActive: true
-    }
-  } else {
-    // TODO
-    return {}
-  }
-};
-
-const buildResponse = ({ res, data, error, module = Gallery, errorCode }) => {
+const buildResponse = ({ res, data, error, errorCode }) => {
   let code = errorCode || error ? 400 : 200;
   if (error) {
     logger.error(error);
   }
-  if (data && Array.isArray(data)) {
-    data = data.map(d => module.toDTO(d));
-  } else if (data) {
-    data = module.toDTO(data);
-  }
   return res.status(code).json({
-    data: data || {},
+    data: {
+      galleries: convertNullIfLenghtIsZeo(data.galleries),
+      cuadros: convertNullIfLenghtIsZeo(data.cuadros),
+      yonnyFotos: convertNullIfLenghtIsZeo(data.yonnyFotos),
+    },
     error: error ? error.message : null,
   })
 };
 
-const query = ({ req, res, next, model = Gallery, cond = {}, plain = true }) => {
+const fetchObjects = ({ model, cond, keyword }) => {
+  return new Promise((resolve) => {
 
-  const keyword = req.query.q;
-  logger.debug(
-    `search ${model.collection.name} by keyword = ${keyword}, type = ${req.params.type}`);
+    logger.info(
+      `search ${model.collection.name} by keyword = ${keyword}`);
 
-  if (!keyword) {
-    model.find(cond).sort({
-      order: 'desc',
-    }).limit(5).exec((error, galleries) => {
-      if (plain) {
-        buildResponse({
-          res,
-          data: galleries,
-          error
-        });
-      } else {
-        if (error) {
-          return next(error);
-        }
-        res.render('search-galleries', {
-          title: 'Search Galleries',
-          init: true,
-          galleries: galleries,
-          scripts: 'search-galleries.bundle',
-        });
-      }
-    });
-  } else {
+    const condition = {};
+    if (cond) {
+      Object.assign(condition, cond);
+    }
 
-    Gallery.find({
+    if (!keyword) {
+      model.find(condition)
+        .sort({
+          order: 'desc'
+        })
+        .limit(5)
+        .exec((error, results) => {
+          if (error) {
+            logger.error(
+              `search ${model.collection.name} by keyword = ${keyword} failed`);
+            logger.error(error);
+            resolve([]);
+          }
+          resolve(results);
+        })
+    } else {
+
+      Object.assign(condition, {
         $text: {
           $search: keyword,
           $caseSensitive: false
         }
-      },
-      { score: { $meta: "textScore" } }).sort({
-      score: { $meta: "textScore" }
-    }).exec((error, galleries) => {
+      });
+
+      model.find(condition, { score: { $meta: "textScore" } }).sort({
+        score: { $meta: "textScore" }
+      }).exec((error, results) => {
+        if (error) {
+          logger.error(
+            `search ${model.collection.name} by keyword = ${keyword} failed`);
+          logger.error(error);
+          resolve([]);
+        }
+        resolve(results);
+      });
+
+    }
+  })
+};
+
+const query = ({ req, res, next, plain = true }) => {
+
+  const keyword = req.query.q;
+
+  const ps = [];
+  ps.push(fetchObjects({
+    model: db.Galery,
+    cond: {
+      isActive: true
+    },
+    keyword,
+  }));
+  ps.push(fetchObjects({
+    model: db.Cuadro,
+    cond: {
+      visible: true
+    },
+    keyword,
+  }));
+  ps.push(fetchObjects({
+    model: db.YonnyFoto,
+    cond: {
+      visible: true
+    },
+    keyword,
+  }));
+
+  Promise
+    .all(ps)
+    .then(([galleries, cuadros, yonnyFotos]) => {
+      const galleryObjects = !galleries ? null : galleries.map((g) => db.Galery.toDTO(g));
+      const cuadroObjects = !cuadros ? null : (
+        cuadros
+          .filter(c => c.photos && c.photos.length > 0)
+          .map((c) => {
+            const dto = db.Cuadro.toDTO(c);
+            dto.titlePicture = dto.photos[0].link;
+            return dto;
+          })
+      );
+      const yonnyFotoObjects = !yonnyFotos ? null : (
+        yonnyFotos
+          .filter(c => c.photos && c.photos.length > 0)
+          .map((c) => {
+            const dto = db.YonnyFoto.toDTO(c);
+            dto.titlePicture = dto.photos[0].link;
+            return dto;
+          })
+      );
+
       if (plain) {
         buildResponse({
           res,
-          data: galleries,
-          error
+          data: {
+            galleries: galleryObjects,
+            cuadros: cuadroObjects,
+            yonnyFotos: yonnyFotoObjects
+          },
+        });
+      } else {
+        res.render('search-galleries', {
+          title: 'Search Galleries',
+          init: !keyword,
+          keyword,
+          data: {
+            galleries: galleryObjects,
+            cuadros: cuadroObjects,
+            yonnyFotos: yonnyFotoObjects
+          },
+          scripts: 'search-galleries.bundle',
+        });
+      }
+    })
+    .catch((error) => {
+      if (plain) {
+        buildResponse({
+          res,
+          error,
         });
       } else {
         if (error) {
           return next(error);
-        } else {
-          res.render('search-galleries', {
-            title: 'Search Galleries',
-            galleries: galleries,
-            keyword: keyword,
-            scripts: 'search-galleries.bundle',
-          });
         }
       }
     });
-  }
-
 };
 
-router.get('/:type', (req, res, next) => {
-  const type = req.params.type;
+router.get('/', (req, res, next) => {
   query({
     req,
     res,
     next,
-    model: getModel(type),
-    cond: getDefaultCond(type),
     plain: false
   })
 });
 
-router.get('/plain/:type', (req, res, next) => {
-  const type = req.params.type;
+router.get('/plain', (req, res, next) => {
   query({
     req,
     res,
     next,
-    model: getModel(type),
-    cond: getDefaultCond(type),
     plain: true
   })
 });

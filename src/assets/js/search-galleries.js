@@ -11,24 +11,30 @@ app.then(function () {
     require(['justifiedGallery'], function () {
       console.log("loaded justified galery");
 
-      $('#albumList').justifiedGallery({
-        rowHeight: 230,
-        lastRow: 'nojustify',
-        maxRowHeight: 380,
-        randomize: false,
-        margins: 30
-      });
+      $('#albumList, #albumListCuadros, #albumListYonnyFotos').justifiedGallery(
+        {
+          rowHeight: 230,
+          lastRow: 'nojustify',
+          maxRowHeight: 380,
+          randomize: false,
+          margins: 30
+        });
+
     });
 
   };
 
   bindGalleriesEvents();
 
-  var resetGalleriesHtml = function (galleries) {
+  var resetGalleriesHtml = function (data) {
 
-    let html = '';
-    if (galleries) {
-      galleries.forEach(function (gallery) {
+    var noResultHtml = '<h5 class="ui inverted header querySectionTitle" style="margin-bottom: 50px !important;">sin resultados</h5>';
+
+    let html = '<h3 class="ui inverted header querySectionTitle querySectionTitleNoResult">Galeries</h3>';
+    if (data.galleries) {
+      html = html
+        + '<div class="albums_wrapper justified-gallery" id="albumList">';
+      data.galleries.forEach(function (gallery) {
         html = html + (
           `
                 <a href="/galery/${gallery._id}" data-id="${gallery._id}">
@@ -36,17 +42,59 @@ app.then(function () {
       </a>
           `
         )
-      })
+      });
+    } else {
+      html = html + noResultHtml;
     }
+    html = html + '</div>';
+    $('#galeryContainer').html(html);
 
-    $('#albumList').html(html);
+    let htmlCuadros = '<h3 class="ui inverted header querySectionTitle querySectionTitleNoResult">Sus Cuadros</h3>';
+    if (data.cuadros) {
+      htmlCuadros = htmlCuadros
+        + '<div class="albums_wrapper justified-gallery" id="albumListCuadros">';
+      data.cuadros.forEach(function (cuadro) {
+        htmlCuadros = htmlCuadros + (
+          `
+                <a href="/yonny#id=cuadros_${cuadro.id}" data-id="${cuadro.id}">
+        <img alt="${cuadro.title}" src="${cuadro.titlePicture}"/>
+      </a>
+          `
+        )
+      });
+    } else {
+      htmlCuadros = htmlCuadros + noResultHtml;
+    }
+    htmlCuadros = htmlCuadros + '</div>';
+    $('#cuadrosContainer').html(htmlCuadros);
+
+    let htmlYonnyFotos = '<h3 class="ui inverted header querySectionTitle">Yonny En Fotos</h3>';
+    if (data.yonnyFotos) {
+      htmlYonnyFotos = htmlYonnyFotos
+        + '<div class="albums_wrapper justified-gallery" id="albumListYonnyFotos">';
+      data.yonnyFotos.forEach(function (cuadro) {
+        console.log(cuadro);
+        htmlYonnyFotos = htmlYonnyFotos + (
+          `
+                <a href="/yonny/en-fotos#id=en_fotos_${cuadro.id}" data-id="${cuadro.id}">
+        <img alt="${cuadro.title}" src="${cuadro.titlePicture}"/>
+      </a>
+          `
+        )
+      });
+    } else {
+      htmlYonnyFotos = htmlYonnyFotos + noResultHtml;
+    }
+    htmlYonnyFotos = htmlYonnyFotos + '</div>';
+    $('#yonnyFotosContainer').html(htmlYonnyFotos);
+
     bindGalleriesEvents();
   };
 
   $('#searchButton').on('click', function () {
     var keyword = $('#search-query').val();
     if (keyword) {
-      window.location.href = `/query/galery?q=${keyword}`;
+      window.location.href = `/query?q=${keyword}`;
     }
   });
 
@@ -61,11 +109,11 @@ app.then(function () {
     triggerOnChangeEvent = setTimeout(function () {
       $.ajax({
         method: 'GET',
-        url: `/query/plain/galery${qCond}`,
-        success : function(result){
+        url: `/query/plain${qCond}`,
+        success: function (result) {
           resetGalleriesHtml(result.data);
         },
-        error : function(xhr){
+        error: function (xhr) {
           console.error(xhr.status + " " + xhr.statusText);
         }
       })

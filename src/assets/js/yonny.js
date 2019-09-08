@@ -6,7 +6,7 @@ require('../vendor/slick-1.8.1/slick/slick.js');
 
 app.then(function () {
 
-  var justifiedGallery = require(['justifiedGallery'], function () {
+  require(['justifiedGallery'], function () {
     console.log("loaded justified galery22");
 
     $('#enFotos').justifiedGallery({
@@ -30,12 +30,31 @@ app.then(function () {
     variableWidth: true
   });
 
+  function getHashParameters(){
+    var arr = (location.hash || "").replace(/^\#/,'').split("&");
+    var params = {};
+    for(var i=0; i<arr.length; i++){
+      var data = arr[i].split("=");
+      if(data.length === 2){
+        params[data[0]] = data[1];
+      }
+    }
+    return params;
+  }
 
+  var gotoPosition = function () {
+    var hashes = getHashParameters();
+    if (hashes.id) {
+      var scroll = $('#' + hashes.id).offset().top - 30;
+      $('body, html').scrollTop(scroll);
+    }
+  };
+  gotoPosition();
 
 
   // ================this is for open up the light box=============
 
-  var photoswipe = require([
+  require([
     'photoswipe',
     '../vendor/photoswipe/dist/photoswipe-ui-default.js'
   ], function( PhotoSwipe, PhotoSwipeUI_Default ) {

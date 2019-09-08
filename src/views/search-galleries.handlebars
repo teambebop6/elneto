@@ -13,26 +13,50 @@
   </div>
 {{/if}}
 
+{{#if init }}
+  <input type="hidden" id="init" value="{{ init }}"/>
+{{/if}}
 
-{{#if galleries }}
-
-  <div class="albums_wrapper justified-gallery" id="albumList">
-    {{#each galleries}}
-      <a href="/galery/{{this._id}}" data-id="{{this._id}}">
-        <img alt="{{this.title}}" src="{{this.titlePicture}}"/>
-      </a>
-    {{/each}}
+{{#if data.galleries }}
+  <div id="galeryContainer">
+    <h3 class="ui inverted header querySectionTitle">Galeries</h3>
+    <div class="albums_wrapper justified-gallery" id="albumList">
+      {{#each data.galleries}}
+        <a href="/galery/{{this._id}}" data-id="{{this._id}}">
+          <img alt="{{this.title}}" src="{{this.titlePicture}}"/>
+        </a>
+      {{/each}}
+    </div>
   </div>
+{{/if}}
 
-  {{#if init }}
-    <input type="hidden" id="init" value="{{ init }}"/>
-  {{/if}}
+{{#if data.cuadros}}
+  <div id="cuadrosContainer">
+    <h3 class="ui inverted header querySectionTitle">Sus Cuadros</h3>
+    <div class="albums_wrapper justified-gallery" id="albumListCuadros">
+      {{#each data.cuadros}}
+        {{#if this.photos}}
+          <a href="/yonny#cuadros_{{this.id}}" data-id="{{this.id}}">
+            <img alt="{{this.title}}" src="{{this.titlePicture}}"/>
+          </a>
+        {{/if}}
+      {{/each}}
+    </div>
+  </div>
+{{/if}}
 
-{{ else if keyword}}
-  <div id="noResult">
-    <span class="results">
-      sin resultados ...
-    </span>
+{{#if data.yonnyFotos}}
+  <div id="yonnyFotosContainer">
+    <h3 class="ui inverted header querySectionTitle">Yonny En Fotos</h3>
+    <div class="albums_wrapper justified-gallery" id="albumListYonnyFotos">
+      {{#each data.yonnyFotos}}
+        {{#if this.photos}}
+          <a href="/yonny/en-fotos#en_fotos_{{this.id}}" data-id="{{this.id}}">
+            <img alt="{{this.title}}" src="{{this.titlePicture}}"/>
+          </a>
+        {{/if}}
+      {{/each}}
+    </div>
   </div>
 {{/if}}
 

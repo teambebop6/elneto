@@ -16,6 +16,24 @@ const dateUtils = require('../../utils/dateUtils');
 const Cuadro = db.Cuadro;
 const YonnyFoto = db.YonnyFoto;
 
+const reCreateIndex = (model) => {
+
+  logger.info(`start re-create index for ${model.collection.name} at backend ...`);
+  model.collection.dropIndexes();
+
+  model.collection.createIndex({
+    "$**": "text"
+  }, {
+    default_language: 'spanish',
+    background: true
+  }, (err) => {
+    if (err) {
+      logger.error(`re-create index for ${model.collection.name} collection failed`);
+      logger.error(err);
+    }
+  });
+};
+
 const getType = (req) => {
 
   if (req.query.m) {
@@ -156,8 +174,8 @@ router.get('/', (req, res) => {
 router.post('/modify/:id', (req, res) => {
 
   const m = getType(req) || 'c';
-
-  model(m).findOne({ _id: req.params.id }, (err, item) => {
+  const module = model(m);
+  module.findOne({ _id: req.params.id }, (err, item) => {
     if (err) {
       res.json({ success: false, message: err.message });
       return;
@@ -198,6 +216,8 @@ router.post('/modify/:id', (req, res) => {
         if (err) {
           return res.json({ success: false, message: err.message });
         }
+
+        reCreateIndex(module);
       });
 
       return res.json({ success: true });
@@ -228,6 +248,7 @@ router.post('/modify/:id', (req, res) => {
         if (err) {
           return res.json({ success: false, message: err.message });
         }
+        reCreateIndex(module);
       });
 
       return res.json({ success: true });
@@ -274,8 +295,9 @@ router.post('/delete-photo/:id', (req, res) => {
   if (!postData.photoId) {
     return res.status(400).json();
   }
+  const module = model(m);
 
-  model(m).findOne({ _id: itemId }, (err, item) => {
+  module.findOne({ _id: itemId }, (err, item) => {
     if (err) {
       return err;
     }
@@ -301,6 +323,7 @@ router.post('/delete-photo/:id', (req, res) => {
             if (err) {
               return err;
             }
+            reCreateIndex(module);
             res.status(200).json({});
           });
         })
@@ -309,6 +332,7 @@ router.post('/delete-photo/:id', (req, res) => {
         if (err) {
           return err;
         }
+        reCreateIndex(module);
         res.status(200).json({});
       });
     }
@@ -395,6 +419,7 @@ router.post('/', (req, res) => {
               module
             })
           }
+          reCreateIndex(module);
           return buildResponseAndReturn({
             res,
             data: p,
@@ -404,7 +429,6 @@ router.post('/', (req, res) => {
       })
     });
   }
-
 });
 
 router.delete('/', (req, res) => {
@@ -431,6 +455,8 @@ router.delete('/', (req, res) => {
       if (err) {
         return res.status(500).json(err);
       }
+
+      reCreateIndex(module);
 
       res.status(200).json({ success: true, message: "Item deleted successfully!" });
     });
@@ -485,29 +511,6 @@ const deleteImage2 = (config, fileUrls, thumbFileUrls) => {
     .catch(logger.error)
 };
 
-const deleteImage = (dirname, filename) => {
-
-  const taskPath = path.resolve(__dirname, '../../tasks/deleteImage.js');
-  const childProcess = require('child_process').fork(taskPath);
-
-  childProcess.on('message', (message) => {
-    logger.info(message);
-  });
-  childProcess.on('error', (error) => {
-    logger.info(error.stack)
-  });
-  childProcess.on('exit', () => {
-    logger.info(filename + ' done.');
-  });
-
-  if (filename) {
-    childProcess.send({
-      dirname: dirname,
-      filename: filename
-    });
-  }
-};
-
 const buildResponseAndReturn = ({ res, data, error, module = Cuadro }) => {
   let code = error ? 400 : 200;
   if (error) {
@@ -551,6 +554,7 @@ const updateItem = (id, updateData, model) => {
         if (err) {
           reject(err);
         }
+        reCreateIndex(model);
         resolve();
       });
     });

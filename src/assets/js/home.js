@@ -5,7 +5,7 @@ app.then(function () {
   var windowWidth = $(window).width();
 
   $('#searchField').on('focus', function () {
-    window.location.href = '/query/galery';
+    window.location.href = '/query';
   });
 
   if (windowWidth > 1080) {

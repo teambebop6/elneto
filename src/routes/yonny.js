@@ -14,25 +14,28 @@ router.get('/*', function (req, res, next) {
 
 router.get('/', function (req, res) {
 
-  db.Cuadro.find({visible: true}).sort({ order: 'desc' }).exec((err, cuadros) => {
+  db.Cuadro.find({ visible: true }).sort({ order: 'desc' }).exec(
+    (err, cuadros) => {
 
-    if (err) {
-      logger.error("Find cuadros failed", err);
-      cuadros = [];
-    }
+      if (err) {
+        logger.error("Find cuadros failed", err);
+        cuadros = [];
+      }
 
-    const cuadroObjects = cuadros.map( c => db.Cuadro.toDTO(c));
+      const cuadroObjects = cuadros.filter((c) => {
+        return c.photos && c.photos.length > 0
+      }).map(c => db.Cuadro.toDTO(c));
 
-    res.render('yonny/cuadros', {
-      title: 'Yonny',
-      active: {
-        cuadros: true
-      },
-      cuadros: cuadroObjects,
-      scripts: 'yonny.bundle',
+      res.render('yonny/cuadros', {
+        title: 'Yonny',
+        active: {
+          cuadros: true
+        },
+        cuadros: cuadroObjects,
+        scripts: 'yonny.bundle',
+      });
+
     });
-
-  });
 
 });
 
@@ -107,24 +110,27 @@ router.get('/poemas-detail', function (req, res) {
 
 router.get('/en-fotos', function (req, res) {
 
-  db.YonnyFoto.find({visible: true}).sort({ order: 'desc' }).exec((err, yonnyFotos) => {
+  db.YonnyFoto.find({ visible: true }).sort({ order: 'desc' }).exec(
+    (err, yonnyFotos) => {
 
-    if (err) {
-      logger.error("Find cuadros failed", err);
-      yonnyFotos = [];
-    }
+      if (err) {
+        logger.error("Find cuadros failed", err);
+        yonnyFotos = [];
+      }
 
-    const yonnyFotoObjects = yonnyFotos.map( c => db.YonnyFoto.toDTO(c));
+      const yonnyFotoObjects = yonnyFotos.filter((c) => {
+        return c.photos && c.photos.length > 0
+      }).map(c => db.YonnyFoto.toDTO(c));
 
-    res.render('yonny/en_fotos', {
-      title: 'Yonny',
-      active: {
-        enFotos: true
-      },
-      yonnyFotos: yonnyFotoObjects,
-      scripts: 'yonny.bundle',
+      res.render('yonny/en_fotos', {
+        title: 'Yonny',
+        active: {
+          enFotos: true
+        },
+        yonnyFotos: yonnyFotoObjects,
+        scripts: 'yonny.bundle',
+      });
+
     });
-
-  });
 
 });
