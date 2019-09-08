@@ -172,12 +172,13 @@ class RemoteUpload {
     const normalParams = {
       Bucket: normalBucket,
       Delete: {
-        Objects: fileUrls.map((fileUrl) => {
-          logger.info(`Will remove ${fileUrl}`);
-          return {
-            Key: parseFileKey(this.endPoint, normalBucket, fileUrl)
-          }
-        }),
+        Objects: fileUrls.filter(url => url.startsWith('http')).map(
+          (fileUrl) => {
+            logger.info(`Will remove ${fileUrl}`);
+            return {
+              Key: parseFileKey(this.endPoint, normalBucket, fileUrl)
+            }
+          }),
         Quiet: true
       }
     };
@@ -185,12 +186,13 @@ class RemoteUpload {
     const thumbParams = {
       Bucket: thumbBucket,
       Delete: {
-        Objects: thumbFileUrls.map((fileUrl) => {
-          logger.info(`Will remove ${fileUrl}`);
-          return {
-            Key: parseFileKey(this.endPoint, thumbBucket, fileUrl)
-          }
-        }),
+        Objects: thumbFileUrls.filter(url => url.startsWith('http')).map(
+          (fileUrl) => {
+            logger.info(`Will remove ${fileUrl}`);
+            return {
+              Key: parseFileKey(this.endPoint, thumbBucket, fileUrl)
+            }
+          }),
         Quiet: true
       }
     };
