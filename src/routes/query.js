@@ -110,7 +110,9 @@ const query = ({ req, res, next, plain = true }) => {
           .filter(c => c.photos && c.photos.length > 0)
           .map((c) => {
             const dto = db.Cuadro.toDTO(c);
-            dto.titlePicture = dto.photos[0].link;
+            if (!dto.titlePicture) {
+              dto.titlePicture = dto.photos[0].link;
+            }
             return dto;
           })
       );
@@ -119,7 +121,9 @@ const query = ({ req, res, next, plain = true }) => {
           .filter(c => c.photos && c.photos.length > 0)
           .map((c) => {
             const dto = db.YonnyFoto.toDTO(c);
-            dto.titlePicture = dto.photos[0].link;
+            if (!dto.titlePicture) {
+              dto.titlePicture = dto.photos[0].link;
+            }
             return dto;
           })
       );

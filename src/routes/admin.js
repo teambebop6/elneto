@@ -385,7 +385,7 @@ router.post('/admin/upload2/:target?', multer.fields([{ name: 'files' }]),
                 });
               }
             })
-          } if (target === 'yonny-foto') {
+          } else if (target === 'yonny-foto') {
 
             db.YonnyFoto.findOne({ _id: req.body.yonny_foto_id }, (err, yonnyFoto) => {
               if (err || !yonnyFoto) {
@@ -427,6 +427,9 @@ router.post('/admin/upload2/:target?', multer.fields([{ name: 'files' }]),
                 console.log(photo);
                 // Add new picture to galery
                 galery.images.push(photo);
+                if (!galery.titlePicture) {
+                  galery.titlePicture = photo.link;
+                }
                 galery.save().then(() => {
                   res.json(urls);
                 });
