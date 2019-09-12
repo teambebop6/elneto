@@ -10,7 +10,7 @@ PhotoSchema = new (mongoose.Schema)({
   linkThumb: String,
   width: Number,
   height: Number,
-  size: Number,
+  size: String,
   technik: String,
   comments: String,
   order: {
