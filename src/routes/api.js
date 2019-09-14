@@ -41,8 +41,6 @@ router.get('/search', function(req, res, next){
     });
   }
 
-
-
   SearchEntries.collection.dropIndexes();
   SearchEntries.collection.createIndex({
     year: 'text',
