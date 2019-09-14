@@ -154,7 +154,7 @@ router.post('/new', (req, res) => {
         _id: counter.seq,
         title: req.body.title,
         description: req.body.description,
-        dateOfPlay: new Date(req.body.date_of_play),
+        dateOfPlay: dateUtils.parse(req.body.date_of_play, 'DD/MM/YYYY'),
         createdOn: new Date(),
         location: req.body.location,
         author: req.body.author,
@@ -319,13 +319,15 @@ router.post('/:id/modify', (req, res) => {
       }
 
       galery['dateOfPlay'] = dateUtils.parse(formData.date_of_play,
-        'MM/DD/YYYY');
+        'DD/MM/YYYY');
 
       galery.save((err) => {
         if (err) {
           return res.json({ success: false, message: err.message });
         }
-        reCreateIndex();
+        setTimeout(() => {
+          reCreateIndex();
+        }, 2000);
         return res.json({ success: true });
       });
     }

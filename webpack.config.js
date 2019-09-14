@@ -26,6 +26,7 @@ module.exports = {
       'jquery.validate': path.join(__dirname, '/public/vendor/jquery.validate.min.js'),
       'jquery.validate.de': path.join(__dirname, '/src/assets/vendor/jquery.validate.de.js'),
       'jquery-ui': path.join(__dirname, '/public/js/vendor/jquery-ui.min'),
+      'jquery.inputmask': path.join(__dirname, '/public/js/vendor/jquery.inputmask.min.js'),
       'cookies': path.join(__dirname, '/src/assets/js/js.cookie'),
       'lightbox': path.join(__dirname, '/bower_components/lightbox2/dist/js/lightbox.min.js'),
       'jquery.datepicker': path.join(__dirname, '/src/assets/vendor/jquery.datepicker/datepicker.min.js'),

@@ -12,8 +12,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <link type="text/css" rel="stylesheet" href="/assets/commons.css"/>
-  <link type="text/css" rel="stylesheet" href="//fast.fonts.net/cssapi/ff2d2c4a-64b2-4789-879c-40facd89a49e.css"/>
 
+  {{#if isDev }}
+  {{ else }}
+    <link type="text/css" rel="stylesheet" href="//fast.fonts.net/cssapi/ff2d2c4a-64b2-4789-879c-40facd89a49e.css"/>
+  {{/if}}
 
   {{#if head_scripts}}
     <!-- custom styles -->

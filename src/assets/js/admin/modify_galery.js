@@ -6,32 +6,39 @@ var moment = require('moment');
 
 require('../../vendor/datepicker/dist/datepicker.min.css');
 
-app.then(function(){
+app.then(function () {
 
   // Datepicker
-  require(['datepicker'], function(){
+  require(['datepicker'], function () {
     console.log("loaded datepicker.");
     // Datepicker
     var picker = $('#date_of_play_string');
 
     var dateOfPlay = $('#date_of_play').val();
 
-    console.log(dateOfPlay);
-
-    dateFormat = "DD | MM | yyyy";
+    var dateFormat = "DD/MM/YYYY";
 
     picker.datepicker({
-      format: dateFormat,
-      date: moment(dateOfPlay, dateFormat).format(),
+      format: 'dd/mm/yyyy',
+      date: moment(dateOfPlay, dateFormat).toDate(),
     });
     $(picker).on('pick.datepicker', function (e) {
-      $('#date_of_play').val(moment(e.date).format('L'));
+      $('#date_of_play').val(moment(e.date).format(dateFormat));
     });
   });
 
+  require(['jquery.inputmask'], function () {
+    console.log('Loaded inputmask');
+    $('#date_of_play_string').inputmask("99/99/9999", {
+      alias: "dd/mm/yyyy",
+      oncomplete: function () {
+        $('#date_of_play').val($('#date_of_play_string').val())
+      }
+    });
+  });
 
   // Refresh rollover events for thumbnails
-  var refreshThumb = function(thumb){
+  var refreshThumb = function (thumb) {
 
     // Hide hidden content of galery thumbs
     thumb.find('.info .actions').hide();
@@ -39,31 +46,30 @@ app.then(function(){
     var actionsButton = thumb.find('.info .actions .button').first();
     var icon = actionsButton.find('i').first();
 
-    actionsButton.mouseover(function(){
+    actionsButton.mouseover(function () {
       icon.removeClass("square outline");
       icon.addClass("checkmark box");
     });
-    actionsButton.mouseout(function(){
+    actionsButton.mouseout(function () {
       icon.addClass("square outline");
       icon.removeClass("checkmark box");
     });
 
     //Show actions and hide states on rollover
-    thumb.mouseover(function(){
+    thumb.mouseover(function () {
       var actions = thumb.find('.info .actions').first();
       actions.show();
     });
-    thumb.mouseout(function(){
+    thumb.mouseout(function () {
       thumb.find('.actions').hide();
     });
   };
 
-  $('.image-thumb').each(function(){
+  $('.image-thumb').each(function () {
     refreshThumb($(this));
   });
 
-
-  require(['jquery.fileupload'], function(){
+  require(['jquery.fileupload'], function () {
     // Fileupload
     var galery_id = $('#galery-id').val();
 
@@ -71,20 +77,22 @@ app.then(function(){
 
     $('#fileupload').fileupload({
       dataType: 'json',
-      formData: {galery_id: galery_id },
+      formData: { galery_id: galery_id },
       disableImageResize: false,
       imageMaxWidth: 1177,
       imageMaxHeight: 1177,
       sequentialUploads: true,
-      done: function(e, data){
+      done: function (e, data) {
 
         console.log(data.result.files)
 
-        $.get("/admin/galery/getThumbTemplate?link=" + data.result.thumbUrl + "&id=" + data.result.id, function(data){
-          var thumb = $('<div/>').html(data).find('> div');
-          refreshThumb(thumb); // Bind mouseover events
-          thumb.appendTo($('.images-list'));
-        });
+        $.get(
+          "/admin/galery/getThumbTemplate?link=" + data.result.thumbUrl + "&id="
+          + data.result.id, function (data) {
+            var thumb = $('<div/>').html(data).find('> div');
+            refreshThumb(thumb); // Bind mouseover events
+            thumb.appendTo($('.images-list'));
+          });
 
         $('.ui.progress').hide();
         $('.no-images-yet-message').hide();
@@ -110,14 +118,13 @@ app.then(function(){
     });
   });
 
-  require(['jquery.validate', 'jquery-ui'], function(){
+  require(['jquery.validate', 'jquery-ui'], function () {
 
     // Serialize Array
-    $.fn.serializeObject = function()
-    {
+    $.fn.serializeObject = function () {
       var o = {};
       var a = this.serializeArray();
-      $.each(a, function() {
+      $.each(a, function () {
         if (o[this.name]) {
           if (!o[this.name].push) {
             o[this.name] = [o[this.name]];
@@ -130,9 +137,7 @@ app.then(function(){
       return o;
     };
 
-
-
-    var deletePicture = function(id){
+    var deletePicture = function (id) {
       var confirmDelete = $('#confirmDeleteModal').clone()
         .html($('#confirmDeleteModal').html().replace(/###placeholder###/g,
           "this picture")
@@ -140,18 +145,18 @@ app.then(function(){
 
       var galery_id = $('#galery-id').val();
       confirmDelete.modal({
-        onApprove : function() {
+        onApprove: function () {
           $.ajax({
             method: 'POST',
-            url: '/admin/galery/'+galery_id+'/deletePicture',
+            url: '/admin/galery/' + galery_id + '/deletePicture',
             data: { id: id },
-            success : function(data, textStatus, xhr){
-              if(xhr.status === 200){
+            success: function (data, textStatus, xhr) {
+              if (xhr.status === 200) {
                 console.log('#galery-thumb-' + String(id));
                 $('#galery-thumb-' + String(id)).hide();
               }
             },
-            error : function(xhr){
+            error: function (xhr) {
               console.log(xhr.status + " " + xhr.statusText);
             }
           })
@@ -161,31 +166,32 @@ app.then(function(){
     }
 
     // Delete single galery
-    $('.deletePicture').click(function(){
+    $('.deletePicture').click(function () {
       deletePicture($(this).data("id"));
     })
 
     // Set title picture of galery
-    var setTitlePicture = function(id){
+    var setTitlePicture = function (id) {
       var galery_id = $('#galery-id').val();
       $.ajax({
         type: "post",
-        url: "/admin/galery/"+galery_id+"/modify",
+        url: "/admin/galery/" + galery_id + "/modify",
         data: {
           action: "setTitlePicture",
           titlePictureId: id
         },
-        success: function(data){
-          if(data.success){
+        success: function (data) {
+          if (data.success) {
 
             // Remove existing labels
             $('.isTitlePicture').remove();
 
             var info = $('#image-thumb-' + id).find('.info');
-            var isTitleElement = $('<p class="isTitlePicture">').html('<i class="icon checkmark box"></i>Current title picture');
+            var isTitleElement = $('<p class="isTitlePicture">').html(
+              '<i class="icon checkmark box"></i>Current title picture');
             console.log(isTitleElement);
             isTitleElement.appendTo(info.find('.states').first());
-          }else{
+          } else {
             console.log(data.message);
           }
         }
@@ -193,66 +199,67 @@ app.then(function(){
     }
 
     // Delete single galery
-    $('.setTitlePicture').click(function(){
+    $('.setTitlePicture').click(function () {
       setTitlePicture($(this).data("id"));
     })
 
-
-    $('#form-galery-info').submit(function(e){
+    $('#form-galery-info').submit(function (e) {
       e.preventDefault();
     }).validate({
-      submitHandler: function(form){
+      submitHandler: function (form) {
         submitFormData();
       }
     });
     // Validation of second form
-    $('#form-images').submit(function(e){
+    $('#form-images').submit(function (e) {
       e.preventDefault();
     }).validate({
-      submitHandler: function(form){
+      submitHandler: function (form) {
         submitFormData();
       }
     });
 
-    var submitFormData= function(){
+    var submitFormData = function () {
       // Serialize data of all forms
-      var galeryInfoData = JSON.stringify($("#form-galery-info").serializeObject());
+      var galeryInfoData = JSON.stringify(
+        $("#form-galery-info").serializeObject());
 
       var imagesArray = [];
 
-      $.each($('#form-images').find('.galery-thumb-element'), function(i, galery_el){
-        var el = { id: $(galery_el).data("id") };
-        $.extend(el, $(galery_el).find("input").serializeObject());
-        imagesArray.push(el);
-      });
+      $.each($('#form-images').find('.galery-thumb-element'),
+        function (i, galery_el) {
+          var el = { id: $(galery_el).data("id") };
+          $.extend(el, $(galery_el).find("input").serializeObject());
+          imagesArray.push(el);
+        });
 
       console.log(imagesArray);
 
       var galery_id = $('#galery-id').val();
 
       $.ajax({
-        url: '/admin/galery/'+galery_id+'/modify',
+        url: '/admin/galery/' + galery_id + '/modify',
         type: 'post',
         data: {
           formData: galeryInfoData,
           action: 'updateGaleryInfo'
         },
-        success: function(data){
-          if(data.success){
+        success: function (data) {
+          if (data.success) {
             $.ajax({
-              url: '/admin/galery/'+galery_id+'/modify',
+              url: '/admin/galery/' + galery_id + '/modify',
               type: 'post',
               data: {
                 formData: JSON.stringify(imagesArray),
                 action: 'updateGaleryImages'
               },
-              success: function(data){
-                if(data.success){
+              success: function (data) {
+                if (data.success) {
                   $('.save.success.message')
                     .transition('fade right', '500ms')
                     .transition('fade right', '3000ms');
                 }
-                else{
+                else {
                   $(".save.error.message")
                     .transition('fade right', '500ms')
                     .transition('fade right', '3000ms');
@@ -260,7 +267,7 @@ app.then(function(){
               }
             });
 
-          }else{
+          } else {
             $(".save.error.message")
               .transition('fade right', '500ms')
               .transition('fade right', '3000ms');
@@ -268,8 +275,6 @@ app.then(function(){
         }
       });
     }
-
-
 
     // Initialize Dropdown
     $('.ui.dropdown.tags').dropdown();
@@ -279,64 +284,63 @@ app.then(function(){
     var tags = tagsString.split(",");
     $('.ui.dropdown.tags').dropdown('set selected', tags);
 
-
-    $(window).scroll(function() {
+    $(window).scroll(function () {
 
       // sticky save-changes segment
-      if($('.images-list').offset().top + $('.images-list').height() > ($(window).scrollTop() + $(window).height()-$('#save-changes').outerHeight())){
+      if ($('.images-list').offset().top + $('.images-list').height() > ($(
+        window).scrollTop() + $(window).height() - $(
+        '#save-changes').outerHeight())) {
         $('#save-changes').addClass("fixed");
         $('#save-changes').removeClass("basic");
-      }else{
+      } else {
         $('#save-changes').addClass("basic");
         $('#save-changes').removeClass("fixed");
       }
     });
 
-
     // Hide progress bar initially
     $('.ui.progress').hide();
-
-
 
     // Initialize tab
     $('.menu .item').tab();
 
     // Initialize checkboxes
-    if($('#is-active').val() == "true"){
+    if ($('#is-active').val() == "true") {
       $('.ui.checkbox.isActive').checkbox('check');
     }
-    if($('#is-favorite').val() == "true"){
+    if ($('#is-favorite').val() == "true") {
       $('.ui.checkbox.isFavorite').checkbox('check');
     }
 
     // Add checkbox events
     $('.ui.checkbox.isFavorite')
       .checkbox({
-        onChecked: function(){
+        onChecked: function () {
           console.log("Checked event called/")
           var galery_id = $('#galery-id').val();
           $.ajax({
             method: 'post',
-            url: '/admin/galery/'+galery_id+'/setFavorite',
-            success: function(data){
+            url: '/admin/galery/' + galery_id + '/setFavorite',
+            success: function (data) {
               $('.ui.checkbox.isFavorite label').text("Displayed on home page");
             },
-            error: function(err){
+            error: function (err) {
               $('.ui.checkbox.isFavorite').prop('checked', false);
               console.log(err);
             }
           });
         },
-        onUnchecked: function(){
+        onUnchecked: function () {
           var galery_id = $('#galery-id').val();
 
           $.ajax({
             method: 'post',
-            url: '/admin/galery/'+galery_id+'/unsetFavorite',
-            success: function(data){
-              $('.ui.checkbox.isFavorite label').text("Not displayed on home page");
+            url: '/admin/galery/' + galery_id + '/unsetFavorite',
+            success: function (data) {
+              $('.ui.checkbox.isFavorite label').text(
+                "Not displayed on home page");
             },
-            error: function(err){
+            error: function (err) {
               $('.ui.checkbox.isFavorite').prop('checked', true);
               console.log(err);
             }
@@ -347,7 +351,7 @@ app.then(function(){
     // Initialize isActive toggle
     $('.ui.checkbox.isActive')
       .checkbox({
-        onChecked: function(){
+        onChecked: function () {
           var galery_id = $('#galery-id').val();
 
           $.ajax({
@@ -357,16 +361,16 @@ app.then(function(){
               galeryId: galery_id,
               action: 'setActive'
             },
-            success: function(data){
+            success: function (data) {
               $('.ui.checkbox.isActive label').text("Active");
             },
-            error: function(err){
+            error: function (err) {
               $('.ui.checkbox.isActive').prop('checked', false);
               console.log(err);
             }
           });
         },
-        onUnchecked: function(){
+        onUnchecked: function () {
           var galery_id = $('#galery-id').val();
 
           $.ajax({
@@ -376,10 +380,10 @@ app.then(function(){
               galeryId: galery_id,
               action: 'setInactive'
             },
-            success: function(data){
+            success: function (data) {
               $('.ui.checkbox.isActive label').text("Inactive");
             },
-            error: function(err){
+            error: function (err) {
               $('.ui.checkbox.isActive').prop('checked', true);
               console.log(err);
             }
@@ -387,7 +391,7 @@ app.then(function(){
         }
       });
 
-    require(['sortable'], function(Sortable){
+    require(['sortable'], function (Sortable) {
       var el = document.getElementById('sortable-galery-images');
       var sortable = Sortable.create(el);
     });

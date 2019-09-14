@@ -21,6 +21,10 @@ exports.formatPrice = function(price){
   return "CHF " + (parseFloat(price) / 100).toFixed(2);
 }
 
+exports.formatDateWithDDMMYYYY = function(date){
+  return moment(date).format('DD/MM/YYYY');
+}
+
 exports.formatStandardDate = function(date){
   return moment(date).format('L');
 }
@@ -30,7 +34,7 @@ exports.formatDate = function(date){
     return "";
   }
 
-  return ("0" + date.getDate()).slice(-2) + " | " + ("0" + (date.getMonth()+1)).slice(-2) + " | " + date.getFullYear();
+  return ("0" + date.getDate()).slice(-2) + "/" + ("0" + (date.getMonth()+1)).slice(-2) + "/" + date.getFullYear();
 }
 
 exports.formatFullDateString = function(date){
