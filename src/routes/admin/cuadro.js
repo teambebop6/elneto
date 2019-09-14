@@ -18,20 +18,26 @@ const YonnyFoto = db.YonnyFoto;
 
 const reCreateIndex = (model) => {
 
-  logger.info(`start re-create index for ${model.collection.name} at backend ...`);
-  model.collection.dropIndexes();
+  logger.info(
+    `start re-create index for ${model.collection.name} at backend ...`);
 
-  model.collection.createIndex({
-    "$**": "text"
-  }, {
-    default_language: 'spanish',
-    background: true
-  }, (err) => {
-    if (err) {
-      logger.error(`re-create index for ${model.collection.name} collection failed`);
-      logger.error(err);
-    }
-  });
+  setTimeout(() => {
+    model.collection.dropIndexes();
+
+    model.collection.createIndex({
+      "$**": "text"
+    }, {
+      default_language: 'spanish',
+      background: true
+    }, (err) => {
+      if (err) {
+        logger.error(
+          `re-create index for ${model.collection.name} collection failed`);
+        logger.error(err);
+      }
+    });
+  }, 2000)
+
 };
 
 const getType = (req) => {
@@ -313,29 +319,15 @@ router.post('/delete-photo/:id', (req, res) => {
     }
 
     if (photoToRemove) {
-      new RemoteUpload(req.config)
-        .remove({
-          fileUrl: photoToRemove.link,
-          thumbFileUrl: photoToRemove.linkThumb
-        })
-        .then(() => {
-          item.save((err) => {
-            if (err) {
-              return err;
-            }
-            reCreateIndex(module);
-            res.status(200).json({});
-          });
-        })
-    } else {
-      item.save((err) => {
-        if (err) {
-          return err;
-        }
-        reCreateIndex(module);
-        res.status(200).json({});
-      });
+      deleteImage2(req.config, [photoToRemove.link], [photoToRemove.linkThumb]);
     }
+    item.save((err) => {
+      if (err) {
+        return err;
+      }
+      reCreateIndex(module);
+      res.status(200).json({});
+    });
   });
 });
 
@@ -458,7 +450,8 @@ router.delete('/', (req, res) => {
 
       reCreateIndex(module);
 
-      res.status(200).json({ success: true, message: "Item deleted successfully!" });
+      res.status(200).json(
+        { success: true, message: "Item deleted successfully!" });
     });
 
     // Delete associated images
@@ -499,6 +492,8 @@ router.patch('/visible', (req, res) => {
 });
 
 const deleteImage2 = (config, fileUrls, thumbFileUrls) => {
+  logger.info(`Deleting at backend: ${JSON.stringify(fileUrls)}`);
+  logger.info(`Deleting at backend:  ${JSON.stringify(thumbFileUrls)}`);
   new RemoteUpload(config)
     .remove({
       fileUrls,

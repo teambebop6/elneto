@@ -23,19 +23,23 @@ const mergeImageInfo = (pre, { title, size, technik, comments }) => {
 const reCreateIndex = () => {
 
   logger.info("start re-create index for galery at backend ...");
-  db.Galery.collection.dropIndexes();
 
-  db.Galery.collection.createIndex({
-    "$**": "text"
-  }, {
-    default_language: 'spanish',
-    background: true
-  }, (err) => {
-    if (err) {
-      logger.error("re-create index for galery collection failed");
-      logger.error(err);
-    }
-  });
+  setTimeout(() => {
+    db.Galery.collection.dropIndexes();
+
+    db.Galery.collection.createIndex({
+      "$**": "text"
+    }, {
+      default_language: 'spanish',
+      background: true
+    }, (err) => {
+      if (err) {
+        logger.error("re-create index for galery collection failed");
+        logger.error(err);
+      }
+    });
+  }, 2000)
+
 };
 
 router.get('/getThumbTemplate', (req, res) => {
@@ -325,9 +329,7 @@ router.post('/:id/modify', (req, res) => {
         if (err) {
           return res.json({ success: false, message: err.message });
         }
-        setTimeout(() => {
-          reCreateIndex();
-        }, 2000);
+        reCreateIndex();
         return res.json({ success: true });
       });
     }
@@ -415,6 +417,8 @@ router.post('/:id/unsetFavorite', (req, res) => {
 });
 
 const deleteImage2 = (config, fileUrls, thumbFileUrls) => {
+  logger.info(`Deleting at backend: ${JSON.stringify(fileUrls)}`);
+  logger.info(`Deleting at backend:  ${JSON.stringify(thumbFileUrls)}`);
   new RemoteUpload(config)
     .remove({
       fileUrls,
