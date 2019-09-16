@@ -1,0 +1,76 @@
+<div class="column">
+  <h2 class="ui left floated inverted header">Manage Yonny En Fotos</h2>
+  <a class="ui inverted basic button" href="/admin/yonny-fotos/new">
+    <i class="plus icon"></i>
+    Create new
+  </a>
+
+  <table class="ui inverted table">
+    <thead>
+    <tr>
+      <th>Título</th>
+      <th>Erstellungsdatum</th>
+      <th>Visible</th>
+      <th style="min-width:125px;">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <div class="ui list clearfix">
+      {{#each yonnyFotos}}
+        <tr id="yonny_foto_{{this._id}}" class="yonny-fotos-listing">
+          <td>{{this.title}}</td>
+          <td>{{this.creationDate}}</td>
+          <td>
+            <div id="yonny_foto_{{this._id}}_visible" class="ui toggle checkbox">
+              <input type="checkbox" data-id="{{this._id}}" tabindex="0" name="visible" class="hidden visible" {{#if this.visible}}checked{{/if}}>
+            </div>
+          </td>
+          <td>
+            <a class="ui positive icon button changeOrderUp" data-id="{{this._id}}">
+              <i class="angle up icon"></i>
+            </a>
+            <a class="ui orange icon button changeOrderDown" data-id="{{this._id}}">
+              <i class="angle down icon"></i>
+            </a>
+            <a href="/admin/yonny-fotos/modify/{{this._id}}" class="ui inverted yellow icon button">
+              <i class="edit icon"></i>
+            </a>
+            <a data-id="{{this._id}}" class="ui inverted red icon button deleteYonnyFoto">
+              <i class="delete icon"></i>
+            </a>
+          </td>
+        </tr>
+      {{/each}}
+    </div>
+    </tbody>
+  </table>
+
+  <!-- Delete Modal -->
+  <div class="ui basic modal confirm delete" id="deleteModalTemplate">
+    <i class="close icon"></i>
+    <div class="header">
+      Bestätigung Löschvorgang
+    </div>
+    <div class="image content">
+      <div class="image">
+        <i class="archive icon"></i>
+      </div>
+      <div class="description">
+        <p>Are you sure to delete ###placeholder###?</p>
+      </div>
+    </div>
+    <div class="actions">
+      <div class="two fluid ui inverted buttons">
+        <div class="ui deny red basic inverted button">
+          <i class="remove icon"></i>
+          Cancel
+        </div>
+        <div class="ui approve green basic inverted button">
+          <i class="checkmark icon"></i>
+          Yes, I want to delete ###placeholder###!
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

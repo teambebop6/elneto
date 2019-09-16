@@ -39,7 +39,7 @@ var production = {
   DEBUG_ERROR : true,
   DEBUG_CLIENT : false,
   DB_PORT: '27017',
-  DB_NAME: process.env.DB_NAME || (process.env.ELNETO_ENV == "dev") ? "elneto_dev" : "elneto",
+  DB_NAME: process.env.DB_NAME || (process.env.ELNETO_ENV === "dev") ? "elneto_dev" : "elneto",
   APP_PORT : 20082,
   redis : {
     port: '6379'
@@ -54,6 +54,13 @@ module.exports = function (env) {
     DB_HOST: 'localhost',
     VIEW_FOLDER: path.join(__dirname, 'views'),
     ENV: env,
+    REMOTE_UPLOAD: {
+      TYPE: '', // aws-s3 or qiniu
+      END_POINT: '',
+      ACCESS_KEY: '',
+      SECRET_KEY: '',
+      BUCKET:''
+    }
   };
 
   switch(env){

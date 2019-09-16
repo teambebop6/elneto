@@ -8,10 +8,9 @@
   </div>
   <div class="row">
     <div class="column">
-      <!-- TOP RESULTS -->
 
       <div class="ui inverted segment">
-        <h3>Top result:</h3>
+        <h3>Resultados:</h3>
 
         <p><strong class="ui yellow header">{{topResult.work}}</strong></p>
         <p>
@@ -23,26 +22,21 @@
         <p>
         autor, autora: {{dashIfEmpty topResult.author}}
         </p>
+
+        {{#each results}}
+          <p><strong class="ui yellow header">{{this.work}}</strong></p>
+          <p>
+            año: {{dashIfEmpty this.year}}
+          </p>
+          <p>
+            dirige: {{dashIfEmpty this.conductedBy}}
+          </p>
+          <p>
+            author(es): {{dashIfEmpty this.author}}
+          </p>
+        {{/each}}
+
       </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="column">
-
-      <h3>Other suggested results:</h3>
-
-      {{#each results}}
-      <p><strong class="ui yellow header">{{this.work}}</strong></p>
-      <p>
-      año: {{dashIfEmpty this.year}}
-      </p>
-      <p>
-      dirige: {{dashIfEmpty this.conductedBy}}
-      </p>
-      <p>
-      author(es): {{dashIfEmpty this.author}}
-      </p>
-      {{/each}}
     </div>
   </div>
 </div>

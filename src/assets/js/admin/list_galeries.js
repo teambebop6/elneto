@@ -45,7 +45,7 @@ app.then(function(){
             success : function(result){
               console.log(result.message);
 
-              if(result.success){ 
+              if(result.success){
                 $('#galery_' + id).hide();
               }
             },
@@ -58,11 +58,19 @@ app.then(function(){
         });
       }
     })
-    .modal('show');	
+    .modal('show');
 
   });
   */
 
+
+  var resetButtonsState = function () {
+    $(".changeOrderUp").removeClass("disabled");
+    $(".changeOrderDown").removeClass("disabled");
+    $(".changeOrderUp:first").addClass("disabled");
+    $(".changeOrderDown:last").addClass("disabled");
+  };
+  resetButtonsState();
 
   // Delete galery
   $(".deleteGalery").click(function(){
@@ -70,7 +78,7 @@ app.then(function(){
     console.log("Deleting: " + id);
 
     deleteGalery(id);
-  })
+  });
 
   var deleteGalery = function(id){
     var confirmDelete = $('#deleteModalTemplate').clone().html($('#deleteModalTemplate').html().replace(/###placeholder###/g, "this galery"));
@@ -84,8 +92,9 @@ app.then(function(){
           success : function(result){
             console.log(result.message);
 
-            if(result.success){ 
-              $('#galery_' + id).hide();
+            if(result.success){
+              $('#galery_' + id).remove();
+              resetButtonsState();
             }
           },
           error : function(xhr){
@@ -94,10 +103,36 @@ app.then(function(){
         })
       }
     })
-      .modal('show');	
-  }
+      .modal('show');
+  };
 
   $('.ui.checkbox').checkbox();
+
+  var sort = function (id, direction) {
+
+    $.ajax({
+      method: 'POST',
+      url: '/admin/galery/change-order/' + id,
+      data: { direction },
+      success: function (result) {
+        window.location.href = "/admin/galery/";
+      },
+      error: function (xhr) {
+        console.log(xhr.status + " " + xhr.statusText);
+      }
+    })
+
+  };
+
+  $(".changeOrderUp").click(function () {
+    var id = $(this).data("id");
+    sort(id, 'up')
+  });
+
+  $(".changeOrderDown").click(function () {
+    var id = $(this).data("id");
+    sort(id, 'down')
+  })
 
 });
 

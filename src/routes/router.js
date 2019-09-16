@@ -15,13 +15,20 @@ router.use('/uploads', express.static(config.UPLOAD_FOLDER));
 router.use('/api', require('./api'));
 router.use('/', require('./index'));
 router.use('/yonny', require('./yonny'));
+// router.use('/categories', require('./category'));
+router.use('/query', require('./query'));
+router.use('/poems', require('./poem'));
 router.use('/', require('./admin'));
 
 router.use('/admin/galery', require('./admin/galery'));
+router.use('/admin/backup', require('./admin/backup'));
+router.use('/admin/poems', require('./admin/poem'));
+router.use('/admin/cuadros', require('./admin/cuadro'));
+router.use('/admin/yonny-fotos', require('./admin/cuadro'));
 
 // Redirect if last char of url is '/'
 router.use(function (req, res, next) {
-  if (req.path.substr(-1) == '/' && req.path.length > 1) {
+  if (req.path.substr(-1) === '/' && req.path.length > 1) {
     var query = req.url.slice(req.path.length);
     res.redirect(301, req.path.slice(0, -1) + query);
   } else {

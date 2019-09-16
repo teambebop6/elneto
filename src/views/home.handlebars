@@ -2,46 +2,39 @@
 	<div class="movingImage imageMove">
     <div class="default active">
       {{#each titlePics.teatroCubano }}
-      <img src="/uploads/{{this}}" />
+      <img src="{{this}}" />
       {{/each}}
     </div>
 
     <div class="teatro-cubano">
       {{#each titlePics.teatroCubano }}
-      <img src="/uploads/{{this}}" />
+      <img src="{{this}}" />
       {{/each}}
     </div>
 
     <div class="danza">
       {{#each titlePics.danza }}
-      <img src="/uploads/{{this}}" />
+      <img src="{{this}}" />
       {{/each}}
     </div>
 
     <div class="musica">
       {{#each titlePics.musica }}
-      <img src="/uploads/{{this}}" />
+      <img src="{{this}}" />
       {{/each}}
     </div>
 
     <div class="teatro">
       {{#each titlePics.teatro }}
-      <img src="/uploads/{{this}}" />
+      <img src="{{this}}" />
       {{/each}}
     </div>
 
-    {{#if isDev }}
-<!--       <div class="yonny">
-        {{#each titlePics.yonny }}
-        <img src="/uploads/{{this}}" />
-        {{/each}}
-      </div> -->
     <div class="yonny">
         <img src="/static/images/yonny1.jpg" />
         <img src="/static/images/yonny3.jpg" />
         <img src="/static/images/yonny2.jpg" />
     </div>
-    {{/if}}
 
   </div>
 
@@ -53,14 +46,19 @@
       <a class="item {{#if active.danza}}active{{/if}}" href="/danza">Danza</a>
       <a class="item {{#if active.musik}}active{{/if}}" href="/musica">Música</a>
       <a id="teatro" class="item {{#if active.theater}}active{{/if}}" href="/teatro">Teatro</a>
-
-    {{#if isDev }}
       <a id="yonny" class="item {{#if active.yonny}}active{{/if}}" href="/yonny">Yonny</a>
-    {{/if}}
 
     </div>
 
   </div>
+
+  <div id="searchContainer" class="search teatro-cubano">
+    <div class="searchBar teatre-search">
+      <input id="searchField" name="q" class="prompt" type="text" placeholder="Buscar en galerías..." autocomplete="off">
+      <i id="searchButton" class="inverted circular search link icon"></i>
+    </div>
+  </div>
+
 </div>
 
 

@@ -16,7 +16,7 @@ app.then(function(){
       rowHeight : 230,
       lastRow : 'nojustify',
       maxRowHeight: 380,
-      randomize: true,
+      randomize: false,
       margins : 30
     });
   });

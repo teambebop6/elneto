@@ -1,0 +1,85 @@
+<div class="sixteen wide column images">
+
+  <h1 class="ui inverted header">Modify Cuadro</h1>
+
+  <div class="ui inverted segment">
+    <form class="ui inverted form" id="form-cuadro-info">
+      <div class="ui grid">
+        <div class="three column row">
+          <div class="column">
+            <div class="ui toggle checkbox">
+              <input type="checkbox" tabindex="0" name="visible" class="hidden" {{#if cuadro.visible}}checked{{/if}}>
+              <label>Visible</label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="sixteen wide column">
+
+            <!-- hidden fields -->
+            <input type="hidden" id="cuadro-id" value="{{ cuadro.id }}"/>
+
+            <div class="field">
+              <!-- Title -->
+              <label>Título</label>
+              <div class="ui underlined input">
+                <input placeholder="Titel" type="text" name="title" value="{{cuadro.title}}" required>
+              </div>
+            </div>
+
+            <button class="ui hidden button" type="submit">Save</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <h2 class="ui inverted header">Fotos</h2>
+  <div class="ui inverted yellow segment upload-images">
+    <form class="ui form">
+      <div class="field">
+        <label for="fileupload">Upload Fotos</label>
+        <!-- The file input field used as target for the file upload widget -->
+        <input id="fileupload" type="file" name="files" data-url="/admin/upload2/cuadro" multiple>
+
+        <!-- The global progress bar -->
+        <div class="ui progress">
+          <div class="bar">
+            <div class="progress"></div>
+          </div>
+          <div class="label">Uploading Fotos</div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <p class="ui info message no-images-yet-message {{#if cuadro.photos}}hidden{{/if}}">No fotos uploaded yet!</p>
+  <div class="ui inverted segment">
+    <form class="ui inverted form" id="form-images">
+
+      <div class="ui stackable two column grid images-list" id="sortable-cuadro-images">
+        {{#each cuadro.photos}}
+          {{> admin/cuadro-thumb-element this}}
+        {{/each}}
+      </div>
+
+      <div class="ui mobile reversed page grid" id="save-changes">
+        <div class="row">
+          <div class="eight wide column">
+            <div class="ui hidden save success message">
+              <div class="header">Saved</div>
+            </div>
+            <div class="ui hidden save error message">
+              <div class="header">There was an error!</div>
+            </div>
+          </div>
+          <div class="eight wide column">
+            <button class="ui right floated green button" type="submit">Save changes</button>
+          </div>
+        </div>
+      </div>
+
+    </form>
+  </div>
+</div>
+

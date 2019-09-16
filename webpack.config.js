@@ -26,25 +26,46 @@ module.exports = {
       'jquery.validate': path.join(__dirname, '/public/vendor/jquery.validate.min.js'),
       'jquery.validate.de': path.join(__dirname, '/src/assets/vendor/jquery.validate.de.js'),
       'jquery-ui': path.join(__dirname, '/public/js/vendor/jquery-ui.min'),
+      'jquery.inputmask': path.join(__dirname, '/public/js/vendor/jquery.inputmask.min.js'),
       'cookies': path.join(__dirname, '/src/assets/js/js.cookie'),
       'lightbox': path.join(__dirname, '/bower_components/lightbox2/dist/js/lightbox.min.js'),
       'jquery.datepicker': path.join(__dirname, '/src/assets/vendor/jquery.datepicker/datepicker.min.js'),
       datepicker: path.join(__dirname, 'src/assets/vendor/datepicker/dist/datepicker'),
       'jquery.fileupload': path.join(__dirname, '/public/vendor/jquery.fileupload'),
       'jquery.ui.widget': path.join(__dirname, '/public/vendor/jquery.ui.widget'),
+      'sortable': path.join(__dirname, 'src/assets/vendor/Sortable/Sortable.js'),
+      'trumbowyg': path.join(__dirname, 'src/assets/vendor/trumbowyg/trumbowyg.min.js'),
+      'trumbowyg.lang.es': path.join(__dirname, 'src/assets/vendor/trumbowyg/langs/es.js'),
     }
   },
   entry: {
     'def': './src/assets/js/default',
     'teatro-cubano': './src/assets/js/teatro-cubano',
+    'search-galleries': './src/assets/js/search-galleries',
     'galery-cat': './src/assets/js/galery-cat',
     'galery': './src/assets/js/galery',
     'home': './src/assets/js/home',
     'impressum': './src/assets/js/impressum',
     'yonny': './src/assets/js/yonny',
+    'poemas': './src/assets/js/poemas',
     'admin/list-galeries': './src/assets/js/admin/list_galeries',
     'admin/modify-galery': './src/assets/js/admin/modify_galery',
     'admin/new-galery': './src/assets/js/admin/new_galery',
+
+    'admin/new-poem': './src/assets/js/admin/new_poem',
+    'admin/list-poems': './src/assets/js/admin/list_poems',
+
+    'admin/new-cuadro': './src/assets/js/admin/new_cuadro',
+    'admin/modify-cuadro': './src/assets/js/admin/modify_cuadro',
+    'admin/list-cuadros': './src/assets/js/admin/list_cuadros',
+
+    'admin/new-yonny-foto': './src/assets/js/admin/new_yonny_foto',
+    'admin/modify-yonny-foto': './src/assets/js/admin/modify_yonny_foto',
+    'admin/list-yonny-fotos': './src/assets/js/admin/list_yonny_fotos',
+
+    'admin/list-backups': './src/assets/js/admin/list_backups',
+    'admin/new-backup': './src/assets/js/admin/new_backup',
+    'admin/restore-backup': './src/assets/js/admin/restore_backup',
   },
   output: {
     path: path.resolve(__dirname, 'public/dist'),
@@ -80,11 +101,12 @@ module.exports = {
   },
   optimization: {
     splitChunks: {
+      minSize: 1,
       cacheGroups: {
         commons: {
           name: "commons",
           chunks: "initial",
-          minChunks: 2,
+          minChunks: 1,
         }
       }
     },
