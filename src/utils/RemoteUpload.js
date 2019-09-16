@@ -111,7 +111,7 @@ class RemoteUpload {
         ContentType: mimeType
       };
 
-      this.S3.upload(params, (err, res) => {
+      this.S3.upload(params, (err) => {
         if (err) {
           logger.error(err);
           reject(err);
@@ -218,6 +218,8 @@ class RemoteUpload {
   }
 
   removeForQiniu({ fileUrls, thumbFileUrls }) {
+    logger.info(fileUrls);
+    logger.info(thumbFileUrls);
     logger.warn('Remove for Qiniu is not supported now.');
     return Promise.resolve();
   }
