@@ -172,7 +172,7 @@ class RemoteUpload {
     const normalParams = {
       Bucket: normalBucket,
       Delete: {
-        Objects: fileUrls.filter(url => url.startsWith('http')).map(
+        Objects: fileUrls.filter(url => (typeof url) === 'string' && url.startsWith('http')).map(
           (fileUrl) => {
             logger.info(`Will remove ${fileUrl}`);
             return {
@@ -186,7 +186,7 @@ class RemoteUpload {
     const thumbParams = {
       Bucket: thumbBucket,
       Delete: {
-        Objects: thumbFileUrls.filter(url => url.startsWith('http')).map(
+        Objects: thumbFileUrls.filter(url => (typeof url) === 'string' && url.startsWith('http')).map(
           (fileUrl) => {
             logger.info(`Will remove ${fileUrl}`);
             return {
