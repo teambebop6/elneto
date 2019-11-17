@@ -476,8 +476,12 @@ router.post('/delete', (req, res) => {
       const fileUrls = [];
       const thumbFileUrls = [];
       galery.images.forEach((photo) => {
-        fileUrls.push(photo.link);
-        thumbFileUrls.push(photo.linkThumb);
+        if (photo.link) {
+          fileUrls.push(photo.link);
+        }
+        if (photo.linkThumb) {
+          thumbFileUrls.push(photo.linkThumb);
+        }
       });
       deleteImage2(req.config, fileUrls, thumbFileUrls)
     }
