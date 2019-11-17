@@ -134,5 +134,86 @@ app.then(function(){
     sort(id, 'down')
   })
 
+
+
+  // Add checkbox events
+  $('.ui.checkbox.isFavorite')
+    .checkbox({
+      onChecked: function () {
+        console.log("isFavorite checked");
+        var id = $(this).data('id');
+        $.ajax({
+          method: 'post',
+          url: '/admin/galery/' + id + '/setFavorite',
+          success: function () {
+            console.log('setFavorite for gallery ' + id);
+          },
+          error: function (err) {
+            $('gallery_' + id + '_displayed').prop('checked', false);
+            console.log(err);
+          }
+        });
+      },
+      onUnchecked: function () {
+        console.log("isFavorite unchecked");
+
+        var id = $(this).data('id');
+        $.ajax({
+          method: 'post',
+          url: '/admin/galery/' + id + '/unsetFavorite',
+          success: function () {
+            console.log('unsetFavorite for gallery ' + id);
+          },
+          error: function (err) {
+            $('gallery_' + id + '_displayed').prop('checked', true);
+            console.log(err);
+          }
+        });
+      }
+    });
+
+  // Initialize isActive toggle
+  $('.ui.checkbox.isActive')
+    .checkbox({
+      onChecked: function () {
+        console.log("isActive checked");
+        var id = $(this).data('id');
+        $.ajax({
+          method: 'post',
+          url: '/admin/galery/modify',
+          data: {
+            galeryId: id,
+            action: 'setActive'
+          },
+          success: function () {
+            console.log('Check isActive for gallery ' + id);
+          },
+          error: function (err) {
+            $('gallery_' + id + '_active').prop('checked', false);
+            console.log(err);
+          }
+        });
+      },
+      onUnchecked: function () {
+        console.log(console.log("isActive unchecked"));
+        var id = $(this).data('id');
+        $.ajax({
+          method: 'post',
+          url: '/admin/galery/modify',
+          data: {
+            galeryId: id,
+            action: 'setInactive'
+          },
+          success: function () {
+            console.log('Check setInactive for gallery ' + id);
+          },
+          error: function (err) {
+            $('gallery_' + id + '_active').prop('checked', true);
+            console.log(err);
+          }
+        });
+      }
+    });
+
 });
 

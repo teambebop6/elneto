@@ -13,6 +13,11 @@ const utils = require('../../utils/AdminUtils');
 
 module.exports = router;
 
+const tagMap = {};
+constants.tags.forEach((t) => {
+  tagMap[t.id] = t.name;
+});
+
 const mergeImageInfo = (pre, { title, size, technik, comments }) => {
   Object.assign(pre, {
     title,
@@ -42,6 +47,10 @@ const reCreateIndex = () => {
 
 };
 
+const getTagNames = (tags) => {
+  return tags.map((t) => tagMap[t]).join(',');
+};
+
 router.get('/getThumbTemplate', (req, res) => {
   const link = req.query.link;
   const id = req.query.id;
@@ -67,10 +76,16 @@ router.get('/', function (req, res) {
         return;
       }
 
+      const galleryObjects = galeries.map((g) => {
+        const go = db.Galery.toDTO(g);
+        go.tags = getTagNames(go.tags);
+        return go;
+      });
+
       res.render('admin/list_galeries', {
         title: 'Manage Galeries',
         custom_js: 'admin/list-galeries.bundle',
-        galeries: galeries,
+        galeries: galleryObjects,
         active: { list_galeries: true },
         body_scripts: 'list-galeries.bundle',
       });
