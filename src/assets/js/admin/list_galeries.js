@@ -187,9 +187,10 @@ app.then(function(){
           },
           success: function () {
             console.log('Check isActive for gallery ' + id);
+            // $('#gallery_' + id + '_inactive_icon').html('<i class="eye icon" title="Inactive"></i>');
           },
           error: function (err) {
-            $('gallery_' + id + '_active').prop('checked', false);
+            $('#gallery_' + id + '_active').prop('checked', false);
             console.log(err);
           }
         });
@@ -206,9 +207,10 @@ app.then(function(){
           },
           success: function () {
             console.log('Check setInactive for gallery ' + id);
+            // $('#gallery_' + id + '_inactive_icon').html('<i class="eye slash outline icon" title="Inactive"></i>');
           },
           error: function (err) {
-            $('gallery_' + id + '_active').prop('checked', true);
+            $('#gallery_' + id + '_active').prop('checked', true);
             console.log(err);
           }
         });
