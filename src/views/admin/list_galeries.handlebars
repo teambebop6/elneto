@@ -8,6 +8,7 @@
   <table class="ui inverted table">
     <thead>
     <tr>
+      <!--<th></th>-->
       <th>Título</th>
       <th>Fecha</th>
       <th>Director(a)</th>
@@ -22,6 +23,14 @@
     <div class="ui list clearfix">
       {{#each galeries}}
         <tr id="galery_{{this._id}}" class="galery-listing">
+          <!--<td id="gallery_{{this._id}}_inactive_icon">-->
+            <!--{{#unless this.isActive}}-->
+              <!--<i class="eye slash outline icon" title="Inactive"></i>-->
+            <!--{{/unless}}-->
+            <!--{{#if this.isActive}}-->
+              <!--<i class="eye icon" title="Inactive"></i>-->
+            <!--{{/if}}-->
+          <!--</td>-->
           <td>{{this.title}}</td>
           <td>{{formatDate this.dateOfPlay}}</td>
           <td>{{this.location}}</td>
