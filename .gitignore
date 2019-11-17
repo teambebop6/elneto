@@ -1,6 +1,5 @@
 elneto-secret/
 
-
 .sass-cache/
 
 semantic/dist
@@ -46,10 +45,13 @@ jspm_packages
 
 .idea/
 
-dist/
+/dist
+/public/dist/
 
-public/dist/
+!src/assets/vendor/semantic/dist/
 
 elneto-dist.zip
 
-elneto-dist/
+.travis/assets/
+.travis/assets.zip
+aws-custom/

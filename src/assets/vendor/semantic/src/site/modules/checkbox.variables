@@ -1,0 +1,8 @@
+/*******************************
+    User Variable Overrides
+*******************************/
+
+@labelActiveColor: @primaryColor;
+
+@sliderOnLineColor: @primaryColor;
+

@@ -1,0 +1,34 @@
+
+
+<div class="menuBar goToTop">
+
+	<a href="/"><div class="title">elneto • Fotos</div></a>
+	
+	<div class="mobileOnly menuMobile">
+		<input id="burger" type="checkbox" />
+		<label for="burger">
+			<span></span>
+			<span></span>
+			<span></span>
+		</label>
+		<nav>    
+			<ul>
+				<li><a class="item {{#if active.teatro_cubano}}active{{/if}}" href="/teatro-cubano">Teatro Cubano</a></li>
+				<li><a class="item {{#if active.danza}}active{{/if}}" href="/danza">Danza</a></li>
+				<li><a class="item {{#if active.musik}}active{{/if}}" href="/musica">Música</a></li>
+				<li><a class="item {{#if active.theater}}active{{/if}}" href="/teatro">Teatro</a></li>
+				<li><a id="yonny" class="item {{#if active.yonny}}active{{/if}}" href="/yonny">Yonny</a></li>
+			</ul>  
+		</nav>
+	</div>
+
+	<div class="menu">
+		<a class="item {{#if active.teatro_cubano}}active{{/if}}" href="/teatro-cubano">Teatro Cubano</a>
+		<a class="item {{#if active.danza}}active{{/if}}" href="/danza">Danza</a>
+		<a class="item {{#if active.musik}}active{{/if}}" href="/musica">Música</a>
+		<a class="item {{#if active.theater}}active{{/if}}" href="/teatro">Teatro</a>
+        	<a id="yonny" class="item {{#if active.yonny}}active{{/if}}" href="/yonny">Yonny</a>
+	</div>
+
+</div>
+

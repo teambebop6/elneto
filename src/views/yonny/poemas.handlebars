@@ -1,0 +1,54 @@
+<!--<div class="mask_top"></div>-->
+<div id="yonny_poem_wrapper" class="yonny_poem_wrapper">
+
+  <div class="poemList">
+    <ul>
+      {{#each poems}}
+        <li>
+          <a data-id="{{this.id}}"
+             data-title="{{this.title}}"
+             data-content="{{this.content}}"
+             data-year="{{this.year}}"
+          >
+            {{this.title}}
+          </a>
+        </li>
+      {{/each}}
+    </ul>
+
+  </div>
+
+  <div class="imageWrapper">
+    <div class="yonnyImage">
+      <img src="/static/images/yonnyPoemImage.jpg">
+    </div>
+  </div>
+
+</div>
+
+<div id="yonny_poem_wrapper_detail" class="yonny_poem_wrapper_detail" style="display: none;">
+
+  <div class="poemDetail">
+    <div id="poemDetailTitle" class="title">
+      IT SEEMS THAT HAPPINESS...
+    </div>
+    <div id="poemDetailContent" class="content">
+
+    </div>
+    <div class="footer">
+      <br>
+      <div>
+        <span id="poemDetailYear"></span>
+      </div>
+      <br>
+      <div id="backContainer">
+        <a href="#" id="backLink"><<</a>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+
+<!--<div class="mask_bottom"></div>-->

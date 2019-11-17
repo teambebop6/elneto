@@ -1,0 +1,42 @@
+<div class="ui page grid default-content">
+  <div class="two column row">
+    <div class="column centered">
+      <form action="/search-results" id="search-form">
+        {{> teatre-search-bar}}
+      </form>
+    </div>
+  </div>
+  <div class="row">
+    <div class="column">
+
+      <div class="ui inverted segment">
+        <h3>Resultados:</h3>
+
+        <p><strong class="ui yellow header">{{topResult.work}}</strong></p>
+        <p>
+        año: {{dashIfEmpty topResult.year}}
+        </p>
+        <p>
+        dirige: {{dashIfEmpty topResult.conductedBy}}
+        </p>
+        <p>
+        autor, autora: {{dashIfEmpty topResult.author}}
+        </p>
+
+        {{#each results}}
+          <p><strong class="ui yellow header">{{this.work}}</strong></p>
+          <p>
+            año: {{dashIfEmpty this.year}}
+          </p>
+          <p>
+            dirige: {{dashIfEmpty this.conductedBy}}
+          </p>
+          <p>
+            author(es): {{dashIfEmpty this.author}}
+          </p>
+        {{/each}}
+
+      </div>
+    </div>
+  </div>
+</div>

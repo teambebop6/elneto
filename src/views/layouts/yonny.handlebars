@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Elneto Fotos - Ernst Rudin</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link type="text/css" rel="stylesheet" href="/assets/commons.css"/>
+
+  {{#if isDev }}
+  {{ else }}
+    <link type="text/css" rel="stylesheet" href="//fast.fonts.net/cssapi/ff2d2c4a-64b2-4789-879c-40facd89a49e.css"/>
+  {{/if}}
+
+  {{#if head_scripts}}
+    <!-- custom styles -->
+    {{> (head_scripts) }}
+  {{/if}}
+</head>
+<body class="yonnyPage">
+<!--[if lt IE 7]>
+<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a>
+  to improve your experience.</p>
+<![endif]-->
+
+
+<div class="menuBar goToTop">
+  <a href="/" class="backToElneto">
+    <div class="title {{#if active.poemas}}poemas{{/if}}">elneto <</div>
+  </a>
+
+  <div class="mobileOnly menuMobile">
+    <input id="burger" type="checkbox"/>
+    <label for="burger">
+      <span></span>
+      <span></span>
+      <span></span>
+    </label>
+    <nav>
+      <ul>
+        <li><a class="item {{#if active.yonny}}active{{/if}}" href="/yonny">Yonny</a></li>
+        <li><a class="item {{#if active.cuadros}}active{{/if}}" href="/yonny/cuadros">sus cuadros</a></li>
+        <li><a class="item {{#if active.poemas}}active{{/if}}" href="/yonny/poemas">sus poemas</a></li>
+        <li><a class="item {{#if active.enFotos}}active{{/if}}" href="/yonny/en-fotos">yonny en fotos</a></li>
+      </ul>
+    </nav>
+  </div>
+
+</div>
+
+
+<!-- YONNY HEADER -->
+
+
+<!-- YONNY NAV -->
+
+<!-- <div class="menuBar yonnyMenu">
+            <div class="menu">
+                <a class="item {{#if active.cuadros}}active{{/if}}" href="/yonny/cuadros">sus cuadros</a>
+                <a class="item {{#if active.poemas}}active{{/if}}" href="/yonny/poemas">sus poemas</a>
+                <a class="item {{#if active.enFotos}}active{{/if}}" href="/yonny/en-fotos">yonny en fotos</a>
+            </div>
+        </div> -->
+
+
+<div class="pageTile_wrapper {{#if active.poemas}}poemas{{/if}}">
+  <div class="text_content">
+    <div class="title">YONNY</div>
+    <div class="des">yonny (juan gualberto ibáñez gómez, la habana, 1933-2010).</div>
+    <div class="des">pintor, escultor, poeta. nieto de juan gualberto gómez.</div>
+    <!-- <div class="des"><a href="http://www.habanaelegante.com/Winter2001/Cafe.html">articulo sobre yonny en la habana elegante (2001)</a></div> -->
+
+  </div>
+</div>
+<div class="yonnyPhoto">
+  <img style="float: left" src="/static/images/yonny1.jpg">
+  <img style="float: right;" src="/static/images/yonny3.jpg">
+  <img style="float: right;" src="/static/images/yonny2.jpg">
+</div>
+
+<div id="nav" class="menuBar {{#if active.poemas}}poemas{{/if}}">
+  <div class="menu">
+    <a class="item {{#if active.cuadros}}active{{/if}}" href="/yonny">sus cuadros</a>
+    <a class="item {{#if active.poemas}}active{{/if}}" href="/yonny/poemas">sus poemas</a>
+    <a class="item {{#if active.enFotos}}active{{/if}}" href="/yonny/en-fotos">yonny en fotos</a>
+  </div>
+</div>
+
+<!-- YONNY content -->
+{{#unless active.yonny}}
+  {{{body}}}
+{{/unless}}
+
+
+<div class="mask"></div>
+
+<!-- YONNY footer -->
+{{> page/footer }}
+
+<script src="/assets/commons.chunk.js" charset="utf-8"></script>
+
+    <!-- {{#if scripts}} -->
+<script src="/assets/{{scripts}}.js" charset="utf-8"></script>
+    <!--         {{else}}
+          <script src="/assets/default.bundle.js" charset="utf-8"></script>
+          {{/if}} -->
+
+</body>
+</html>

@@ -1,0 +1,101 @@
+@import "../vendor/semantic/src/themes/default/globals/site.variables";
+@import "../vendor/datepicker/dist/datepicker.min.css";
+
+.deletePicture{
+	float:left;
+	display:inline;
+}
+
+
+
+#new-galery {
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin: 1rem;
+}
+.images-list {
+  list-style-type: none;
+}
+
+.upload-images{
+	margin-bottom: 2rem !important;
+}
+
+#save-changes.fixed{
+	position: fixed;
+	bottom:0;
+	left:0;
+	right:0;
+	margin-bottom:0 !important;
+	background: @transparentWhite !important;	
+}
+
+.image-thumb{
+	position:relative;
+
+	.info{
+		position:absolute;
+		top:0;left:0;right:0;bottom:0;
+	}
+
+	.states{
+
+		position:absolute;
+		bottom:0;
+		left:0;
+		right:0;
+		margin:1rem;
+
+		.isTitlePicture{
+			background:@blue; 	
+			padding: 5px;
+			font-weight:bold;
+			font-size:0.8rem;
+			border-radius:0;
+		}
+	}
+	
+	.actions{
+		position:absolute;
+		bottom:0;
+		left:0;
+		right:0;
+		top:0;
+		margin:1rem;
+
+		.deletePictureIcon{
+			float:left;
+			padding:5px;
+			background:@strongTransparentWhite;
+			i{margin:0 !important}
+		}
+	}
+
+	.ui.button.setTitlePicture{
+		border-radius:0;
+		position:absolute;
+		bottom:0;
+		left:0;
+		right:0;
+		width:100%;
+	}
+}
+.underlined.input{
+	border-bottom: 1px solid @transparentWhite !important;
+}
+
+.trumbowyg-editor {
+	background: white;
+}
+
+.editor-error {
+	border-color: #e0b4b4 !important;
+	background: #fff6f6
+}
+
+.ui.error.message {
+	label.error {
+		color: #9f3a38;
+	}
+}

@@ -1,0 +1,9 @@
+/*******************************
+     User Global Variables
+*******************************/
+
+@yellow : #FBBD08;
+
+@linkColor : @yellow;
+@primaryColor : @yellow;
+@selectedTextColor : @linkColor;

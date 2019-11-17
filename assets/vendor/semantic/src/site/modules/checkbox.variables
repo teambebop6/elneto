@@ -1,9 +1,0 @@
-/*******************************
-    User Variable Overrides
-*******************************/
-
-@sliderOnLineColor: @primaryColor;
-@toggleOnLineColor: @primaryColor;
-@sliderOnLabelColor: @invertedTextColor;
-@toggleOnLabelColor: @invertedTextColor;
-

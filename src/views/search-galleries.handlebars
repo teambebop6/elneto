@@ -1,0 +1,66 @@
+<div id="searchContainer2" class="search teatro-cubano">
+  <div class="searchBar teatre-search">
+    <input id="search-query" name="q" class="prompt" type="text" placeholder="Buscar en la galería ..." autocomplete="off">
+    <i id="searchButton" class="inverted circular search link icon"></i>
+  </div>
+</div>
+
+{{#if keyword}}
+  <div class="pageTile_wrapper">
+    <div class="text_content">
+      <div class="title">{{keyword}}</div>
+    </div>
+  </div>
+{{/if}}
+
+{{#if init }}
+  <input type="hidden" id="init" value="{{ init }}"/>
+{{/if}}
+
+{{#if data.galleries }}
+  <div id="galeryContainer">
+    <h3 class="ui inverted header querySectionTitle">Galerías</h3>
+    <div class="albums_wrapper justified-gallery" id="albumList">
+      {{#each data.galleries}}
+        <a href="/galery/{{this._id}}" data-id="{{this._id}}">
+          <img alt="{{this.title}}" src="{{this.titlePicture}}"/>
+        </a>
+      {{/each}}
+    </div>
+  </div>
+{{/if}}
+
+{{#if data.cuadros}}
+  <div id="cuadrosContainer">
+    <h3 class="ui inverted header querySectionTitle">Sus Cuadros</h3>
+    <div class="albums_wrapper justified-gallery" id="albumListCuadros">
+      {{#each data.cuadros}}
+        {{#if this.photos}}
+          <a href="/yonny#cuadros_{{this.id}}" data-id="{{this.id}}">
+            <img alt="{{this.title}}" src="{{this.titlePicture}}"/>
+          </a>
+        {{/if}}
+      {{/each}}
+    </div>
+  </div>
+{{/if}}
+
+{{#if data.yonnyFotos}}
+  <div id="yonnyFotosContainer">
+    <h3 class="ui inverted header querySectionTitle">Yonny En Fotos</h3>
+    <div class="albums_wrapper justified-gallery" id="albumListYonnyFotos">
+      {{#each data.yonnyFotos}}
+        {{#if this.photos}}
+          <a href="/yonny/en-fotos#en_fotos_{{this.id}}" data-id="{{this.id}}">
+            <img alt="{{this.title}}" src="{{this.titlePicture}}"/>
+          </a>
+        {{/if}}
+      {{/each}}
+    </div>
+  </div>
+{{/if}}
+
+<div style="color: white; text-align: center; margin: 2rem;">
+  <a href="/" style="text-decoration: underline;">volver</a>
+</div>
+

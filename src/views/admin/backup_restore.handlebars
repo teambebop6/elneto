@@ -1,0 +1,78 @@
+<div class="sixteen wide column images">
+
+  <div id="message" class="ui message" style="display: none">
+    <i class="close icon"></i>
+    <div class="header"></div>
+    <p class="content"></p>
+  </div>
+
+  <h1 class="ui header inverted">Restore Backup</h1>
+
+  <div class="ui icon red message">
+    <i class="exclamation icon"></i>
+    <div class="content">
+      <div class="header">PLEASE READ</div>
+      <div class="header">
+        If backup restore job start, current data for above names will be REMOVED !
+      </div>
+      <div>
+        Then the data for above names in backup file will be RESTORE.
+      </div>
+    </div>
+  </div>
+
+  <div class="ui inverted segment">
+    <div class="ui grid">
+      <div class="row">
+        <div class="sixteen wide column">
+
+          <h3>Title</h3>
+          <span>
+            {{ backupInfoMeta.title }}
+          </span>
+
+          <h3>Creation Time</h3>
+          <span>
+            {{ backupInfoMeta.creationDate }}
+          </span>
+
+          <h3>Backup Detail</h3>
+
+          <table class="ui celled structured table reverse">
+
+            <thead>
+            <tr>
+              <th>Data Name</th>
+              <th>Length</th>
+              <th>Backup Result</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#if backupInfoMeta.collections}}
+              {{#each backupInfoMeta.collections}}
+                <tr>
+                  <td>{{ this.description }}</td>
+                  <td>{{ this.length }}</td>
+                  <td>
+                    {{#if this.success}}
+                      <i class="large green checkmark icon"></i>
+                    {{else}}
+                      <i class="large red times icon"></i>
+                    {{/if}}
+                  </td>
+                </tr>
+              {{/each}}
+            {{/if}}
+            </tbody>
+          </table>
+
+          <button id="restore" class="ui button" data-id="{{id}}">
+            <i class="redo icon"></i>
+            Restore
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
