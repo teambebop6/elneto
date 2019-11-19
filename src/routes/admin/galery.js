@@ -206,7 +206,7 @@ router.get('/:id/modify', (req, res) => {
     }
 
     // Sort them images
-    galery.images.sort(utils.sort_by('sort'));
+    // galery.images.sort(utils.sort_by('sort'));
 
     const galeryObject = galery.toObject();
 

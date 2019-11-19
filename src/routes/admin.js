@@ -336,6 +336,7 @@ router.post('/admin/upload2/:target?', multer.fields([{ name: 'files' }]),
   (req, res, next) => {
 
     const target = req.params.target || 'common';
+    const tempId = req.headers.tempid;
 
     if (req.files && req.files.files) {
 
@@ -360,7 +361,10 @@ router.post('/admin/upload2/:target?', multer.fields([{ name: 'files' }]),
 
           Object.assign(urls, {
             id: new Buffer(urls.url).toString('base64').replace(/=/g, ""),
+            tempId: tempId
           });
+
+          // TODO save photos to db in order
 
           if (target === 'cuadro') {
 
