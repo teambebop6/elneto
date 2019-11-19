@@ -82,16 +82,33 @@ app.then(function () {
       imageMaxWidth: 1177,
       imageMaxHeight: 1177,
       sequentialUploads: true,
+      send: function (e, data) {
+        console.log('before send');
+        var tempId = utils.create_UUID();
+        // 1. gen thumb html with temp id AND append to container
+        var tempHtml = `<div id="${tempId}"></div>`;
+        $('#sortable-galery-images').append(tempHtml);
+        // 2. set temp id in header to backend
+        data.headers = {
+          tempId: tempId
+        };
+        console.log(`TempId from front-end ${tempId}`);
+        return true;
+      },
       done: function (e, data) {
 
-        console.log(data.result.files)
+        console.log(data.result.files);
+        var tempId = data.result.tempId;
+        console.log(`from backend tempId is ${tempId}`);
 
         $.get(
           "/admin/galery/getThumbTemplate?link=" + data.result.thumbUrl + "&id="
           + data.result.id, function (data) {
             var thumb = $('<div/>').html(data).find('> div');
             refreshThumb(thumb); // Bind mouseover events
-            thumb.appendTo($('.images-list'));
+            // thumb.appendTo($('.images-list'));
+            // replaceWith html by temp id
+            $(`#${tempId}`).replaceWith(thumb);
           });
 
         $('.ui.progress').hide();

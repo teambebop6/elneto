@@ -43,6 +43,8 @@ app.then(function(){
     var cuadro_id = $('#cuadro-id').val();
 
     console.log(cuadro_id);
+    var tempId = data.result.tempId;
+    console.log(`from backend tempId is ${tempId}`);
 
     $('#fileupload').fileupload({
       dataType: 'json',
@@ -51,6 +53,19 @@ app.then(function(){
       disableImageResize: false,
       imageMaxWidth: 1177,
       imageMaxHeight: 1177,
+      send: function (e, data) {
+        console.log('before send');
+        var tempId = utils.create_UUID();
+        // 1. gen thumb html with temp id AND append to container
+        var tempHtml = `<div id="${tempId}"></div>`;
+        $('#sortable-cuadro-images').append(tempHtml);
+        // 2. set temp id in header to backend
+        data.headers = {
+          tempId: tempId
+        };
+        console.log(`TempId from front-end ${tempId}`);
+        return true;
+      },
       done: function(e, data){
 
         console.log(data.result);
@@ -58,7 +73,8 @@ app.then(function(){
         $.get("/admin/cuadros/getThumbTemplate?link=" + data.result.thumbUrl + "&id=" + data.result.id, function(data){
           var thumb = $('<div/>').html(data).find('> div');
           refreshThumb(thumb); // Bind mouseover events
-          thumb.appendTo($('.images-list'));
+          // thumb.appendTo($('.images-list'));
+          $(`#${tempId}`).replaceWith(thumb);
         });
 
         $('.ui.progress').hide();
