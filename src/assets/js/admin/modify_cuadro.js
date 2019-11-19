@@ -43,8 +43,6 @@ app.then(function(){
     var cuadro_id = $('#cuadro-id').val();
 
     console.log(cuadro_id);
-    var tempId = data.result.tempId;
-    console.log(`from backend tempId is ${tempId}`);
 
     $('#fileupload').fileupload({
       dataType: 'json',
@@ -69,6 +67,8 @@ app.then(function(){
       done: function(e, data){
 
         console.log(data.result);
+        var tempId = data.result.tempId;
+        console.log(`from backend tempId is ${tempId}`);
 
         $.get("/admin/cuadros/getThumbTemplate?link=" + data.result.thumbUrl + "&id=" + data.result.id, function(data){
           var thumb = $('<div/>').html(data).find('> div');
