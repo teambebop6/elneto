@@ -83,7 +83,7 @@ app.then(function () {
       imageMaxHeight: 1177,
       sequentialUploads: true,
       send: function (e, data) {
-        console.log('before send');
+        console.log('before send ' + data.files[0].name);
         var tempId = utils.create_UUID();
         // 1. gen thumb html with temp id AND append to container
         var tempHtml = `<div id="${tempId}"></div>`;
