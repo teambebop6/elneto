@@ -217,5 +217,21 @@ app.then(function(){
       }
     });
 
+  $('#adjustSequence').on('click', function() {
+    if (confirm('Confirm to adjust all galleries sequence?')) {
+      console.log('adjust galleries sequence');
+      $.ajax({
+        method: 'post',
+        url: '/admin/galery/adjust-sequence',
+        success: function () {
+          window.location.href = "/admin/galery/";
+        },
+        error: function (err) {
+          console.error(err);
+        }
+      });
+    }
+  })
+
 });
 

@@ -9,7 +9,7 @@ const dateUtils = require('../../utils/dateUtils');
 const logger = require('../../lib/logger');
 const sort = require('../../utils/sort');
 const RemoteUpload = require('../../utils/RemoteUpload');
-const utils = require('../../utils/AdminUtils');
+const adjustOrder = require('../../utils/adjustOrder');
 
 module.exports = router;
 
@@ -249,6 +249,16 @@ router.post('/change-order/:id', (req, res) => {
       })
   })
 
+});
+
+router.post('/adjust-sequence', (req, res) => {
+  adjustOrder(db.Galery)
+    .then(() => {
+      return res.json({ success: true });
+    })
+    .catch((err) => {
+      return res.status(500).json({ success: false, message: err.message });
+    })
 });
 
 // POST, modify galery
