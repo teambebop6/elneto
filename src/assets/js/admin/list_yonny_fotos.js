@@ -96,5 +96,21 @@ app.then(function () {
     sort(id, 'down')
   })
 
+  $('#adjustSequence').on('click', function() {
+    if (confirm('Confirm to adjust all items sequence?')) {
+      console.log('adjust yonny-fotos sequence');
+      $.ajax({
+        method: 'post',
+        url: '/admin/yonny-fotos/adjust-sequence',
+        success: function () {
+          window.location.href = "/admin/yonny-fotos/";
+        },
+        error: function (err) {
+          console.error(err);
+        }
+      });
+    }
+  })
+
 });
 

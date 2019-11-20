@@ -12,6 +12,7 @@ const handlebars = require('handlebars');
 const sort = require('../../utils/sort');
 const RemoteUpload = require('../../utils/RemoteUpload');
 const dateUtils = require('../../utils/dateUtils');
+const adjustOrder = require('../../utils/adjustOrder');
 
 const Cuadro = db.Cuadro;
 const YonnyFoto = db.YonnyFoto;
@@ -284,6 +285,17 @@ router.post('/change-order/:id', (req, res) => {
       })
   })
 
+});
+
+router.post('/adjust-sequence', (req, res) => {
+  const m = getType(req) || 'c';
+  adjustOrder(model(m))
+    .then(() => {
+      return res.json({ success: true });
+    })
+    .catch((err) => {
+      return res.status(500).json({ success: false, message: err.message });
+    })
 });
 
 router.post('/delete-photo/:id', (req, res) => {

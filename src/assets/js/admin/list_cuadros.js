@@ -96,5 +96,21 @@ app.then(function () {
     sort(id, 'down')
   })
 
+  $('#adjustSequence').on('click', function() {
+    if (confirm('Confirm to adjust all cuadros sequence?')) {
+      console.log('adjust cuadros sequence');
+      $.ajax({
+        method: 'post',
+        url: '/admin/cuadros/adjust-sequence',
+        success: function () {
+          window.location.href = "/admin/cuadros/";
+        },
+        error: function (err) {
+          console.error(err);
+        }
+      });
+    }
+  })
+
 });
 

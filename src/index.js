@@ -105,9 +105,9 @@ app.use('/', require('./routes/router.js'));
 debug('Booting %s', app_name);
 
 //var server = http.createServer(app);
-var server = app.listen(app.get('port'), function(){
+app.listen(app.get('port'), function(){
 
-  require('./scheduled')(config);
+  // require('./scheduled')(config);
 
   console.log('Express server listening on ' + app.get('host') + ":" + app.get('port'));
 });
