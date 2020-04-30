@@ -43,7 +43,7 @@
     "gm": "^1.23.0",
     "handlebars": "^4.0.5",
     "image-size": "^0.6.2",
-    "jquery": "^3.3.1",
+    "jquery": "^3.5.0",
     "jquery-file-upload-middleware": "^0.1.7",
     "less-loader": "^4.0.5",
     "log4js": "^4.4.0",
