@@ -98,7 +98,7 @@ router.get('/teatro-cubano', function(req, res){
 });
 
 router.get('/danza', function(req, res){
-  db.Galery.find({tags: "danza", isActive: true}).sort({dateOfPlay: 'asc'}).exec(function(err, galeries){
+  db.Galery.find({tags: "danza", isActive: true}).sort({order: 'desc'}).exec(function(err, galeries){
     if(err){
       throw err;
     }
