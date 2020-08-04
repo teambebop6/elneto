@@ -2,12 +2,19 @@
 
 echo "Start clone..."
 
+echo "git clone git@gitlab.com:teambebop6/elneto-secret.git elneto-secret"
 git clone git@gitlab.com:teambebop6/elneto-secret.git elneto-secret
+
+echo "cloned folder:"
+ls -l ./elneto-secret
 
 # move ecosystem.config.js to project root folder
 mv ./elneto-secret/ecosystem.config.js .
 # move secret folder under src folder
 mv ./elneto-secret ./src/
+
+echo "secret folder:"
+ls -l ./src/elneto-secret
 
 # generate branch name
 timestamp() {
