@@ -26,12 +26,11 @@ if(process.env.NODE_ENV === "development"){
 }
 
 router.get('/search', function(req, res, next){
-  var query = req.query.q;
+  const query = req.query.q;
 
   if(!query){
-    // return full collection
-
-    return SearchEntries.find().sort({"work": 1}).exec(function(err, results){
+    // return 20 collection
+    return SearchEntries.find().sort({"work": 1}).limit(20).exec(function(err, results){
       if(err){ res.json(err); }
       else{
         res.json({
@@ -39,33 +38,19 @@ router.get('/search', function(req, res, next){
         })
       }
     });
+  } else {
+    SearchEntries.find({ $text: { $search: query } }, { score: { $meta: "textScore" } }).sort({
+      score:{ $meta: "textScore" }
+    }).exec(function(err, results){
+      if(err){
+        return res.json(err);
+      } else {
+        res.json({
+          results: results,
+        });
+      }
+    });
   }
-
-  SearchEntries.collection.dropIndexes();
-  SearchEntries.collection.createIndex({
-    year: 'text',
-    work: 'text',
-    conductedBy: 'text',
-    author: 'text',
-    rep: 'text',
-  }, {
-    default_language: 'spanish'
-  }, function(err){
-    if(err){ res.json(err); }
-    else{
-      SearchEntries.find({ $text: { $search: query } }, { score: { $meta: "textScore" } }).sort({
-        score:{ $meta: "textScore" }
-      }).exec(function(err, results){
-        if(err){
-          return res.json(err);
-        } else {
-          res.json({
-            results: results,
-          });
-        }
-      });
-    }
-  });
 });
 
 module.exports = router;
