@@ -2,7 +2,7 @@
 
 echo "Start clone..."
 
-git clone git@github.com:henryhuang/elneto-secret.git elneto-secret
+git clone git@gitlab.com:teambebop6/elneto-secret.git elneto-secret
 
 # move ecosystem.config.js to project root folder
 mv ./elneto-secret/ecosystem.config.js .
