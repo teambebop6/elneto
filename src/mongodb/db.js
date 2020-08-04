@@ -7,6 +7,7 @@ var db = {
   Poem: require('./poem_model'),
   Cuadro: require('./cuadro_model'),
   YonnyFoto: require('./yonny_foto_model'),
+  SearchEntry: require('./searchEntry_model'),
   //Image : require('./image_model')
 };
 
