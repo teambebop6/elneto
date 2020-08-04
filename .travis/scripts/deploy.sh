@@ -7,6 +7,7 @@ ls -l dist/
 
 # copy ecosystem.config.js to dist
 cp ecosystem.config.js dist/
+cp src/elneto-secret/habana.csv dist/elneto-secret/
 
 branchName=`cat branch`
 echo branch name is $branchName
