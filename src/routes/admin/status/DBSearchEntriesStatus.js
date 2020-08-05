@@ -9,25 +9,16 @@ class DBSearchEntriesStatus extends StatusItem {
     super("SearchEntries");
   }
 
-  async getStatusInfo() {
-
-    const ret = {
-      name: this.name
-    }
+  async check() {
     try {
       const count = await db.SearchEntry.count().exec();
-      Object.assign(ret, {
-        status: 'SUCCESS',
-        message: `DB\'s search entries count is ${count}`
-      })
+      this.status = 'SUCCESS'
+      this.message = `DB\'s search entries count is ${count}`
     } catch (e) {
-      Object.assign(ret, {
-        status: 'ERROR',
-        message: e.message
-      })
+      this.status = 'ERROR'
+      this.message = e.message
     }
-    return ret;
-
+    return this
   }
 
 }

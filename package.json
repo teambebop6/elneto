@@ -38,6 +38,7 @@
     "express": "^4.14.0",
     "express-handlebars": "^3.0.0",
     "express-session": "^1.13.0",
+    "fast-csv": "^4.3.1",
     "file-loader": "^1.1.11",
     "gm": "^1.23.0",
     "handlebars": "^4.0.5",
@@ -57,14 +58,14 @@
     "npm-autoinit": "^0.2.0",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
+    "pm2": "^4.4.0",
     "qiniu": "^7.2.2",
     "randomstring": "^1.1.5",
     "rimraf": "^3.0.0",
     "serve-favicon": "^2.3.0",
     "slick-carousel": "^1.6.0",
     "style-loader": "^0.19.0",
-    "url-loader": "^0.6.2",
-    "fast-csv": "^4.3.1"
+    "url-loader": "^0.6.2"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

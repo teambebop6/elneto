@@ -4,13 +4,27 @@
 class StatusItem {
   constructor(name) {
     this.name = name
+    this.status = 'UNKNOWN'
+    this.message = 'Waiting for check'
   }
-  async getStatusInfo() {
-    return {
-      status: 'NORMAL',
-      message: 'No message'
-    }
+
+  async check() {
+    return this
   }
+
+  getName() {
+    return this.name
+  }
+
+  getStatus() {
+    return this.status
+  }
+
+  getMessage() {
+    return this.message
+  }
+
+
 }
 
 module.exports = StatusItem;
