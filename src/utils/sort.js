@@ -78,8 +78,22 @@ module.exports = (object, model, toLarger) => {
         Promise.all([object.save(), other.save()])
           .then(resolve)
           .catch(reject)
+      } else {
+        // if cannot find object, it on the top/bottom, means need back to bottom/top
+        // find the bottom/top object, -1 or + 1
+        model.find().sort({
+          order: toLarger ? 1 : -1
+        }).limit(1).exec((error2, objects2) => {
+          if (error2) {
+            reject(error);
+          }
+          if (objects2 && objects2[0]) {
+            const refObject = objects2[0]
+            object.order = toLarger ? refObject.order - 1 : refObject.order + 1
+            object.save().then(resolve).catch(reject)
+          }
+        })
       }
-      // do not need swap
     })
 
   })

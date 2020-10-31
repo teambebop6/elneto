@@ -65,10 +65,12 @@ app.then(function(){
 
 
   var resetButtonsState = function () {
-    $(".changeOrderUp").removeClass("disabled");
-    $(".changeOrderDown").removeClass("disabled");
-    $(".changeOrderUp:first").addClass("disabled");
-    $(".changeOrderDown:last").addClass("disabled");
+  // {{ 20201031 active top to bottom / bottom to top
+  //   $(".changeOrderUp").removeClass("disabled");
+  //   $(".changeOrderDown").removeClass("disabled");
+  //   $(".changeOrderUp:first").addClass("disabled");
+  //   $(".changeOrderDown:last").addClass("disabled");
+  // }}
   };
   resetButtonsState();
 
