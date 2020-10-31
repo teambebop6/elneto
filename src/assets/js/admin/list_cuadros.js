@@ -4,10 +4,10 @@ app.then(function () {
   console.log("Loaded globals.");
 
   var resetButtonsState = function () {
-    $(".changeOrderUp").removeClass("disabled");
-    $(".changeOrderDown").removeClass("disabled");
-    $(".changeOrderUp:first").addClass("disabled");
-    $(".changeOrderDown:last").addClass("disabled");
+    // $(".changeOrderUp").removeClass("disabled");
+    // $(".changeOrderDown").removeClass("disabled");
+    // $(".changeOrderUp:first").addClass("disabled");
+    // $(".changeOrderDown:last").addClass("disabled");
   };
   resetButtonsState();
 
