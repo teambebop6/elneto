@@ -11,6 +11,14 @@ app.then(function () {
     deletePoem(id);
   });
 
+  // Delete poem collection
+  $(".deletePoemCollection").click(function () {
+    var id = $(this).data("id");
+    console.log("Deleting: " + id);
+
+    deletePoemCollection(id);
+  });
+
   var deletePoem = function (id) {
     var confirmDelete = $('#deleteModalTemplate').clone().html(
       $('#deleteModalTemplate').html().replace(/###placeholder###/g,
@@ -24,6 +32,29 @@ app.then(function () {
           data: { id: id },
           success: function () {
             $('#poem_' + id).hide();
+          },
+          error: function ({ error }) {
+            console.error(error);
+          }
+        })
+      }
+    })
+      .modal('show');
+  };
+
+  var deletePoemCollection = function (id) {
+    var confirmDelete = $('#deleteModalTemplate').clone().html(
+      $('#deleteModalTemplate').html().replace(/###placeholder###/g,
+        "this poem collection"));
+
+    confirmDelete.modal({
+      onApprove: function () {
+        $.ajax({
+          method: 'DELETE',
+          url: '/admin/poems/collection',
+          data: { id: id },
+          success: function () {
+            $('#poem_collection_' + id).hide();
           },
           error: function ({ error }) {
             console.error(error);

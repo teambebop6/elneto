@@ -54,6 +54,7 @@ module.exports = {
 
     'admin/new-poem': './src/assets/js/admin/new_poem',
     'admin/list-poems': './src/assets/js/admin/list_poems',
+    'admin/new-poem-collection': './src/assets/js/admin/new_poem_collection',
 
     'admin/new-cuadro': './src/assets/js/admin/new_cuadro',
     'admin/modify-cuadro': './src/assets/js/admin/modify_cuadro',

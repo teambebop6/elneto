@@ -8,6 +8,7 @@ const logger = require('../../lib/logger');
 const dateUtils = require('../../utils/dateUtils');
 
 const Poem = db.Poem;
+const PoemCollection = db.PoemCollection;
 
 const buildResponseAndReturn = ({ res, data, error, module = Poem }) => {
   let code = error ? 400 : 200;
@@ -57,6 +58,38 @@ const updatePoem = (id, updateData) => {
   });
 };
 
+const updatePoemCollection = (id, updateData) => {
+  return new Promise((resolve, reject) => {
+    PoemCollection.findOne({ _id: id }).exec((err, poemCollection) => {
+      if (err) {
+        reject(err);
+      }
+      if (!poemCollection) {
+        reject(new Error('Poem collection does not exist!'))
+      }
+
+      if (!updateData || updateData.length <= 0) {
+        // formData is empty, do nothing
+        reject(new Error('No data provided. Nothing happened.'));
+      }
+
+      // Parse object from json data
+
+      // Iterate through data
+      for (let key in updateData) {
+        poemCollection[key] = updateData[key]
+      }
+
+      poemCollection.save((err) => {
+        if (err) {
+          reject(err);
+        }
+        resolve();
+      });
+    });
+  });
+};
+
 router.get('/', function (req, res) {
 
   Poem.find({}).sort({ order: 'desc' }).exec(
@@ -72,18 +105,35 @@ router.get('/', function (req, res) {
         return t;
       });
 
-      res.render('admin/list_poems', {
-        title: 'Manage Poems',
-        custom_js: 'admin/list-poems.bundle',
-        poems: poemObjects,
-        active: { list_poems: true },
-        body_scripts: 'list-poems.bundle',
-      });
+      PoemCollection.find({}).sort({order: 'desc'}).exec((err2, poemCollections) => {
+
+        if (err2) {
+          console.log(err2);
+          return;
+        }
+
+        const poemCollectionObjects = poemCollections.map((poem) => {
+          const t = poem.toObject();
+          t['creationDate'] = dateUtils.format(poem.creationDate);
+          return t;
+        });
+
+        res.render('admin/list_poems', {
+          title: 'Manage Poems',
+          custom_js: 'admin/list-poems.bundle',
+          poems: poemObjects,
+          poemCollections: poemCollectionObjects,
+          active: { list_poems: true },
+          body_scripts: 'list-poems.bundle',
+        });
+
+      })
+
     });
 
 });
 
-router.get('/modify/:id', (req, res) => {
+router.get('/modify/:id', (req, res, next) => {
 
   const { id } = req.params;
   logger.debug(`Load view for poem update with id = ${id}`);
@@ -96,13 +146,22 @@ router.get('/modify/:id', (req, res) => {
       return next(Error(`Cannot find poem with id = ${id}`));
     }
 
-    res.render('admin/new_poem', {
-      title: 'Update poem',
-      poem: Poem.toDTO(poem),
-      body_scripts: 'new-poem.bundle',
-      active: { list_poems: true, modify: true },
-      css: ['new-poem'],
-    });
+    PoemCollection.find({}).exec((error, collections) => {
+      if (error) {
+        return buildResponseAndReturn({
+          res,
+          error
+        })
+      }
+      res.render('admin/new_poem', {
+        title: 'Update poem',
+        poem: Poem.toDTO(poem),
+        collections: collections.map(c => c.title),
+        body_scripts: 'new-poem.bundle',
+        active: { list_poems: true, modify: true },
+        css: ['new-poem'],
+      });
+    })
 
   });
 
@@ -168,6 +227,7 @@ router.post('/', (req, res) => {
         const poem = new Poem({
           _id: counter.seq,
           title: body.title,
+          poemCollection: body.poemCollection,
           content: body.content,
           visible: body.visible,
           year: body.year || now.getFullYear(),
@@ -207,12 +267,21 @@ router.post('/change-order', (req, res) => {
 });
 
 router.get('/new', (req, res) => {
-  res.render('admin/new_poem', {
-    title: 'Create new poem',
-    body_scripts: 'new-poem.bundle',
-    active: { list_poems: true, create: true },
-    css: ['new-poem'],
-  });
+  PoemCollection.find({}).exec((error, collections) => {
+    if (error) {
+      return buildResponseAndReturn({
+        res,
+        error
+      })
+    }
+    res.render('admin/new_poem', {
+      title: 'Create new poem',
+      collections: collections.map(c => c.title),
+      body_scripts: 'new-poem.bundle',
+      active: { list_poems: true, create: true },
+      css: ['new-poem'],
+    });
+  })
 });
 
 router.delete('/', (req, res) => {
@@ -223,6 +292,132 @@ router.delete('/', (req, res) => {
   }
 
   Poem.remove({ _id: id }, (err) => {
+    return buildResponseAndReturn({ res, error: err });
+  })
+
+});
+
+router.get('/collection/new', (req, res) => {
+  res.render('admin/new_poem_collection', {
+    title: 'New Poem Collection',
+    body_scripts: 'new-poem-collection.bundle',
+    active: { list_poems: true, create: true },
+    css: ['new-poem'],
+  });
+});
+
+router.post('/collection', (req, res) => {
+  const body = req.body;
+  const { id } = body;
+
+  if (id) {
+    logger.debug(`update poem collection (id=${id}) ${JSON.stringify(body)}`);
+  } else {
+    logger.debug(`create poem collection ${JSON.stringify(body)}`);
+  }
+
+  try {
+    PoemCollection.validate(body);
+  } catch (e) {
+    return buildResponseAndReturn({
+      res,
+      error: e
+    })
+  }
+
+  if (id) {
+    // update
+
+    updatePoemCollection(id, body)
+      .then(() => buildResponseAndReturn({ res }))
+      .catch((error) => buildResponseAndReturn({ res, error }));
+
+  } else {
+    // create
+
+    db.Counter.findOne({ _id: 'poem-collection' }, (error, counter) => {
+
+      if (error) {
+        return buildResponseAndReturn({
+          res,
+          error
+        })
+      }
+
+      // Autoincrement of id
+      if (!counter) {
+        counter = new db.Counter({
+          _id: "poem-collection",
+          seq: 0
+        });
+      }
+      counter.seq++;
+      counter.save((err) => {
+
+        if (err) {
+          return buildResponseAndReturn({
+            res,
+            error: err
+          })
+        }
+
+        const now = new Date();
+        const poemCollection = new PoemCollection({
+          _id: counter.seq,
+          title: body.title,
+          visible: body.visible,
+          order: now.getTime()
+        });
+
+        poemCollection.save((err, { _doc: p }) => {
+          if (err) {
+            return buildResponseAndReturn({
+              res,
+              error: err
+            })
+          }
+          return buildResponseAndReturn({ res, data: p });
+        })
+      })
+    });
+
+  }
+
+})
+
+router.get('/collection/modify/:id', (req, res) => {
+
+  const { id } = req.params;
+  logger.debug(`Load view for poem collection update with id = ${id}`);
+
+  PoemCollection.findOne({ _id: id }, (err, poemCollection) => {
+    if (err) {
+      return next(err);
+    }
+    if (!poemCollection) {
+      return next(Error(`Cannot find poem collection with id = ${id}`));
+    }
+
+    res.render('admin/new_poem_collection', {
+      title: 'Update poem collection',
+      poemCollection: PoemCollection.toDTO(poemCollection),
+      body_scripts: 'new-poem-collection.bundle',
+      active: { list_poems: true, modify: true },
+      css: ['new-poem'],
+    });
+
+  });
+
+});
+
+router.delete('/collection', (req, res) => {
+
+  const { id } = req.body;
+  if (!id) {
+    return buildResponseAndReturn({ res, error: Error("Missing poem collection id.") });
+  }
+
+  PoemCollection.remove({ _id: id }, (err) => {
     return buildResponseAndReturn({ res, error: err });
   })
 

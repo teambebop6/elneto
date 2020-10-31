@@ -8,6 +8,11 @@ const PoemSchema = new mongoose.Schema({
   title: {
     type: String,
   },
+  // collection
+  poemCollection: {
+    type: String,
+    default: ''
+  },
   content: {
     type: String,
   },
@@ -44,10 +49,11 @@ PoemSchema.statics.validate = ({ title, content }) => {
   return null;
 };
 
-PoemSchema.statics.toDTO = ({ _id: id, title, year, author, content, visible, order, creationDate, lastModifiedDate }) => {
+PoemSchema.statics.toDTO = ({ _id: id, title, poemCollection, year, author, content, visible, order, creationDate, lastModifiedDate }) => {
   return {
     id,
     title,
+    poemCollection,
     year,
     author,
     content,

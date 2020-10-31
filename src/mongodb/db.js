@@ -8,6 +8,7 @@ var db = {
   Cuadro: require('./cuadro_model'),
   YonnyFoto: require('./yonny_foto_model'),
   SearchEntry: require('./searchEntry_model'),
+  PoemCollection: require('./poem_collection_model'),
   //Image : require('./image_model')
 };
 

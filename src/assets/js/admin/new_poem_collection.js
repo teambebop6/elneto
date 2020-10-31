@@ -5,9 +5,7 @@ require('../../vendor/trumbowyg/ui/trumbowyg.min.css');
 app.then(function () {
 
   // Initialize UI
-  $('.ui.dropdown').dropdown({
-    allowAdditions: true,
-  });
+  $('.ui.dropdown').dropdown();
   $('.ui.checkbox').checkbox();
   $('.ui.error.message').hide();
 
@@ -18,14 +16,9 @@ app.then(function () {
       .transition('fade');
   });
 
-  var poemCollection = $('#poemCollection').val()
-  if (poemCollection) {
-    $('#cltSelect').dropdown('set selected', poemCollection);
-  }
-
   require(['jquery.validate', '../../../utils/locales/messages_de.js'],
     function () {
-      $('#poem-form').validate({
+      $('#poem-collection-form').validate({
         lang: 'de',
         rules: {
           title: {
@@ -33,20 +26,10 @@ app.then(function () {
           }
         },
         highlight: function (element) {
-          if (element.name === 'content') {
-            $(element).parent().addClass('editor-error');
-            $(element).parents('.field').addClass('error');
-          } else {
-            $(element).parent().addClass('error');
-          }
+          $(element).parent().addClass('error');
         },
         unhighlight: function (element) {
-          if (element.name === 'content') {
-            $(element).parent().removeClass('editor-error');
-            $(element).parents('.field').removeClass('error');
-          } else {
-            $(element).parent().removeClass('error');
-          }
+          $(element).parent().removeClass('error');
         },
         errorLabelContainer: "#errorMsgBox",
         wrapper: "p",
@@ -58,8 +41,8 @@ app.then(function () {
 
           $.ajax({
             type: 'POST',
-            url: '/admin/poems',
-            data: $('#poem-form').serialize(),
+            url: '/admin/poems/collection',
+            data: $('#poem-collection-form').serialize(),
             success: function () {
               window.location.href = "/admin/poems";
             },
@@ -74,18 +57,6 @@ app.then(function () {
         }
       });
     });
-
-  require(['trumbowyg', 'trumbowyg.lang.es'], function () {
-    $('#content').trumbowyg({
-      svgPath: '/static/svg/trumbowyg/icons.svg',
-      btns: [
-        ['undo', 'redo'],
-        ['strong', 'em', 'del'],
-        ['fullscreen']
-      ]
-    });
-    $('.trumbowyg-editor').attr('id', 'teditor');
-  });
 
 });
 
