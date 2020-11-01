@@ -107,11 +107,13 @@ router.get('/poemas', function (req, res) {
       return
     }
     const poemCollections = clts.map(c => c.title)
+    const matchCond = [].concat(poemCollections)
+    matchCond.push('')
     db.Poem.aggregate([
       {
         $match: {
           poemCollection: {
-            $in: poemCollections
+            $in: matchCond
           },
           visible: true
         }
@@ -129,6 +131,21 @@ router.get('/poemas', function (req, res) {
         logger.error("Find poem failed", error1);
         renderPoems(res, [], [])
         return
+      }
+      var ncFound = false
+      poemGroups.forEach(pg => {
+        if (pg._id === '') {
+          pg._id = 'Sin colección'
+          ncFound = true
+          if (pg.poems) {
+            pg.poems.forEach(p => {
+              p.poemCollection = 'Sin colección'
+            })
+          }
+        }
+      })
+      if (ncFound) {
+        poemCollections.push('Sin colección')
       }
       renderPoems(res, poemGroups, poemCollections)
     })
