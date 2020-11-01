@@ -59,7 +59,7 @@
 
 
     margin: auto;
-    z-index: 1000000;
+    //z-index: 1000000;
 
     .backToElneto {
       left: 6%;
@@ -224,6 +224,29 @@
         &:before {
           transition: all 0.5s ease;
           content: '>';
+          width: 0;
+          height: 20px;
+          margin-right: 0;
+          overflow: hidden;
+          display: inline-block;
+        }
+
+        &:hover {
+          &:before {
+            width: 10px;
+            margin-right: 10px;
+          }
+        }
+      }
+
+      li.poemCollectionBackLink {
+        a {
+          font-weight: bold;
+        }
+
+        &:before {
+          transition: all 0.5s ease;
+          content: '<<';
           width: 0;
           height: 20px;
           margin-right: 0;

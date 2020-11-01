@@ -1,14 +1,53 @@
 <div class="column">
   <h2 class="ui left floated inverted header">Manage Poems</h2>
+  <a class="ui inverted basic button" href="/admin/poems/collection/new">
+    <i class="plus icon"></i>
+    New collection
+  </a>
   <a class="ui inverted basic button" href="/admin/poems/new">
     <i class="plus icon"></i>
-    Create new
+    New poem
   </a>
 
   <table class="ui inverted table">
     <thead>
     <tr>
+      <th>Colección</th>
+      <th>Erstellungsdatum</th>
+      <th>Visible</th>
+      <th style="min-width:125px;">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <div class="ui list clearfix">
+      {{#each poemCollections}}
+        <tr id="poem_collection_{{this._id}}" class="poem-collections-listing">
+          <td>{{this.title}}</td>
+          <td>{{this.creationDate}}</td>
+          <td>
+            <div id="poem_collection_{{this._id}}_visible" class="ui toggle checkbox poemCollectionVisible">
+              <input type="checkbox" data-id="{{this._id}}" tabindex="0" name="visible" class="hidden visible" {{#if this.visible}}checked{{/if}}>
+            </div>
+          </td>
+          <td>
+            <a href="/admin/poems/collection/modify/{{this._id}}" class="ui inverted yellow icon button">
+              <i class="edit icon"></i>
+            </a>
+            <a data-id="{{this._id}}" class="ui inverted red icon button deletePoemCollection">
+              <i class="delete icon"></i>
+            </a>
+          </td>
+        </tr>
+      {{/each}}
+    </div>
+    </tbody>
+  </table>
+
+  <table class="ui inverted table">
+    <thead>
+    <tr>
       <th>Título</th>
+      <th>Colección</th>
       <th>Erstellungsdatum</th>
       <th>Visible</th>
       <th style="min-width:125px;">Actions</th>
@@ -19,19 +58,14 @@
       {{#each poems}}
         <tr id="poem_{{this._id}}" class="poems-listing">
           <td>{{this.title}}</td>
+          <td class="poemCollection">{{this.poemCollection}}</td>
           <td>{{this.creationDate}}</td>
           <td>
-            <div id="poem_{{this._id}}_visible" class="ui toggle checkbox">
+            <div id="poem_{{this._id}}_visible" class="ui toggle checkbox poemVisible">
               <input type="checkbox" data-id="{{this._id}}" tabindex="0" name="visible" class="hidden visible" {{#if this.visible}}checked{{/if}}>
             </div>
           </td>
           <td>
-            <!--<a href="/admin/poem/{{this._id}}/download" class="ui inverted green icon button">-->
-            <!--<i class="arrow up icon"></i>-->
-            <!--</a>-->
-            <!--<a href="/admin/poem/{{this._id}}/download" class="ui inverted yellow icon button">-->
-            <!--<i class="arrow down icon"></i>-->
-            <!--</a>-->
             <a href="/admin/poems/modify/{{this._id}}" class="ui inverted yellow icon button">
               <i class="edit icon"></i>
             </a>
@@ -56,7 +90,8 @@
         <i class="archive icon"></i>
       </div>
       <div class="description">
-        <p>Are you sure to delete ###placeholder###?</p>
+        <p>###placeholder###</p>
+        <p>###subPlaceholder###</p>
       </div>
     </div>
     <div class="actions">
@@ -67,7 +102,7 @@
         </div>
         <div class="ui approve green basic inverted button">
           <i class="checkmark icon"></i>
-          Yes, I want to delete ###placeholder###!
+          Yes
         </div>
       </div>
     </div>

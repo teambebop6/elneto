@@ -1,5 +1,6 @@
 <form id="poem-form" class="ui inverted form" method="POST" action="/admin/poems/">
   <input type="hidden" name="id" value="{{poem.id}}">
+  <input type="hidden" id="poemCollection" value="{{poem.poemCollection}}">
   <div id="errorMsgBox" class="ui error message">
 
   </div>
@@ -7,6 +8,19 @@
     <div class="ui toggle checkbox">
       <input type="checkbox" tabindex="0" name="visible" class="hidden" {{#if poem.visible}}checked{{/if}}>
       <label>Visible</label>
+    </div>
+  </div>
+  <div class="two fields">
+    <div class="field">
+      <label>Collection</label>
+      <div class="ui input">
+        <select name="poemCollection" class="ui dropdown" id="cltSelect">
+          <option value="">Collection</option>
+          {{#each collections }}
+            <option value="{{ this }}">{{ this }}</option>
+          {{/each}}
+        </select>
+      </div>
     </div>
   </div>
   <div class="two fields">
