@@ -6,24 +6,12 @@ require('../vendor/slick-1.8.1/slick/slick.js');
 
 app.then(function () {
 
-  require(['justifiedGallery'], function () {
-    console.log("loaded justified galery22");
-
-    $('#enFotos').justifiedGallery({
-      rowHeight: 230,
-      lastRow: 'nojustify',
-      maxRowHeight: 380,
-      randomize: false,
-      margins: 30
-    });
-  });
-
   $('.responsive').slick({
     // dots: true,
     infinite: false,
     speed: 1000,
     // centerMode: true,
-    autoplay: true,
+    // autoplay: true,
     autoplaySpeed: 2000,
     slidesToShow: 3,
     slidesToScroll: 2,
@@ -65,7 +53,7 @@ app.then(function () {
       // parse slide data (url, title, size ...) from DOM elements
       // (children of gallerySelector)
       var parseThumbnailElements = function(el) {
-        var thumbElements = el.childNodes,
+        var thumbElements = el.querySelectorAll('figure'),
           numNodes = thumbElements.length,
           items = [],
           figureEl,
@@ -92,8 +80,6 @@ app.then(function () {
             w: parseInt(size[0], 10),
             h: parseInt(size[1], 10)
           };
-
-
 
           if(figureEl.children.length > 1) {
             // <figcaption> content
@@ -135,8 +121,8 @@ app.then(function () {
 
         // find index of clicked item by looping through all child nodes
         // alternatively, you may define index via data- attribute
-        var clickedGallery = clickedListItem.parentNode,
-          childNodes = clickedListItem.parentNode.childNodes,
+        var clickedGallery = clickedListItem.closest('.my-gallery'),
+          childNodes = clickedGallery.querySelectorAll('figure'),
           numChildNodes = childNodes.length,
           nodeIndex = 0,
           index;
@@ -254,7 +240,6 @@ app.then(function () {
 
       // loop through all gallery elements and bind events
       var galleryElements = document.querySelectorAll( gallerySelector );
-
       for(var i = 0, l = galleryElements.length; i < l; i++) {
         galleryElements[i].setAttribute('data-pswp-uid', i+1);
         galleryElements[i].onclick = onThumbnailsClick;
