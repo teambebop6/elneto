@@ -20,13 +20,13 @@ app.then(function () {
 
   $('.responsive').slick({
     // dots: true,
-    infinite: true,
+    infinite: false,
     speed: 1000,
-    // slidesToShow: 5,
-    centerMode: true,
+    // centerMode: true,
     autoplay: true,
-    autoplaySpeed: 10000,
-    slidesToScroll: 3,
+    autoplaySpeed: 2000,
+    slidesToShow: 3,
+    slidesToScroll: 2,
     variableWidth: true
   });
 
