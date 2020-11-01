@@ -73,6 +73,9 @@ const updatePoemCollection = (id, updateData) => {
         reject(new Error('No data provided. Nothing happened.'));
       }
 
+      var oldTitle = poemCollection.title
+      var newTitle = updateData.title
+
       // Parse object from json data
 
       // Iterate through data
@@ -84,7 +87,22 @@ const updatePoemCollection = (id, updateData) => {
         if (err) {
           reject(err);
         }
-        resolve();
+
+        // if title is updated, need update all related poems
+        // !newTitle === true, means it is non-title-change operaition, like change visible
+        if (newTitle && oldTitle !== newTitle) {
+          Poem.update(
+            {poemCollection: oldTitle},
+            {$set:{poemCollection: newTitle}},
+            {multi: true}, (err) => {
+              if (err) {
+                reject(err);
+              }
+              resolve();
+          });
+        } else {
+          resolve();
+        }
       });
     });
   });
@@ -262,6 +280,17 @@ router.patch('/visible', (req, res) => {
     })
 });
 
+router.patch('/collection/visible', (req, res) => {
+  const { id, visible } = req.body;
+  updatePoemCollection(id, { visible })
+    .then(() => {
+      return buildResponseAndReturn({ res })
+    })
+    .catch((e) => {
+      return buildResponseAndReturn({ res, error: e })
+    })
+});
+
 router.post('/change-order', (req, res) => {
   // TODO
 });
@@ -417,8 +446,22 @@ router.delete('/collection', (req, res) => {
     return buildResponseAndReturn({ res, error: Error("Missing poem collection id.") });
   }
 
-  PoemCollection.remove({ _id: id }, (err) => {
-    return buildResponseAndReturn({ res, error: err });
+  PoemCollection.findOne({_id: id}).exec((error, poemCollection) => {
+    if (error) {
+      return buildResponseAndReturn({ res, error});
+    }
+    if (!poemCollection) {
+      return buildResponseAndReturn({ res, error: Error("Cannot find the poem collection") });
+    }
+    const title = poemCollection.title
+    Poem.deleteMany({poemCollection: title}, (error2) => {
+      if (error2) {
+        return buildResponseAndReturn({ res, error2});
+      }
+      PoemCollection.remove({ _id: id }, (err) => {
+        return buildResponseAndReturn({ res, error: err });
+      })
+    })
   })
 
 });

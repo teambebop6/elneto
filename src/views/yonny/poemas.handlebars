@@ -1,20 +1,24 @@
 <!--<div class="mask_top"></div>-->
 <div id="yonny_poem_wrapper" class="yonny_poem_wrapper">
 
-  <div class="poemList">
+  <input id="poemGroups" type="hidden" value="{{poems}}">
+  <input id="poemCollection" type="hidden" value="{{poemCollection}}">
+  <input id="poemGroup" type="hidden" value="{{poemGroup}}">
+  <input id="poemDetail" type="hidden" value="{{poemDetail}}">
+
+  <div id="poemCollections" class="poemList">
     <ul>
-      {{#each poems}}
+      {{#each poemCollections}}
         <li>
-          <a data-id="{{this.id}}"
-             data-title="{{this.title}}"
-             data-content="{{this.content}}"
-             data-year="{{this.year}}"
-          >
-            {{this.title}}
+          <a data-id="{{this}}">
+            {{this}}
           </a>
         </li>
       {{/each}}
     </ul>
+  </div>
+
+  <div id="poemList" class="poemList" style="display: none">
 
   </div>
 

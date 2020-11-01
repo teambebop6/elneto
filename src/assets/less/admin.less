@@ -28,7 +28,7 @@
 	left:0;
 	right:0;
 	margin-bottom:0 !important;
-	background: @transparentWhite !important;	
+	background: @transparentWhite !important;
 }
 
 .image-thumb{
@@ -48,14 +48,14 @@
 		margin:1rem;
 
 		.isTitlePicture{
-			background:@blue; 	
+			background:@blue;
 			padding: 5px;
 			font-weight:bold;
 			font-size:0.8rem;
 			border-radius:0;
 		}
 	}
-	
+
 	.actions{
 		position:absolute;
 		bottom:0;
@@ -98,4 +98,9 @@
 	label.error {
 		color: #9f3a38;
 	}
+}
+
+// to avoid it is hide by other elements
+.ui.dropdown.selection.active.visible {
+	z-index: 9999;
 }

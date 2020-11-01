@@ -77,25 +77,62 @@ router.get('/serie', function (req, res, next) {
   });
 });
 
+/**
+ *
+ * @param res
+ * @param poemGroup [{poemCollection.title, poems}]
+ * @param poemCollections [poemCollection]
+ */
+const renderPoems = (res, poemGroups, poemCollections) => {
+  res.render('yonny/poemas', {
+    title: 'Yonny',
+    active: {
+      poemas: true
+    },
+    poems: JSON.stringify(poemGroups),
+    poemCollections,
+    scripts: 'poemas.bundle',
+  });
+}
+
 router.get('/poemas', function (req, res) {
 
   const cond = { visible: true };
 
-  db.Poem.find(cond).limit(8).sort({ lastModifiedDate: -1 }).exec(
-    (error, poems) => {
-      const data = poems.map(p => db.Poem.toDTO(p));
-
-      res.render('yonny/poemas', {
-        title: 'Yonny',
-        active: {
-          poemas: true
-        },
-        poems: data,
-        scripts: 'poemas.bundle',
-      });
-
-    });
-
+  // find visible collections
+  db.PoemCollection.find(cond).sort({ lastModifiedDate: -1 }).exec((error1, clts) => {
+    if (error1) {
+      logger.error("Find poem collections failed", error1);
+      renderPoems(res, [], [])
+      return
+    }
+    const poemCollections = clts.map(c => c.title)
+    db.Poem.aggregate([
+      {
+        $match: {
+          poemCollection: {
+            $in: poemCollections
+          },
+          visible: true
+        }
+      },
+      {
+        $group: {
+          _id: 	"$poemCollection",
+          poems: {
+            $push: "$$ROOT"
+          }
+        }
+      }
+    ]).exec((error2, poemGroups) => {
+      if (error2) {
+        logger.error("Find poem failed", error1);
+        renderPoems(res, [], [])
+        return
+      }
+      renderPoems(res, poemGroups, poemCollections)
+    })
+  })
 });
 
 router.get('/poemas-detail', function (req, res) {

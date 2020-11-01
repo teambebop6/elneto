@@ -22,7 +22,8 @@ app.then(function () {
   var deletePoem = function (id) {
     var confirmDelete = $('#deleteModalTemplate').clone().html(
       $('#deleteModalTemplate').html().replace(/###placeholder###/g,
-        "this poem"));
+        "Are you sure to delete this poem?").replace(/###subPlaceholder###/g,
+        ""));
 
     confirmDelete.modal({
       onApprove: function () {
@@ -45,7 +46,8 @@ app.then(function () {
   var deletePoemCollection = function (id) {
     var confirmDelete = $('#deleteModalTemplate').clone().html(
       $('#deleteModalTemplate').html().replace(/###placeholder###/g,
-        "this poem collection"));
+        "The operation will delete the poems which collection is this!").replace(/###subPlaceholder###/g,
+        "Are you sure to delete this poem collection?"));
 
     confirmDelete.modal({
       onApprove: function () {
@@ -53,8 +55,8 @@ app.then(function () {
           method: 'DELETE',
           url: '/admin/poems/collection',
           data: { id: id },
-          success: function () {
-            $('#poem_collection_' + id).hide();
+          success: function (data) {
+            window.location.href = '/admin/poems'
           },
           error: function ({ error }) {
             console.error(error);
@@ -66,31 +68,42 @@ app.then(function () {
   };
 
   var switchVisible = function (id, visible) {
-    console.log(id, visible);
-
     $.ajax({
       method: 'PATCH',
       url: '/admin/poems/visible',
       data: { id, visible },
-      success: function (result) {
-        console.log(result.message);
-        // if (result.success) {
-        //   $('#poem_' + id + '_visible').checkbox(visible ? 'check' : 'uncheck');
-        // }
-      },
       error: function (xhr) {
         console.error(xhr.status + " " + xhr.statusText);
       }
     })
-
   };
 
-  $('.ui.checkbox').checkbox({
+  var switchCollectionVisible = function (id, visible) {
+    $.ajax({
+      method: 'PATCH',
+      url: '/admin/poems/collection/visible',
+      data: { id, visible },
+      error: function (xhr) {
+        console.error(xhr.status + " " + xhr.statusText);
+      }
+    })
+  };
+
+  $('.ui.checkbox.poemVisible').checkbox({
     onChecked: function () {
       switchVisible($(this).data('id'), true);
     },
     onUnchecked: function () {
       switchVisible($(this).data('id'), false);
+    }
+  });
+
+  $('.ui.checkbox.poemCollectionVisible').checkbox({
+    onChecked: function () {
+      switchCollectionVisible($(this).data('id'), true);
+    },
+    onUnchecked: function () {
+      switchCollectionVisible($(this).data('id'), false);
     }
   });
 
