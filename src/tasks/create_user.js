@@ -1,6 +1,4 @@
-var mongoose = require('mongoose')
 var User = require('../mongodb/user_model')
-var Counter = require('../mongodb/counter_model')
 
 var env = process.env.NODE_ENV || 'development';
 console.log(`Env is ${env}`);
