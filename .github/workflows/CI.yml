@@ -48,7 +48,12 @@ jobs:
         run: CI=false npm run dist
 
       - name: Release app
-        run: echo $GITHUB_WORKSPACE/dist.zip
+        run: bash dev/CI/test.sh
+        env:
+          TOKEN: ${{ secrets.ELNETO_SECRET_TOKEN }}
+          BRANCH_NAME: ${{ steps.extract_branch.outputs.branch }}
+          FILE: $GITHUB_WORKSPACE/dist.zip
+#        run: bash dev/CI/deploy.sh ${{ secrets.ELNETO_SECRET_TOKEN }} ${{ steps.extract_branch.outputs.branch }} $GITHUB_WORKSPACE/dist.zip
 
 #      - name: Release app
 #        run: bash dev/CI/deploy.sh
