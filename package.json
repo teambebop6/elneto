@@ -9,6 +9,7 @@
     "start-dev": "FORCE_AWS=false node src/index.js",
     "clean": "rimraf dist",
     "build": "npm run build:server && npm run build:client && npm run copy",
+    "dist": "rm -rf dist.zip && zip -r dist.zip dist/**",
     "copy": "npm run copy:package.json && npm run copy:public && npm run copy:pm2 && npm run copy:csv",
     "dev": "webpack --mode=development",
     "dev-watch": "webpack --mode=development --watch",
