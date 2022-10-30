@@ -66,8 +66,12 @@ echo asset url is ${assetUrl}
 ts=$(date +%s)
 
 cp dev/CI/DEPLOY_INFO.template DEPLOY_INFO
-sed -i 's/@@tag@@/'${tagName}'/g' DEPLOY_INFO
-sed -i 's/@@ts@@/'${ts}'/g' DEPLOY_INFO
-sed -i 's/@@url@@/'${assetUrl}'/g' DEPLOY_INFO
 
+sed -i 's/@@tag@@/'$tagName'/g' DEPLOY_INFO
+cat DEPLOY_INFO
+
+sed -i 's/@@ts@@/'$ts'/g' DEPLOY_INFO
+cat DEPLOY_INFO
+
+sed -i 's/@@url@@/'$assetUrl'/g' DEPLOY_INFO
 cat DEPLOY_INFO
