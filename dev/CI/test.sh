@@ -4,8 +4,10 @@ token=${TOKEN}
 branchName=${BRANCH_NAME}
 file=${FILE}
 
-if [[ -z "${a}" ]]; then
-  echo A is not set
+if [[ -z "${token}" ]]; then
+  echo Token is not set
+else
+  echo Token is set
 fi
 
 if [[ -z "${branchName}" ]]; then
