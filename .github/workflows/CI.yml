@@ -52,7 +52,7 @@ jobs:
         env:
           TOKEN: ${{ secrets.ELNETO_SECRET_TOKEN }}
           BRANCH_NAME: ${{ steps.extract_branch.outputs.branch }}
-          FILE: ${{ GITHUB_WORKSPACE }}/dist.zip
+          FILE: ${{ github.workspace }}/dist.zip
 #        run: bash dev/CI/deploy.sh ${{ secrets.ELNETO_SECRET_TOKEN }} ${{ steps.extract_branch.outputs.branch }} $GITHUB_WORKSPACE/dist.zip
 
 #      - name: Release app
