@@ -60,7 +60,7 @@ uploadAssetResponse=$(
     "$uploadUrl"
 )
 
-assetUrl=$(echo $uploadAssetResponse | jq '.url')
+assetUrl=$(echo $uploadAssetResponse | jq -r '.url')
 echo asset url is ${assetUrl}
 
 ts=$(date +%s)
