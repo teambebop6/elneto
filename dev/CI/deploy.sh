@@ -52,8 +52,22 @@ fileName=$(basename ${file})
 uploadUrl=https://uploads.github.com/repos/${targetRepo}/releases/${releaseId}/assets?name=${fileName}
 echo upload url is ${uploadUrl}
 
-curl \
-  -H "Authorization: Bearer $token"  \
-  -H "Content-Type: application/zip" \
-  --data-binary @${file}  \
-  "$uploadUrl"
+uploadAssetResponse=$(
+  curl \
+    -H "Authorization: Bearer $token"  \
+    -H "Content-Type: application/zip" \
+    --data-binary @${file}  \
+    "$uploadUrl"
+)
+
+assetUrl=$(echo $uploadAssetResponse | jq '.url')
+echo asset url is ${assetUrl}
+
+ts=$(date +%s)
+
+cp dev/CI/DEPLOY_INFO.template DEPLOY_INFO
+sed -i 's/@@tag@@/'${tagName}'/g' DEPLOY_INFO
+sed -i 's/@@ts@@/'${ts}'/g' DEPLOY_INFO
+sed -i 's/@@url@@/'${assetUrl}'/g' DEPLOY_INFO
+
+cat DEPLOY_INFO
