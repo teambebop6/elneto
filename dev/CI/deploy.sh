@@ -67,8 +67,6 @@ ts=$(date +%s)
 
 cp dev/CI/DEPLOY_INFO.template DEPLOY_INFO
 
-awk '{sub(/@@tag@@/,'${tagName}'); print . "dev/CI/DEPLOY_INFO.template" }' > DEPLOY_INFO
-awk '{sub(/@@ts@@/,'${ts}'); print . "DEPLOY_INFO" }' > DEPLOY_INFO
-awk '{sub(/@@url@@/,'${assetUrl}'); print . "DEPLOY_INFO" }' > DEPLOY_INFO
+sed -i -e 's/@@tag@@/'${tagName}'/g;s/@@ts@@/'${ts}'/g;s,@@url@@,'${assetUrl}',g' DEPLOY_INFO
 
 cat DEPLOY_INFO
