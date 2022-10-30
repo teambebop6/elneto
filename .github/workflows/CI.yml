@@ -45,9 +45,10 @@ jobs:
         run: CI=false npm run build
 
       - name: Dist app
-        run: |
-        CI=false npm run dist
-        echo $GITHUB_WORKSPACE/dist.zip
+        run: CI=false npm run dist
+
+      - name: Release app
+        run: echo $GITHUB_WORKSPACE/dist.zip
 
 #      - name: Release app
 #        run: bash dev/CI/deploy.sh
