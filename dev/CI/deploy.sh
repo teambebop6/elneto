@@ -63,10 +63,14 @@ uploadAssetResponse=$(
 assetUrl=$(echo $uploadAssetResponse | jq -r '.url')
 echo asset url is ${assetUrl}
 
+schema="$(echo $assetUrl | grep :// | sed -e's,^\(.*://\).*,\1,g')"
+urlWithoutSchema="$(echo ${assetUrl/$schema/})"
+assetDownloadUrl="${schema}${token}@${urlWithoutSchema}"
+
 ts=$(date +%s)
 
 cp dev/CI/DEPLOY_INFO.template DEPLOY_INFO
 
-sed -i -e 's/@@tag@@/'${tagName}'/g;s/@@ts@@/'${ts}'/g;s,@@url@@,'${assetUrl}',g' DEPLOY_INFO
+sed -i -e 's/@@tag@@/'${tagName}'/g;s/@@ts@@/'${ts}'/g;s,@@url@@,'${assetDownloadUrl}',g' DEPLOY_INFO
 
 cat DEPLOY_INFO
