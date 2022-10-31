@@ -33,7 +33,8 @@ jobs:
 
       - name: Test condition
         if: |
-          startsWith(github.ref, 'refs/heads/feature/')
+          startsWith(github.ref, 'refs/heads/feature/') ||
+          startsWith(github.ref, 'refs/heads/release')
         run: echo "Run test condition!"
 
 #      - name: Install dependencies
