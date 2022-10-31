@@ -33,7 +33,7 @@ jobs:
 
       - name: Test condition
         if: |
-          ${{ steps.extract_branch.outputs.branch }} == 'feature'
+          startsWith(github.ref, 'refs/heads/feature/')
         run: echo "Run test condition!"
 
 #      - name: Install dependencies
