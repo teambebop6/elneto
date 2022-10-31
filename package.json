@@ -9,13 +9,16 @@
     "start-dev": "FORCE_AWS=false node src/index.js",
     "clean": "rimraf dist",
     "build": "npm run build:server && npm run build:client && npm run copy",
-    "copy": "npm run copy:package.json && npm run copy:public",
+    "dist": "rm -rf dist.zip && zip -r dist.zip dist/**",
+    "copy": "npm run copy:package.json && npm run copy:public && npm run copy:pm2 && npm run copy:csv",
     "dev": "webpack --mode=development",
     "dev-watch": "webpack --mode=development --watch",
     "build:server": "npx babel src --out-dir dist --ignore src/assets && cp -R src/views dist/",
     "build:client": "NODE_ENV=production webpack --mode=development",
     "copy:public": "cp -R public dist/",
-    "copy:package.json": "cpx \"package*.json\" dist/"
+    "copy:package.json": "cpx \"package*.json\" dist/",
+    "copy:pm2": "cpx src/elneto-secret/ecosystem.config.js dist/",
+    "copy:csv": "cpx src/elneto-secret/habana.csv dist/elneto-secret/"
   },
   "keywords": [
     "elneto"
@@ -68,6 +71,7 @@
     "url-loader": "^0.6.2"
   },
   "devDependencies": {
+    "@faker-js/faker": "^7.6.0",
     "babel-cli": "^6.26.0",
     "better-console": "^1.0.1",
     "extract-text-webpack-plugin": "^4.0.0-alpha",
