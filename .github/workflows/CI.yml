@@ -33,7 +33,6 @@ jobs:
 
       - name: Test condition
         if: |
-          steps.extract_branch.outputs.branch == 'release' ||
           steps.extract_branch.outputs.branch == 'feature'
         run: echo "Run test condition!"
 
