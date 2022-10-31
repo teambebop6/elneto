@@ -51,7 +51,7 @@ jobs:
 
       - name: Test runable
         run: echo "Job is runable"
-        if: $RUN_RELEASE
+        if: $RUN_RELEASE == true
 
 #      - name: Build app
 #        run: CI=false npm run build
