@@ -11,7 +11,7 @@ on:
   workflow_dispatch:
 
 env:
-  RUN_RELEASE: startsWith(github.ref, 'refs/heads/feature/') || startsWith(github.ref, 'refs/heads/release')
+  RUN_RELEASE: ${{ startsWith(github.ref, 'refs/heads/feature/') || startsWith(github.ref, 'refs/heads/release') }}
 
 
 jobs:
