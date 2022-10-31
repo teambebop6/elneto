@@ -11,7 +11,8 @@ on:
   workflow_dispatch:
 
 env:
-  RUN_RELEASE: ${{ startsWith(github.ref, 'refs/heads/feature/') || startsWith(github.ref, 'refs/heads/release') }}
+#  RUN_RELEASE: ${{ startsWith(github.ref, 'refs/heads/feature/') || startsWith(github.ref, 'refs/heads/release') }}
+  RUN_RELEASE: ${{ startsWith(github.ref, 'refs/heads/feature/') }}
 
 
 jobs:
@@ -47,6 +48,10 @@ jobs:
 
       - name: Test env variable
         run: echo "run release is $RUN_RELEASE"
+
+      - name: Test runable
+        run: echo "Job is runable"
+        if: $RUN_RELEASE
 
 #      - name: Build app
 #        run: CI=false npm run build
