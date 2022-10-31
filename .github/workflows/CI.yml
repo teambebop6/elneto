@@ -46,9 +46,15 @@ jobs:
 
       - name: Dist app
         run: CI=false npm run dist
+        if: |
+#          startsWith(github.ref, 'refs/heads/feature/') ||
+          startsWith(github.ref, 'refs/heads/release')
 
       - name: Release app
         run: bash dev/CI/deploy.sh
+        if: |
+#          startsWith(github.ref, 'refs/heads/feature/') ||
+          startsWith(github.ref, 'refs/heads/release')
         env:
           TOKEN: ${{ secrets.ELNETO_SECRET_TOKEN }}
           BRANCH_NAME: ${{ steps.extract_branch.outputs.branch }}
@@ -57,7 +63,7 @@ jobs:
       - name: Publish app
         uses: nogsantos/scp-deploy@master
         if: |
-          startsWith(github.ref, 'refs/heads/feature/') ||
+#          startsWith(github.ref, 'refs/heads/feature/') ||
           startsWith(github.ref, 'refs/heads/release')
         with:
           src: ./DEPLOY_INFO
