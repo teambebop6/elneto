@@ -27,13 +27,13 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: Extract branch name
+        id: extract_branch
         shell: bash
         run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
-        id: extract_branch
 
       - name: Test condition
         if: |
-          steps.extract_branch.outputs.branch == 'feature'
+          ${{ steps.extract_branch.outputs.branch }} == 'feature'
         run: echo "Run test condition!"
 
 #      - name: Install dependencies
