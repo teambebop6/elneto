@@ -27,40 +27,45 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: Extract branch name
+        id: extract_branch
         shell: bash
         run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
-        id: extract_branch
 
-      - name: Install dependencies
-        run: npm ci
+      - name: Test condition
+        if: |
+          ${{ steps.extract_branch.outputs.branch }} == 'feature'
+        run: echo "Run test condition!"
 
-      - name: Check out secret
-        uses: actions/checkout@v3
-        with:
-          path: 'src/elneto-secret/'
-          repository: teambebop6/elneto-secret
-          token: '${{ secrets.ELNETO_SECRET_TOKEN }}'
-
-      - name: Build app
-        run: CI=false npm run build
-
-      - name: Dist app
-        run: CI=false npm run dist
-
-      - name: Release app
-        run: bash dev/CI/deploy.sh
-        env:
-          TOKEN: ${{ secrets.ELNETO_SECRET_TOKEN }}
-          BRANCH_NAME: ${{ steps.extract_branch.outputs.branch }}
-          FILE: ${{ github.workspace }}/dist.zip
-
-      - name: Publish app
-        uses: nogsantos/scp-deploy@master
-        if: contains(github.ref, 'refs/heads/feature/')
-        with:
-          src: ./DEPLOY_INFO
-          host: ${{ secrets.DEPLOY_HOST }}
-          remote: ${{ secrets.DEPLOY_DIR }}
-          port: ${{ secrets.DEPLOY_PORT }}
-          user: ${{ secrets.DEPLOY_USER }}
-          key: ${{ secrets.DEPLOY_KEY }}
+#      - name: Install dependencies
+#        run: npm ci
+#
+#      - name: Check out secret
+#        uses: actions/checkout@v3
+#        with:
+#          path: 'src/elneto-secret/'
+#          repository: teambebop6/elneto-secret
+#          token: '${{ secrets.ELNETO_SECRET_TOKEN }}'
+#
+#      - name: Build app
+#        run: CI=false npm run build
+#
+#      - name: Dist app
+#        run: CI=false npm run dist
+#
+#      - name: Release app
+#        run: bash dev/CI/deploy.sh
+#        env:
+#          TOKEN: ${{ secrets.ELNETO_SECRET_TOKEN }}
+#          BRANCH_NAME: ${{ steps.extract_branch.outputs.branch }}
+#          FILE: ${{ github.workspace }}/dist.zip
+#
+#      - name: Publish app
+#        uses: nogsantos/scp-deploy@master
+#        if: contains(github.ref, 'refs/heads/feature/')
+#        with:
+#          src: ./DEPLOY_INFO
+#          host: ${{ secrets.DEPLOY_HOST }}
+#          remote: ${{ secrets.DEPLOY_DIR }}
+#          port: ${{ secrets.DEPLOY_PORT }}
+#          user: ${{ secrets.DEPLOY_USER }}
+#          key: ${{ secrets.DEPLOY_KEY }}
