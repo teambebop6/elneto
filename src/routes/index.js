@@ -9,6 +9,10 @@ var path = require('path');
 var utils = require('../utils/AdminUtils');
 var env = process.env.NODE_ENV || 'development';
 
+router.get('/hc', (req, res) => {
+  res.send('ok');
+});
+
 router.all('/*', function (req, res, next) {
   req.app.locals.layout = 'main';
   req.app.locals.isDev = env === 'development';
