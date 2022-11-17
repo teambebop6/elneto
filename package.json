@@ -111,6 +111,6 @@
     "run-sequence": "^2.2.0",
     "webpack": "^4.39.1",
     "webpack-bundle-analyzer": "^2.13.1",
-    "webpack-cli": "^3.3.6"
+    "webpack-cli": "^3.3.12"
   }
 }
