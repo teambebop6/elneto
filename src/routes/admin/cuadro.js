@@ -29,7 +29,7 @@ const reCreateIndex = (model) => {
       "$**": "text"
     }, {
       default_language: 'spanish',
-      background: true
+      background: false
     }, (err) => {
       if (err) {
         logger.error(

@@ -92,9 +92,16 @@ router.get('/teatro-cubano', function(req, res){
       throw err;
     }
 
+
     res.render('teatro-cubano', {
       title: 'Teatro Cubano',
-      galeries: galeries,
+      galeries: galeries.map((g) => {
+        return {
+        _id: g._id,
+        title: g.title,
+        titlePicture: g.titlePicture
+        }
+      }),
       active: { teatro_cubano: true },
       scripts: 'teatro-cubano.bundle',
     });
@@ -108,8 +115,14 @@ router.get('/danza', function(req, res){
     }
     res.render('danza', {
       title: 'Danza',
-      galeries: galeries,
-      active: {
+      galeries: galeries.map((g) => {
+        return {
+        _id: g._id,
+        title: g.title,
+        titlePicture: g.titlePicture
+        }
+      }),
+            active: {
         danza: true
       },
       scripts: 'galery-cat.bundle',
@@ -125,8 +138,14 @@ router.get('/musica', function(req, res){
     }
     res.render('musica', {
       title: 'Musica',
-      galeries: galeries,
-      active: {
+      galeries: galeries.map((g) => {
+        return {
+        _id: g._id,
+        title: g.title,
+        titlePicture: g.titlePicture
+        }
+      }),
+            active: {
         musik: true
       },
       scripts: 'galery-cat.bundle',
@@ -142,12 +161,17 @@ router.get('/teatro', function(req, res){
     }
     res.render('teatro', {
       title: 'Teatro',
-      galeries: galeries,
-      active: {
+      galeries: galeries.map((g) => {
+        return {
+        _id: g._id,
+        title: g.title,
+        titlePicture: g.titlePicture
+        }
+      }),
+            active: {
         theater: true
       },
-      scripts: 'galery-cat.bundle',
-
+      scripts: 'galery-cat.bundle'
     });
   });
 });
@@ -195,11 +219,29 @@ router.get('/galery/:id', function(req, res){
     res.render('galery', {
       title: 'Galery',
       scripts: 'galery.bundle',
-      galery: galery
+      galery: {
+        _id: galery.id,
+        title: galery.title,
+        images: galery.images.map((image) => {
+          return {
+            src: image.src,
+            title: image.title,
+            comments: image.comments,
+            link: image.link,
+            width: image.width,
+            height: image.height,
+            linkThumb: image.linkThumb,
+          }
+        }),
+        dateOfPlay: galery.dateOfPlay,
+        location: galery.location,
+        author: galery.author,
+        director: galery.director,
+        info1: galery.info1,
+        info2: galery.info2,
+      }
     });
   });
 });
-
-
 
 module.exports = router;
