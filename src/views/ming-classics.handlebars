@@ -1,0 +1,48 @@
+<div id="homePage" class="homePage_wrapper">
+  <div class="movingImage imageMove">
+    <div class="default active">
+      {{#each titlePics.clarinet }}
+      <img src="{{this}}" />
+      {{/each}}
+    </div>
+
+    <div class="orchestra">
+      {{#each titlePics.orchestra }}
+      <img src="{{this}}" />
+      {{/each}}
+    </div>
+
+    <div class="strings">
+      {{#each titlePics.strings }}
+      <img src="{{this}}" />
+      {{/each}}
+    </div>
+
+    <div class="piano">
+      {{#each titlePics.piano }}
+      <img src="{{this}}" />
+      {{/each}}
+    </div>
+
+    <div class="voice">
+      {{#each titlePics.voice }}
+      <img src="{{this}}" />
+      {{/each}}
+    </div>
+  </div>
+
+  <div class="menuBar">
+    <a href="/">
+      <div class="title">elneto • Ming Classics</div>
+    </a>
+    <div class="menu">
+      {{#each menuItems}}
+      <a class="item {{#if this.active}}active{{/if}}" href="{{this.url}}">{{this.name}}</a>
+      {{/each}}
+    </div>
+  </div>
+
+  <div style="position:absolute;margin:1rem;top:0;right:0;">
+    <a href="/">Back to elneto ></a>
+  </div>
+</div>

@@ -36,7 +36,7 @@ const reCreateIndex = () => {
       "$**": "text"
     }, {
       default_language: 'spanish',
-      background: true
+      background: false
     }, (err) => {
       if (err) {
         logger.error("re-create index for galery collection failed");
@@ -142,6 +142,7 @@ router.get('/new', function (req, res) {
     title: 'Create new galery',
     body_scripts: 'new-galery.bundle',
     active: { list_galeries: true },
+    tags: constants.tags,
   });
 
 });
