@@ -1,0 +1,27 @@
+<div class="menuBar goToTop">
+	<a href="/ming-classics">
+		<div class="title">elneto • Ming Classics</div>
+	</a>
+
+	<div class="mobileOnly menuMobile">
+		<input id="burger" type="checkbox" />
+		<label for="burger">
+			<span></span>
+			<span></span>
+			<span></span>
+		</label>
+		<nav>
+			<ul>
+				{{#each menuItems}}
+					<li><a class="item {{#if this.active}}active{{/if}}" href="{{this.url}}">{{this.name}}</a></li>
+				{{/each}}
+			</ul>
+		</nav>
+	</div>
+
+	<div class="menu">
+		{{#each menuItems}}
+			<a class="item {{#if this.active}}active{{/if}}" href="{{this.url}}">{{this.name}}</a>
+		{{/each}}
+	</div>
+</div>

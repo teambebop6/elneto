@@ -142,6 +142,7 @@ router.get('/new', function (req, res) {
     title: 'Create new galery',
     body_scripts: 'new-galery.bundle',
     active: { list_galeries: true },
+    tags: constants.tags,
   });
 
 });
