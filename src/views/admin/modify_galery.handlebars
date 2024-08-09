@@ -23,10 +23,11 @@
           <div class="sixteen wide column">
 
             <!-- hidden fields -->
-            <input type="hidden" id="galery-tags" value="{{#each galery.tags}}{{this}}{{#unless @last}},{{/unless}}{{/each}}"/>
-            <input type="hidden" id="is-active" value="{{galery.isActive}}"/>
-            <input type="hidden" id="galery-id" value="{{galery._id}}"/>
-            <input type="hidden" id="is-favorite" value="{{galery.isFavorite}}"/>
+            <input type="hidden" id="galery-tags"
+              value="{{#each galery.tags}}{{this}}{{#unless @last}},{{/unless}}{{/each}}" />
+            <input type="hidden" id="is-active" value="{{galery.isActive}}" />
+            <input type="hidden" id="galery-id" value="{{galery._id}}" />
+            <input type="hidden" id="is-favorite" value="{{galery.isFavorite}}" />
 
 
             <div class="two fields">
@@ -37,16 +38,29 @@
                   <input placeholder="Titel" type="text" name="title" value="{{galery.title}}" required>
                 </div>
               </div>
-              <div class="field">
+              <div class="two fields">
+<div class="field">
                 <!-- Date -->
                 <label>Fecha</label>
                 <div class="ui underlined input">
                   <input type="text" id="date_of_play_string" name="date_of_play_string" autocomplete="off"
-                         value="{{formatDateWithDDMMYYYY galery.dateOfPlay}}" required>
+                    value="{{formatDateWithDDMMYYYY galery.dateOfPlay}}" required>
                 </div>
+                </div>
+                <div class="field">
+
+                <label>Time</label>
+                <div class="ui underlined input">
+                  <input type="text" id="time_of_play" name="time_of_play" value="{{galery.timeOfPlay}}" readonly />
+                </div>
+
               </div>
+
+              </div>
+              
               <div class="hidden field">
-                <input type="hidden" id="date_of_play" name="date_of_play" value="{{formatDateWithDDMMYYYY galery.dateOfPlay}}">
+                <input type="hidden" id="date_of_play" name="date_of_play"
+                  value="{{formatDateWithDDMMYYYY galery.dateOfPlay}}">
               </div>
             </div>
 
@@ -84,7 +98,7 @@
                   <select name="tags" multiple="" class="ui tags dropdown">
                     <option value="">Tags</option>
                     {{#each tags}}
-                      <option value="{{this.id}}">{{this.name}}</option>
+                    <option value="{{this.id}}">{{this.name}}</option>
                     {{/each}}
                   </select>
                 </div>
@@ -144,7 +158,7 @@
     <form class="ui inverted form" id="form-images">
       <div class="ui stackable two column grid images-list" id="sortable-galery-images">
         {{#each galery.images}}
-          {{> admin/galery-thumb-element this}}
+        {{> admin/galery-thumb-element this}}
         {{/each}}
       </div>
       <div class="ui mobile reversed page grid" id="save-changes">
@@ -165,4 +179,3 @@
     </form>
   </div>
 </div>
-

@@ -5,25 +5,34 @@ var utils = require('../../../lib/helpers');
 var moment = require('moment');
 
 require('../../vendor/datepicker/dist/datepicker.min.css');
+require('../../vendor/jquery-timepicker-1.3.5/jquery.timepicker.min.css');
 
 app.then(function () {
 
   // Datepicker
   require(['datepicker'], function () {
-    console.log("loaded datepicker.");
     // Datepicker
     var picker = $('#date_of_play_string');
-
     var dateOfPlay = $('#date_of_play').val();
-
-    var dateFormat = "DD/MM/YYYY";
+    const dateFormat = "DD/MM/YYYY";
 
     picker.datepicker({
-      format: 'dd/mm/yyyy',
+      format: "dd/mm/yyyy",
       date: moment(dateOfPlay, dateFormat).toDate(),
     });
+
     $(picker).on('pick.datepicker', function (e) {
       $('#date_of_play').val(moment(e.date).format(dateFormat));
+    });
+  });
+
+  require(["timepicker"], function() {
+    $('#time_of_play').timepicker({
+      timeFormat: 'HH:mm',
+      interval: 60,
+      dynamic: false,
+      dropdown: true,
+      scrollbar: true
     });
   });
 
@@ -227,6 +236,7 @@ app.then(function () {
         submitFormData();
       }
     });
+
     // Validation of second form
     $('#form-images').submit(function (e) {
       e.preventDefault();
@@ -236,10 +246,18 @@ app.then(function () {
       }
     });
 
+    // All inputs of modify gallery
     var submitFormData = function () {
-      // Serialize data of all forms
-      var galeryInfoData = JSON.stringify(
-        $("#form-galery-info").serializeObject());
+
+      const formData = $("#form-galery-info").serializeObject()
+
+      formData.date_of_play = formData.date_of_play + " " + $('#time_of_play').val();
+
+      // Serialize data
+      var galeryInfoData = JSON.stringify(formData);
+
+      console.log("Form data: ", galeryInfoData)
+
 
       var imagesArray = [];
 
@@ -249,8 +267,6 @@ app.then(function () {
           $.extend(el, $(galery_el).find("input").serializeObject());
           imagesArray.push(el);
         });
-
-      console.log(imagesArray);
 
       var galery_id = $('#galery-id').val();
 

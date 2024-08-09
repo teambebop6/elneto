@@ -11,6 +11,8 @@ const sort = require('../../utils/sort');
 const RemoteUpload = require('../../utils/RemoteUpload');
 const adjustOrder = require('../../utils/adjustOrder');
 
+const moment = require("moment")
+
 module.exports = router;
 
 const tagMap = {};
@@ -82,10 +84,11 @@ router.get('/', function (req, res) {
         return go;
       });
 
+
       res.render('admin/list_galeries', {
         title: 'Manage Galeries',
         custom_js: 'admin/list-galeries.bundle',
-        galeries: galleryObjects,
+        galeries: galleryObjects.sort((a, b) => new Date(b.dateOfPlay) - new Date(a.dateOfPlay)), // Sort by date desc
         active: { list_galeries: true },
         body_scripts: 'list-galeries.bundle',
       });
@@ -225,7 +228,7 @@ router.get('/:id/modify', (req, res) => {
 
     res.render('admin/modify_galery', {
       title: 'Manage galery',
-      galery: galeryObject,
+      galery: { ...galeryObject, timeOfPlay: moment(galeryObject.dateOfPlay).format("HH:mm") },
       body_scripts: 'modify-galery.bundle',
       active: { list_galeries: true },
       tags: constants.tags,
@@ -348,8 +351,16 @@ router.post('/:id/modify', (req, res) => {
         }
       }
 
-      galery['dateOfPlay'] = dateUtils.parse(formData.date_of_play,
-        'DD/MM/YYYY');
+      try {
+        // Parse date from string
+        galery['dateOfPlay'] = dateUtils.parse(formData.date_of_play,
+          'DD/MM/YYYY HH:mm');
+      }
+      catch (e) {
+        console.log(e)
+      }
+
+
 
       galery.save((err) => {
         if (err) {

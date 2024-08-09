@@ -91,14 +91,14 @@ router.get('/search-results', function (req, res, next) {
 })
 
 router.get('/teatro-cubano', function (req, res) {
-  db.Galery.find({ tags: "teatro-cubano", isActive: true }).sort({ order: 'desc' }).exec(function (err, galeries) {
+  db.Galery.find({ tags: "teatro-cubano", isActive: true }).exec(function (err, galeries) {
     if (err) {
       throw err;
     }
 
     res.render('teatro-cubano', {
       title: 'Teatro Cubano',
-      galeries: galeries.map((g) => {
+      galeries: galeries.sort((a,b) => new Date(b.dateOfPlay) - new Date(a.dateOfPlay)).map((g) => {
         return {
           _id: g._id,
           title: g.title,
@@ -112,13 +112,13 @@ router.get('/teatro-cubano', function (req, res) {
 });
 
 router.get('/danza', function (req, res) {
-  db.Galery.find({ tags: "danza", isActive: true }).sort({ order: 'desc' }).exec(function (err, galeries) {
+  db.Galery.find({ tags: "danza", isActive: true }).exec(function (err, galeries) {
     if (err) {
       throw err;
     }
     res.render('danza', {
       title: 'Danza',
-      galeries: galeries.map((g) => {
+      galeries: galeries.sort((a,b) => new Date(b.dateOfPlay) - new Date(a.dateOfPlay)).map((g) => {
         return {
           _id: g._id,
           title: g.title,
@@ -135,13 +135,13 @@ router.get('/danza', function (req, res) {
 });
 
 router.get('/musica', function (req, res) {
-  db.Galery.find({ tags: "musica", isActive: true }).sort({ order: 'desc' }).exec(function (err, galeries) {
+  db.Galery.find({ tags: "musica", isActive: true }).exec(function (err, galeries) {
     if (err) {
       throw err;
     }
     res.render('musica', {
       title: 'Musica',
-      galeries: galeries.map((g) => {
+      galeries: galeries.sort((a,b) => new Date(b.dateOfPlay) - new Date(a.dateOfPlay)).map((g) => {
         return {
           _id: g._id,
           title: g.title,
@@ -157,13 +157,13 @@ router.get('/musica', function (req, res) {
 });
 
 router.get('/teatro', function (req, res) {
-  db.Galery.find({ tags: "teatro", isActive: true }).sort({ order: 'desc' }).exec(function (err, galeries) {
+  db.Galery.find({ tags: "teatro", isActive: true }).exec(function (err, galeries) {
     if (err) {
       throw err;
     }
     res.render('teatro', {
       title: 'Teatro',
-      galeries: galeries.map((g) => {
+      galeries: galeries.sort((a,b) => new Date(b.dateOfPlay) - new Date(a.dateOfPlay)).map((g) => {
         return {
           _id: g._id,
           title: g.title,
