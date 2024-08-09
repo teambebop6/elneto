@@ -36,6 +36,7 @@ module.exports = {
       'sortable': path.join(__dirname, 'src/assets/vendor/Sortable/Sortable.js'),
       'trumbowyg': path.join(__dirname, 'src/assets/vendor/trumbowyg/trumbowyg.min.js'),
       'trumbowyg.lang.es': path.join(__dirname, 'src/assets/vendor/trumbowyg/langs/es.js'),
+      'timepicker': path.join(__dirname, 'src/assets/vendor/jquery-timepicker-1.3.5/jquery.timepicker.min.js'),
     }
   },
   entry: {
