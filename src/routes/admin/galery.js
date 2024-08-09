@@ -226,9 +226,11 @@ router.get('/:id/modify', (req, res) => {
       });
     }
 
+    galeryObject.timeOfPlay = moment(galeryObject.dateOfPlay).format("HH:mm");
+
     res.render('admin/modify_galery', {
       title: 'Manage galery',
-      galery: { ...galeryObject, timeOfPlay: moment(galeryObject.dateOfPlay).format("HH:mm") },
+      galery: galeryObject,
       body_scripts: 'modify-galery.bundle',
       active: { list_galeries: true },
       tags: constants.tags,
