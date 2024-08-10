@@ -54,14 +54,6 @@ jobs:
         run: CI=false npm run dist
         if: ${{ steps.check_publish.outputs.publish == 'true' }}
 
-      - name: Check publish branch information
-        id: check_publish
-        run: |
-          echo "Branch name is ${{ steps.extract_branch.outputs.branch }}"
-          echo "Publish branch name is $PUBLISH_BRANCH"
-          echo "Current branch should be published: ${{ env.PUBLISH_BRANCH == steps.extract_branch.outputs.branch }}"
-          echo "publish=${{ env.PUBLISH_BRANCH == steps.extract_branch.outputs.branch }}" >> $GITHUB_OUTPUT
-
       - name: Release app
         run: bash dev/CI/deploy.sh
         if: ${{ steps.check_publish.outputs.publish == 'true' }}
