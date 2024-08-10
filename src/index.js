@@ -1,20 +1,21 @@
 var express = require('express');
 var app = express();
-
-var path = require('path'); // path module
 var favicon = require('serve-favicon'); // favicon module
+var path = require('path'); // path module
 var logger = require('morgan'); // Logging engine
 var cookieParser = require('cookie-parser'); // Cookie parser
 var fs = require('fs'); // Filesystem module
 var crypto = require('crypto'); // Cryptography module
 var utils = require('./utils/utils');
 
+// Serve favicon
+app.use(favicon(path.join(__dirname, 'assets', 'favicon.ico'))) // 
+
 // Body parser
 var bodyParser = require('body-parser'); // Request body parser
 
 app.use(bodyParser.urlencoded({ extended: true })) // parse application/x-www-form-urlencoded
 app.use(bodyParser.json()) // parse application/json
-
 
 var env = process.env.NODE_ENV || 'development';
 
@@ -104,11 +105,7 @@ app.use('/', require('./routes/router.js'));
 
 debug('Booting %s', app_name);
 
-//var server = http.createServer(app);
 app.listen(app.get('port'), function(){
-
-  // require('./scheduled')(config);
-
   console.log('Express server listening on ' + app.get('host') + ":" + app.get('port'));
 });
 
