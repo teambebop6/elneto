@@ -11,8 +11,7 @@ on:
   workflow_dispatch:
 
 env:
-#  RUN_RELEASE: ${{ startsWith(github.ref, 'refs/heads/feature/') || startsWith(github.ref, 'refs/heads/release') }}
-  RUN_RELEASE: ${{ startsWith(github.ref, 'refs/heads/release') }}
+  PUBLISH_BRANCH: release
 
 jobs:
   build:
@@ -30,11 +29,6 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Extract branch name
-        id: extract_branch
-        shell: bash
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
-
       - name: Install dependencies
         run: npm ci
 
@@ -48,13 +42,29 @@ jobs:
       - name: Build app
         run: CI=false npm run build
 
+      - name: Check publish branch information
+        id: check_publish
+        run: |
+          echo "Branch name is ${{ steps.extract_branch.outputs.branch }}"
+          echo "Publish branch name is $PUBLISH_BRANCH"
+          echo "Current branch should be published: ${{ env.PUBLISH_BRANCH == steps.extract_branch.outputs.branch }}"
+          echo "publish=${{ env.PUBLISH_BRANCH == steps.extract_branch.outputs.branch }}" >> $GITHUB_OUTPUT
+
       - name: Dist app
         run: CI=false npm run dist
-        if: env.RUN_RELEASE == 'true'
+        if: ${{ steps.check_publish.outputs.publish == 'true' }}
+
+      - name: Check publish branch information
+        id: check_publish
+        run: |
+          echo "Branch name is ${{ steps.extract_branch.outputs.branch }}"
+          echo "Publish branch name is $PUBLISH_BRANCH"
+          echo "Current branch should be published: ${{ env.PUBLISH_BRANCH == steps.extract_branch.outputs.branch }}"
+          echo "publish=${{ env.PUBLISH_BRANCH == steps.extract_branch.outputs.branch }}" >> $GITHUB_OUTPUT
 
       - name: Release app
         run: bash dev/CI/deploy.sh
-        if: env.RUN_RELEASE == 'true'
+        if: ${{ steps.check_publish.outputs.publish == 'true' }}
         env:
           TOKEN: ${{ secrets.ELNETO_SECRET_TOKEN }}
           BRANCH_NAME: ${{ steps.extract_branch.outputs.branch }}
@@ -62,7 +72,7 @@ jobs:
 
       - name: Publish app
         uses: nogsantos/scp-deploy@master
-        if: env.RUN_RELEASE == 'true'
+        if: ${{ steps.check_publish.outputs.publish == 'true' }}
         with:
           src: ./DEPLOY_INFO
           host: ${{ secrets.DEPLOY_HOST }}
