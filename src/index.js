@@ -1,15 +1,7 @@
 var express = require('express');
 var app = express();
-var favicon = require('serve-favicon'); // favicon module
 var path = require('path'); // path module
-var logger = require('morgan'); // Logging engine
-var cookieParser = require('cookie-parser'); // Cookie parser
-var fs = require('fs'); // Filesystem module
-var crypto = require('crypto'); // Cryptography module
 var utils = require('./utils/utils');
-
-// Serve favicon
-app.use(favicon(path.join(__dirname, 'assets', 'favicon.ico'))) // 
 
 // Body parser
 var bodyParser = require('body-parser'); // Request body parser
@@ -44,7 +36,6 @@ var helpers = require('./lib/helpers');
 
 // Server
 var debug = require('debug')('elneto');
-var http = require('http'); // http server
 var app_name = "Elneto Fotos";
 
 // Initialize redis based session
@@ -72,7 +63,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.set('views', path.join(__dirname, 'views/'));
-
 
 // Create `ExpressHandlebars` instance with a default layout.
 var hbs = exphbs.create({
