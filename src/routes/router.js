@@ -1,8 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var passport = require('passport');
-var db = require('../mongodb/db');
-var path = require('path');
+
 var env = process.env.NODE_ENV || "development";
 var config = require('../config')(env);
 
