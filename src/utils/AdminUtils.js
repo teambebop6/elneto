@@ -45,7 +45,11 @@ exports.ensureDirExists = function(path, mask, cb) {
 };
 
 exports.getOrigin = function(req) {
-  return `${req.protocol}://${req.hostname}:${req.socket.localPort}`
+  if(req.hostname === "localhost"){
+    return `${req.protocol}://${req.hostname}:${req.socket.localPort}`
+  }else{
+    return `https://${process.env.ELNETO_ENV === "dev" ? "dev." : "www."}elneto.com`
+  }
 }
 
 exports.getHashDigest = function (string) {
