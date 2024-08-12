@@ -29,7 +29,7 @@ app.then(function () {
   require(["timepicker"], function() {
     $('#time_of_play').timepicker({
       timeFormat: 'HH:mm',
-      interval: 60,
+      interval: 5,
       dynamic: false,
       dropdown: true,
       scrollbar: true

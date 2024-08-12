@@ -248,7 +248,6 @@ router.get('/galery', function (req, res, next) {
         info2: galery.info2,
       }
     });
-
   })
 })
 
