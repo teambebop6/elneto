@@ -214,12 +214,12 @@ router.post('/getGalery', function (req, res, next) {
 
 // Get galery from hash link (ignore isActive)
 router.get('/galery', function (req, res, next) {
-  db.Galery.findOne({ _id: req.params.id }, function (err, galery) {
+  db.Galery.findOne({ _id: req.query.id }, function (err, galery) {
     if (err) { return next(err); }
     if (!galery) { return next({ status: 400, message: "Galery not found." }); }
 
     // Check if hash is valid
-    if(AdminUtils.getHashDigest(galery.createdOn.toString()) !== req.params.hash) {
+    if(AdminUtils.getHashDigest(galery.createdOn.toString()) !== req.query.hash) {
       return next({ status: 403, message: "Access denied." });
     }
 
