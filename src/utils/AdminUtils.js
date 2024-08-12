@@ -1,4 +1,5 @@
 var fs = require('fs');
+var crypto = require('crypto');
 
 exports.camelCase = function(string) {
     return string.replace( /-([a-z])/ig, function( all, letter ) {
@@ -42,3 +43,11 @@ exports.ensureDirExists = function(path, mask, cb) {
     }
   });
 };
+
+exports.getOrigin = function(req) {
+  return `${req.protocol}://${req.hostname}:${req.socket.localPort}`
+}
+
+exports.getHashDigest = function (string) {
+  return crypto.createHash('md5').update(string).digest('base64');
+}

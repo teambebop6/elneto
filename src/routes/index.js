@@ -9,6 +9,8 @@ var env = process.env.NODE_ENV || 'development';
 
 var MingClassicsRouter = require('./ming-classics');
 
+const AdminUtils = require('../utils/AdminUtils');
+
 router.get('/hc', (req, res) => {
   res.send('ok');
 });
@@ -210,13 +212,50 @@ router.post('/getGalery', function (req, res, next) {
   });
 });
 
-router.get('/galery/:id', function (req, res) {
+// Get galery from hash link (ignore isActive)
+router.get('/galery', function (req, res, next) {
   db.Galery.findOne({ _id: req.params.id }, function (err, galery) {
     if (err) { return next(err); }
     if (!galery) { return next({ status: 400, message: "Galery not found." }); }
 
-    // Sort them imageso
-    // galery.images.sort(utils.sort_by("sort"));
+    // Check if hash is valid
+    if(AdminUtils.getHashDigest(galery.createdOn.toString()) !== req.params.hash) {
+      return next({ status: 403, message: "Access denied." });
+    }
+
+    res.render('galery', {
+      title: 'Galery',
+      scripts: 'galery.bundle',
+      galery: {
+        _id: galery.id,
+        title: galery.title,
+        images: galery.images.map((image) => {
+          return {
+            src: image.src,
+            title: image.title,
+            comments: image.comments,
+            link: image.link,
+            width: image.width,
+            height: image.height,
+            linkThumb: image.linkThumb,
+          }
+        }),
+        dateOfPlay: galery.dateOfPlay,
+        location: galery.location,
+        author: galery.author,
+        director: galery.director,
+        info1: galery.info1,
+        info2: galery.info2,
+      }
+    });
+  })
+})
+
+// Get galery
+router.get('/galery/:id', function (req, res, next) {
+  db.Galery.findOne({ _id: req.params.id, isActive: true }, function (err, galery) {
+    if (err) { return next(err); }
+    if (!galery) { return next({ status: 400, message: "Galery not found." }); }
 
     res.render('galery', {
       title: 'Galery',

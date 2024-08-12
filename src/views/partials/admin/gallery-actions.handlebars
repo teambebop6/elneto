@@ -1,0 +1,14 @@
+{{#if this}}
+<a href="/admin/galery/{{this._id}}/modify" class="ui inverted yellow icon button">
+  <i class="edit icon"></i>
+</a>
+<a data-id="{{this._id}}" class="ui inverted red icon button deleteGalery">
+  <i class="delete icon"></i>
+</a>
+
+<!-- Share Gallery -->
+<a data-link="{{this.shareLink}}" class="ui inverted blue icon button shareGallery">
+  <i class="share icon"></i>
+</a>
+<!-- -->
+{{/if}}
