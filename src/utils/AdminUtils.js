@@ -53,5 +53,5 @@ exports.getOrigin = function(req) {
 }
 
 exports.getHashDigest = function (string) {
-  return crypto.createHash('md5').update(string).digest('base64');
+  return crypto.createHash('md5').update(string).digest('base64').replace('/\//g', '');
 }
