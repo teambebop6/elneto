@@ -46,13 +46,9 @@
           this.isActive}}checked{{/if}}>
          <label>Is active</label>
       </div>
+
       <div>
-        <a href="/admin/galery/{{this._id}}/modify" class="ui inverted yellow icon button">
-          <i class="edit icon"></i>
-        </a>
-        <a data-id="{{this._id}}" class="ui inverted red icon button deleteGalery">
-          <i class="delete icon"></i>
-        </a>
+        {{> admin/gallery-actions this}}
       </div>
     </div>
     {{/each}}
@@ -92,13 +88,8 @@
               this.isActive}}checked{{/if}}>
           </div>
         </td>
-        <td>
-          <a href="/admin/galery/{{this._id}}/modify" class="ui inverted yellow icon button">
-            <i class="edit icon"></i>
-          </a>
-          <a data-id="{{this._id}}" class="ui inverted red icon button deleteGalery">
-            <i class="delete icon"></i>
-          </a>
+        <td style="white-space:nowrap;">
+           {{> admin/gallery-actions this}}
         </td>
       </tr>
       {{/each}}

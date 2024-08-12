@@ -2,13 +2,41 @@ const app = require('./globals');
 const changeOrder = require('../change-order');
 
 app.then(function(){
-  console.log("Loaded globals.");
 
-  // Delete galery
+
+  // Share gallery
+  const shareGalery = (id) => {
+    console.log("Share gallery: ", id);
+  }
+
+
+  $(".shareGallery").click(function(){
+    var link = $(this).data("link");
+
+    let modal = document.createElement('div');
+    modal.classList.add('ui', 'modal');
+    modal.innerHTML = `
+      <div class="header">Share Gallery</div>
+      <div class="content">
+        <p>The following link is a direct link to view the gallery. Everyone with the link can see it.</p>
+        <p style="white-space:nowrap;">${link}</p>
+      </div>
+      <div class="actions">
+        <div class="ui button">Close</div>
+      </div>
+    `;
+
+    document.body.appendChild(modal);
+    $(modal).modal('show');
+    // Close modal on button click
+    $(modal).find('.button').click(function(){
+      $(modal).modal('hide');
+    });
+  });
+
+  // Delete gallery
   $(".deleteGalery").click(function(){
     var id = $(this).data("id");
-    console.log("Deleting: " + id);
-
     deleteGalery(id);
   });
 

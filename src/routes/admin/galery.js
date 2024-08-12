@@ -11,6 +11,8 @@ const sort = require('../../utils/sort');
 const RemoteUpload = require('../../utils/RemoteUpload');
 const adjustOrder = require('../../utils/adjustOrder');
 
+const AdminUtils = require('../../utils/AdminUtils');
+
 const moment = require("moment")
 
 module.exports = router;
@@ -69,6 +71,7 @@ router.get('/getThumbTemplate', (req, res) => {
     });
 });
 
+// List Galleries
 router.get('/', function (req, res) {
   // Fetch trips
   db.Galery.find({ title: { $exists: true } }).sort({ order: 'desc' }).exec(
@@ -84,11 +87,18 @@ router.get('/', function (req, res) {
         return go;
       });
 
-
       res.render('admin/list_galeries', {
         title: 'Manage Galeries',
         custom_js: 'admin/list-galeries.bundle',
-        galeries: galleryObjects.sort((a, b) => new Date(b.dateOfPlay) - new Date(a.dateOfPlay)), // Sort by date desc
+        galeries: galleryObjects.sort((a, b) => new Date(b.dateOfPlay) - new Date(a.dateOfPlay)).map((gallery) => {
+          const hash = AdminUtils.getHashDigest(gallery.createdOn.toString());
+          
+          return {
+            ...gallery,
+            shareLink: `${AdminUtils.getOrigin(req)}/galery/?id=${gallery._id}&hash=${hash}`,
+            tags: gallery.tags.split(',').join(', ')
+          }
+        }),
         active: { list_galeries: true },
         body_scripts: 'list-galeries.bundle',
       });
