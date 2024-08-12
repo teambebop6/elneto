@@ -92,12 +92,13 @@ router.get('/', function (req, res) {
         custom_js: 'admin/list-galeries.bundle',
         galeries: galleryObjects.sort((a, b) => new Date(b.dateOfPlay) - new Date(a.dateOfPlay)).map((gallery) => {
           const hash = AdminUtils.getHashDigest(gallery.createdOn.toString());
-          
-          return {
-            ...gallery,
-            shareLink: `${AdminUtils.getOrigin(req)}/galery/?id=${gallery._id}&hash=${hash}`,
-            tags: gallery.tags.split(',').join(', ')
-          }
+
+          // Update values
+          gallery.shareLink = `${AdminUtils.getOrigin(req)}/galery/?id=${gallery._id}&hash=${hash}`;
+          gallery.tags = gallery.tags.split(',').join(', ');
+
+          return gallery;
+
         }),
         active: { list_galeries: true },
         body_scripts: 'list-galeries.bundle',
