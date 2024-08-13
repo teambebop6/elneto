@@ -3,6 +3,7 @@ var db = require('../mongodb/db');
 var env = process.env.NODE_ENV || 'development';
 var constants = require('../utils/constants');
 var adminUtils = require('../utils/AdminUtils');
+const { galerySortByDayDescComparer, galerySortByTimeAscComparer, galeryCompare } = require('../utils/utils');
 
 const menuItems = (active) => constants.tags.filter((tag) => tag.type === 'ming-classics').map((tag) => {
   return {
@@ -12,7 +13,9 @@ const menuItems = (active) => constants.tags.filter((tag) => tag.type === 'ming-
   }
 });
 
-const mapGaleries = (galeries) => galeries.map((g) => {
+const mapGaleries = (galeries) => galeries
+.sort(galeryCompare)
+.map((g) => {
   return {
     _id: g._id,
     title: g.title,
@@ -28,7 +31,7 @@ router.all('/*', function (req, res, next) {
 });
 
 router.get('/', function (req, res, next) {
-  db.Galery.find({ isFavorite: true }).sort({ order: 'desc' }).exec(function (err, galeries) {
+  db.Galery.find({ isFavorite: true }).exec(function (err, galeries) {
     if (err) {
       return (next(err))
     }
@@ -61,7 +64,6 @@ router.get('/', function (req, res, next) {
 /// Clarinet
 router.get('/clarinet', function (req, res) {
   db.Galery.find({  tags: { $all: ['ming-classics', 'clarinet'] }, isActive: true })
-    .sort({ order: 'desc' })
     .exec(function (err, galeries) {
     if (err) { throw err; }
 
@@ -77,7 +79,6 @@ router.get('/clarinet', function (req, res) {
 /// Orchestra
 router.get('/orchestra', function (req, res) {
   db.Galery.find({  tags: { $all: ['ming-classics', 'orchestra'] }, isActive: true })
-    .sort({ order: 'desc' })
     .exec(function (err, galeries) {
     if (err) { throw err; }
 
@@ -93,7 +94,6 @@ router.get('/orchestra', function (req, res) {
 /// Piano
 router.get('/piano', function (req, res) {
   db.Galery.find({  tags: { $all: ['ming-classics', 'piano'] }, isActive: true })
-    .sort({ order: 'desc' })
     .exec(function (err, galeries) {
     if (err) { throw err; }
 
@@ -109,7 +109,6 @@ router.get('/piano', function (req, res) {
 /// Voice
 router.get('/voice', function (req, res) {
   db.Galery.find({  tags: { $all: ['ming-classics', 'voice'] }, isActive: true })
-    .sort({ order: 'desc' })
     .exec(function (err, galeries) {
     if (err) { throw err; }
 
@@ -125,7 +124,6 @@ router.get('/voice', function (req, res) {
 /// Strings
 router.get('/strings', function (req, res) {
   db.Galery.find({  tags: { $all: ['ming-classics', 'strings'] }, isActive: true })
-    .sort({ order: 'desc' })
     .exec(function (err, galeries) {
     if (err) { throw err; }
 
@@ -141,7 +139,6 @@ router.get('/strings', function (req, res) {
 /// Ensemble
 router.get('/ensemble', function (req, res) {
   db.Galery.find({  tags: { $all: ['ming-classics', 'ensemble'] }, isActive: true })
-    .sort({ order: 'desc' })
     .exec(function (err, galeries) {
     if (err) { throw err; }
 
@@ -158,7 +155,6 @@ router.get('/ensemble', function (req, res) {
 /// Honours etc
 router.get('/honours', function (req, res) {
   db.Galery.find({  tags: { $all: ['ming-classics', 'honours'] }, isActive: true })
-    .sort({ order: 'desc' })
     .exec(function (err, galeries) {
     if (err) { throw err; }
 
