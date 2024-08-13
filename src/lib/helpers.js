@@ -1,5 +1,7 @@
 'use strict';
 
+// Available variables in handlebars templates
+
 var moment = require('moment');
 
 var monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
@@ -35,6 +37,14 @@ exports.formatDate = function(date){
   }
 
   return ("0" + date.getDate()).slice(-2) + "/" + ("0" + (date.getMonth()+1)).slice(-2) + "/" + date.getFullYear();
+}
+
+exports.getTime = function(date){
+  if(!date){
+    return "";
+  }
+
+  return ("0" + date.getHours()).slice(-2) + ":" + ("0" + date.getMinutes()).slice(-2);
 }
 
 exports.formatFullDateString = function(date){
