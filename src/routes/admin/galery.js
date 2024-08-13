@@ -11,6 +11,8 @@ const sort = require('../../utils/sort');
 const RemoteUpload = require('../../utils/RemoteUpload');
 const adjustOrder = require('../../utils/adjustOrder');
 
+const { galerySortByDayDescComparer, galerySortByTimeAscComparer} = require('../../utils/utils');
+
 const AdminUtils = require('../../utils/AdminUtils');
 
 const moment = require("moment")
@@ -90,7 +92,10 @@ router.get('/', function (req, res) {
       res.render('admin/list_galeries', {
         title: 'Manage Galeries',
         custom_js: 'admin/list-galeries.bundle',
-        galeries: galleryObjects.sort((a, b) => new Date(b.dateOfPlay) - new Date(a.dateOfPlay)).map((gallery) => {
+        galeries: galleryObjects
+        .sort(galerySortByDayDescComparer)
+        .sort(galerySortByTimeAscComparer)
+        .map((gallery) => {
           const hash = AdminUtils.getHashDigest(gallery.createdOn.toString());
 
           // Update values

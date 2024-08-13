@@ -60,6 +60,7 @@
       <tr>
         <th>Título</th>
         <th>Fecha</th>
+        <th>Time</th>
         <th>Director(a)</th>
         <th>Etiquetas</th>
         <th>Displayed</th>
@@ -74,6 +75,7 @@
       <tr id="galery_{{this._id}}" class="galery-listing">
         <td>{{this.title}}</td>
         <td>{{formatDate this.dateOfPlay}}</td>
+        <td>{{getTime this.dateOfPlay}}</td>   
         <td>{{this.location}}</td>
         <td>{{this.tags}}</td>
         <td>
