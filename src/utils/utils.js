@@ -37,16 +37,10 @@ exports.printMaskedConfig = function(config){
   console.log("-----\n");
 }
 
-
-exports.galerySortByDayDescComparer = (a, b) => {
-  return new Date(b.dateOfPlay) - new Date(a.dateOfPlay);
+exports.galeryCompare = (a, b) => {
+  // Return desc dateOfPlay unless its the same day, then return asc time
+  const compareDays = new Date(b.dateOfPlay.toDateString()) - new Date(a.dateOfPlay.toDateString())
+  const compareTime = new Date(a.dateOfPlay) - new Date(b.dateOfPlay)
+  return compareDays || compareTime
 }
-
-exports.galerySortByTimeAscComparer = (a, b) => {
-  // if the same day, sort by time
-  if (new Date(a.dateOfPlay).toDateString() === new Date(b.dateOfPlay).toDateString()) {
-    return new Date(a.dateOfPlay) - new Date(b.dateOfPlay);
-  }
-  return 0;
-} 
 

@@ -4,14 +4,11 @@ var db = require('../mongodb/db');
 var request = require('request');
 var path = require('path');
 
-var { galerySortByDayDescComparer, galerySortByTimeAscComparer} = require('../utils/utils');
+var { galeryCompare } = require('../utils/utils');
 var env = process.env.NODE_ENV || 'development';
 
 var MingClassicsRouter = require('./ming-classics');
-
 const AdminUtils = require('../utils/AdminUtils');
-
-
 
 router.get('/hc', (req, res) => {
   res.send('ok');
@@ -103,8 +100,7 @@ router.get('/teatro-cubano', function (req, res) {
     res.render('teatro-cubano', {
       title: 'Teatro Cubano',
       galeries: galeries
-        .sort(galerySortByDayDescComparer)
-        .sort(galerySortByTimeAscComparer)
+        .sort(galeryCompare)
         .map((g) => {
         return {
           _id: g._id,
@@ -126,8 +122,7 @@ router.get('/danza', function (req, res) {
     res.render('danza', {
       title: 'Danza',
       galeries: galeries
-      .sort(galerySortByDayDescComparer)
-      .sort(galerySortByTimeAscComparer)
+      .sort(galeryCompare)
       .map((g) => {
         return {
           _id: g._id,
@@ -152,8 +147,7 @@ router.get('/musica', function (req, res) {
     res.render('musica', {
       title: 'Musica',
       galeries: galeries
-      .sort(galerySortByDayDescComparer)
-      .sort(galerySortByTimeAscComparer)
+      .sort(galeryCompare)
       .map((g) => {
         return {
           _id: g._id,
@@ -177,8 +171,7 @@ router.get('/teatro', function (req, res) {
     res.render('teatro', {
       title: 'Teatro',
       galeries: galeries
-      .sort(galerySortByDayDescComparer)
-      .sort(galerySortByTimeAscComparer)
+      .sort(galeryCompare)
       .map((g) => {
         return {
           _id: g._id,
