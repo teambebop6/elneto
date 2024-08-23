@@ -149,7 +149,7 @@ router.get('/musica', function (req, res) {
     var mingClassics = [
       {
         _id: "ming-classics",
-        title: "Ming Classics",
+        title: "Ming Classics 2024 | Zürich und Vitznau",
         titlePicture: '/static/images/Classics-1973.jpg',
         dateOfPlay: new Date("2024/07/16"),
         link: "/ming-classics"
