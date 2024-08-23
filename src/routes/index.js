@@ -144,17 +144,32 @@ router.get('/musica', function (req, res) {
     if (err) {
       throw err;
     }
+
+    // Add Ming Classics
+    var mingClassics = [
+      {
+        _id: "ming-classics",
+        title: "Ming Classics 2024 | Zürich und Vitznau",
+        titlePicture: '/static/images/Classics-1973.jpg',
+        dateOfPlay: new Date("2024/07/16"),
+        link: "/ming-classics"
+      }
+    ];
+
     res.render('musica', {
       title: 'Musica',
       galeries: galeries
-      .sort(galeryCompare)
       .map((g) => {
         return {
           _id: g._id,
           title: g.title,
-          titlePicture: g.titlePicture
+          titlePicture: g.titlePicture,
+          link: "/galery/"+g._id,
+          dateOfPlay: g.dateOfPlay,
         }
-      }),
+      })
+      .concat(mingClassics)
+      .sort(galeryCompare),
       active: {
         musik: true
       },
