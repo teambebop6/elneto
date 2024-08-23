@@ -38,6 +38,8 @@ exports.printMaskedConfig = function(config){
 }
 
 exports.galeryCompare = (a, b) => {
+  if(!a || !b || !a.dateOfPlay || !b.dateOfPlay) return 0
+
   // Return desc dateOfPlay unless its the same day, then return asc time
   const compareDays = new Date(b.dateOfPlay.toDateString()) - new Date(a.dateOfPlay.toDateString())
   const compareTime = new Date(a.dateOfPlay) - new Date(b.dateOfPlay)
