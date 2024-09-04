@@ -678,7 +678,7 @@
 		margin:10px;
 	}
 
-	button::before, button::after{
+	button:not("no-transition-button")::before, button:not("no-transition-button")::after{
 		content:"";
 		width: 0;
 		height: 1px;

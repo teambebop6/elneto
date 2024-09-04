@@ -1,9 +1,14 @@
+<form method="get">
 <div id="searchContainer2" class="search teatro-cubano">
   <div class="searchBar teatre-search">
     <input id="search-query" name="q" class="prompt" type="text" placeholder="Buscar en la galería ..." autocomplete="off">
-    <i id="searchButton" class="inverted circular search link icon"></i>
+    <button class="no-transition-button" role="button" style="border:0 !important;background:none !important;transition: none !important;" type="submit">
+      <i class="inverted circular search link icon"></i>
+    </button>
   </div>
 </div>
+
+</form>
 
 {{#if keyword}}
   <div class="pageTile_wrapper">
@@ -25,36 +30,6 @@
         <a href="/galery/{{this._id}}" data-id="{{this._id}}">
           <img alt="{{this.title}}" src="{{this.titlePicture}}"/>
         </a>
-      {{/each}}
-    </div>
-  </div>
-{{/if}}
-
-{{#if data.cuadros}}
-  <div id="cuadrosContainer">
-    <h3 class="ui inverted header querySectionTitle">Sus Cuadros</h3>
-    <div class="albums_wrapper justified-gallery" id="albumListCuadros">
-      {{#each data.cuadros}}
-        {{#if this.photos}}
-          <a href="/yonny#cuadros_{{this.id}}" data-id="{{this.id}}">
-            <img alt="{{this.title}}" src="{{this.titlePicture}}"/>
-          </a>
-        {{/if}}
-      {{/each}}
-    </div>
-  </div>
-{{/if}}
-
-{{#if data.yonnyFotos}}
-  <div id="yonnyFotosContainer">
-    <h3 class="ui inverted header querySectionTitle">Yonny En Fotos</h3>
-    <div class="albums_wrapper justified-gallery" id="albumListYonnyFotos">
-      {{#each data.yonnyFotos}}
-        {{#if this.photos}}
-          <a href="/yonny/en-fotos#en_fotos_{{this.id}}" data-id="{{this.id}}">
-            <img alt="{{this.title}}" src="{{this.titlePicture}}"/>
-          </a>
-        {{/if}}
       {{/each}}
     </div>
   </div>
