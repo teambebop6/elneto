@@ -132,13 +132,10 @@ const query = ({ req, res, next, plain = true }) => {
     });
 };
 
-
-router.all('/*', function (req, res, next) {
+router.get('/*', function (req, res, next) {
   req.app.locals.layout = 'ming-classics';
-  req.app.locals.isDev = env === 'development';
   next(); // pass control to the next handler
 });
-
 
 router.get('/', (req, res, next) => {
   query({
