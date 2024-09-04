@@ -1,7 +1,7 @@
 # This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: Elneto CI
+name: Elneto Build
 
 on:
   push:
@@ -11,8 +11,7 @@ on:
   workflow_dispatch:
 
 env:
-#  RUN_RELEASE: ${{ startsWith(github.ref, 'refs/heads/feature/') || startsWith(github.ref, 'refs/heads/release') }}
-  RUN_RELEASE: ${{ startsWith(github.ref, 'refs/heads/release') }}
+  PUBLISH_BRANCH: release
 
 jobs:
   build:
@@ -21,25 +20,20 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [12.x]
+        node-version: [18.x]
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-
-      - name: Extract branch name
-        id: extract_branch
-        shell: bash
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
 
       - name: Install dependencies
         run: npm ci
 
       - name: Check out secret
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           path: 'src/elneto-secret/'
           repository: teambebop6/elneto-secret
@@ -48,13 +42,26 @@ jobs:
       - name: Build app
         run: CI=false npm run build
 
+      - name: Extract branch name
+        id: extract_branch
+        shell: bash
+        run: echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
+
+      - name: Check publish branch information
+        id: check_publish
+        run: |
+          echo "Branch name is ${{ steps.extract_branch.outputs.branch }}"
+          echo "Publish branch name is $PUBLISH_BRANCH"
+          echo "Current branch should be published: ${{ env.PUBLISH_BRANCH == steps.extract_branch.outputs.branch }}"
+          echo "publish=${{ env.PUBLISH_BRANCH == steps.extract_branch.outputs.branch }}" >> $GITHUB_OUTPUT
+
       - name: Dist app
         run: CI=false npm run dist
-        if: env.RUN_RELEASE == 'true'
+        if: ${{ steps.check_publish.outputs.publish == 'true' }}
 
       - name: Release app
         run: bash dev/CI/deploy.sh
-        if: env.RUN_RELEASE == 'true'
+        if: ${{ steps.check_publish.outputs.publish == 'true' }}
         env:
           TOKEN: ${{ secrets.ELNETO_SECRET_TOKEN }}
           BRANCH_NAME: ${{ steps.extract_branch.outputs.branch }}
@@ -62,7 +69,7 @@ jobs:
 
       - name: Publish app
         uses: nogsantos/scp-deploy@master
-        if: env.RUN_RELEASE == 'true'
+        if: ${{ steps.check_publish.outputs.publish == 'true' }}
         with:
           src: ./DEPLOY_INFO
           host: ${{ secrets.DEPLOY_HOST }}
