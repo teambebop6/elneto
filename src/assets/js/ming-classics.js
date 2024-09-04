@@ -5,7 +5,7 @@ app.then(function () {
   var windowWidth = $(window).width();
 
   $('#searchField').on('focus', function () {
-    window.location.href = '/query';
+    window.location.href = '/ming-classics/query';
   });
 
   if (windowWidth > 1080) {

@@ -3,7 +3,7 @@ var db = require('../mongodb/db');
 var env = process.env.NODE_ENV || 'development';
 var constants = require('../utils/constants');
 var adminUtils = require('../utils/AdminUtils');
-const { galerySortByDayDescComparer, galerySortByTimeAscComparer, galeryCompare } = require('../utils/utils');
+const { galeryCompare } = require('../utils/utils');
 
 const menuItems = (active) => constants.tags.filter((tag) => tag.type === 'ming-classics').map((tag) => {
   return {
@@ -166,5 +166,10 @@ router.get('/honours', function (req, res) {
     });
   });
 });
+
+
+// Query
+router.use("/query", require("./ming-classics-query"))
+
 
 module.exports = router;
