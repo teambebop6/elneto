@@ -132,7 +132,6 @@ const query = ({ req, res, next, plain = true }) => {
 };
 
 router.get('/', (req, res, next) => {
-  console.log("sooper query")
   query({
     req,
     res,
