@@ -50,8 +50,6 @@ app.then(function(){
           url: '/admin/galery/delete',
           data: { id: id },
           success : function(result){
-            console.log(result.message);
-
             if(result.success){
               $('#galery_' + id).remove();
             }

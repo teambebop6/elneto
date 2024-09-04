@@ -12,8 +12,11 @@ router.use('/uploads', express.static(config.UPLOAD_FOLDER));
 // Load routes
 router.use('/api', require('./api'));
 router.use('/', require('./index'));
+
+// Ming Classics
+router.use('/ming-classics', require('./ming-classics'))
+
 router.use('/yonny', require('./yonny'));
-// router.use('/categories', require('./category'));
 router.use('/query', require('./query'));
 router.use('/poems', require('./poem'));
 router.use('/', require('./admin'));

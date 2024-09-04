@@ -7,7 +7,6 @@ var path = require('path');
 var { galeryCompare } = require('../utils/utils');
 var env = process.env.NODE_ENV || 'development';
 
-var MingClassicsRouter = require('./ming-classics');
 const AdminUtils = require('../utils/AdminUtils');
 
 router.get('/hc', (req, res) => {
@@ -49,9 +48,6 @@ router.get('/', function (req, res, next) {
     });
   });
 });
-
-// Ming Classics
-router.use('/ming-classics', MingClassicsRouter)
 
 router.get('/search-results', function (req, res, next) {
   var query = req.query.q || "";
