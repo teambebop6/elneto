@@ -1,7 +1,7 @@
 <form method="get">
 <div id="searchContainer2" class="search teatro-cubano">
   <div class="searchBar teatre-search">
-    <input id="search-query" name="q" class="prompt" type="text" placeholder="Buscar en la galería ..." autocomplete="off">
+    <input id="search-query" name="q" class="prompt" type="text" placeholder="search galleries ..." autocomplete="off">
     <button class="no-transition-button" role="button" style="border:0 !important;background:none !important;transition: none !important;" type="submit">
       <i class="inverted circular search link icon"></i>
     </button>
@@ -24,7 +24,7 @@
 
 {{#if data.galleries }}
   <div id="galeryContainer">
-    <h3 class="ui inverted header querySectionTitle">Galerías</h3>
+    <h3 class="ui inverted header querySectionTitle">Galleries</h3>
     <div class="albums_wrapper justified-gallery" id="albumList">
       {{#each data.galleries}}
         <a href="/galery/{{this._id}}" data-id="{{this._id}}">
@@ -36,6 +36,6 @@
 {{/if}}
 
 <div style="color: white; text-align: center; margin: 2rem;">
-  <a href="/ming-classics" style="text-decoration: underline;">volver</a>
+  <a href="/ming-classics" style="text-decoration: underline;">return</a>
 </div>
 
