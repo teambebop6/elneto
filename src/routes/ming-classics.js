@@ -67,7 +67,7 @@ router.get('/clarinet', function (req, res) {
     .exec(function (err, galeries) {
     if (err) { throw err; }
 
-    res.render('galery-cat', {
+    res.render('galery-cat-ming', {
       title: 'Clarinet',
       galeries: mapGaleries(galeries),
       scripts: 'galery-cat.bundle',
@@ -82,7 +82,7 @@ router.get('/orchestra', function (req, res) {
     .exec(function (err, galeries) {
     if (err) { throw err; }
 
-    res.render('galery-cat', {
+    res.render('galery-cat-ming', {
       title: 'Orchestra',
       galeries: mapGaleries(galeries),
       scripts: 'galery-cat.bundle',
@@ -97,7 +97,7 @@ router.get('/piano', function (req, res) {
     .exec(function (err, galeries) {
     if (err) { throw err; }
 
-    res.render('galery-cat', {
+    res.render('galery-cat-ming', {
       title: 'Piano',
       galeries: mapGaleries(galeries),
       scripts: 'galery-cat.bundle',
@@ -112,7 +112,7 @@ router.get('/voice', function (req, res) {
     .exec(function (err, galeries) {
     if (err) { throw err; }
 
-    res.render('galery-cat', {
+    res.render('galery-cat-ming', {
       title: 'Voice',
       galeries: mapGaleries(galeries),
       scripts: 'galery-cat.bundle',
@@ -127,7 +127,7 @@ router.get('/strings', function (req, res) {
     .exec(function (err, galeries) {
     if (err) { throw err; }
 
-    res.render('galery-cat', {
+    res.render('galery-cat-ming', {
       title: 'Strings',
       galeries: mapGaleries(galeries),
       scripts: 'galery-cat.bundle',
@@ -142,7 +142,7 @@ router.get('/ensemble', function (req, res) {
     .exec(function (err, galeries) {
     if (err) { throw err; }
 
-    res.render('galery-cat', {
+    res.render('galery-cat-ming', {
       title: 'Ensemble',
       galeries: mapGaleries(galeries),
       scripts: 'galery-cat.bundle',
@@ -158,7 +158,7 @@ router.get('/honours', function (req, res) {
     .exec(function (err, galeries) {
     if (err) { throw err; }
 
-    res.render('galery-cat', {
+    res.render('galery-cat-ming', {
       title: 'Honours',
       galeries: mapGaleries(galeries),
       scripts: 'galery-cat.bundle',
