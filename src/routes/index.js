@@ -8,6 +8,10 @@ var { galeryCompare } = require('../utils/utils');
 var env = process.env.NODE_ENV || 'development';
 
 const AdminUtils = require('../utils/AdminUtils');
+const Utils = require('../utils/utils');
+
+var mingClassicsMenuItems = require('../utils/ming-classics').menuItems;
+
 
 router.get('/hc', (req, res) => {
   res.send('ok');
@@ -98,12 +102,12 @@ router.get('/teatro-cubano', function (req, res) {
       galeries: galeries
         .sort(galeryCompare)
         .map((g) => {
-        return {
-          _id: g._id,
-          title: g.title,
-          titlePicture: g.titlePicture
-        }
-      }),
+          return {
+            _id: g._id,
+            title: g.title,
+            titlePicture: g.titlePicture
+          }
+        }),
       active: { teatro_cubano: true },
       scripts: 'teatro-cubano.bundle',
     });
@@ -118,14 +122,14 @@ router.get('/danza', function (req, res) {
     res.render('danza', {
       title: 'Danza',
       galeries: galeries
-      .sort(galeryCompare)
-      .map((g) => {
-        return {
-          _id: g._id,
-          title: g.title,
-          titlePicture: g.titlePicture
-        }
-      }),
+        .sort(galeryCompare)
+        .map((g) => {
+          return {
+            _id: g._id,
+            title: g.title,
+            titlePicture: g.titlePicture
+          }
+        }),
       active: {
         danza: true
       },
@@ -155,17 +159,17 @@ router.get('/musica', function (req, res) {
     res.render('musica', {
       title: 'Musica',
       galeries: galeries
-      .map((g) => {
-        return {
-          _id: g._id,
-          title: g.title,
-          titlePicture: g.titlePicture,
-          link: "/galery/"+g._id,
-          dateOfPlay: g.dateOfPlay,
-        }
-      })
-      .concat(mingClassics)
-      .sort(galeryCompare),
+        .map((g) => {
+          return {
+            _id: g._id,
+            title: g.title,
+            titlePicture: g.titlePicture,
+            link: "/galery/" + g._id,
+            dateOfPlay: g.dateOfPlay,
+          }
+        })
+        .concat(mingClassics)
+        .sort(galeryCompare),
       active: {
         musik: true
       },
@@ -182,14 +186,14 @@ router.get('/teatro', function (req, res) {
     res.render('teatro', {
       title: 'Teatro',
       galeries: galeries
-      .sort(galeryCompare)
-      .map((g) => {
-        return {
-          _id: g._id,
-          title: g.title,
-          titlePicture: g.titlePicture
-        }
-      }),
+        .sort(galeryCompare)
+        .map((g) => {
+          return {
+            _id: g._id,
+            title: g.title,
+            titlePicture: g.titlePicture
+          }
+        }),
       active: {
         theater: true
       },
@@ -237,7 +241,7 @@ router.get('/galery', function (req, res, next) {
     if (!galery) { return next({ status: 400, message: "Galery not found." }); }
 
     // Check if hash is valid
-    if(AdminUtils.getHashDigest(galery.createdOn.toString()) !== req.query.hash) {
+    if (AdminUtils.getHashDigest(galery.createdOn.toString()) !== req.query.hash) {
       return next({ status: 403, message: "Access denied." });
     }
 
@@ -275,6 +279,10 @@ router.get('/galery/:id', function (req, res, next) {
     if (err) { return next(err); }
     if (!galery) { return next({ status: 400, message: "Galery not found." }); }
 
+    if (Utils.isMingClassics(galery)) {
+      req.app.locals.layout = 'ming-classics';
+    }
+
     res.render('galery', {
       title: 'Galery',
       scripts: 'galery.bundle',
@@ -298,7 +306,8 @@ router.get('/galery/:id', function (req, res, next) {
         director: galery.director,
         info1: galery.info1,
         info2: galery.info2,
-      }
+      },
+      menuItems: mingClassicsMenuItems()
     });
   });
 });
