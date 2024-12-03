@@ -5,13 +5,7 @@ var constants = require('../utils/constants');
 var adminUtils = require('../utils/AdminUtils');
 const { galeryCompare } = require('../utils/utils');
 
-const menuItems = (active) => constants.tags.filter((tag) => tag.type === 'ming-classics').map((tag) => {
-  return {
-    name: tag.name,
-    url: "/ming-classics/" + tag.id,
-    active: tag.id === active,
-  }
-});
+var menuItems = require('../utils/ming-classics').menuItems;
 
 const mapGaleries = (galeries) => galeries
 .sort(galeryCompare)

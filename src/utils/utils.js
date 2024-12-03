@@ -46,3 +46,7 @@ exports.galeryCompare = (a, b) => {
   return compareDays || compareTime
 }
 
+exports.isMingClassics = (galery) => {
+  // Check if galery is a Ming Classics galery
+  return galery.tags.indexOf('ming-classics') > -1
+}
