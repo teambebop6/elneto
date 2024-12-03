@@ -48,6 +48,5 @@ exports.galeryCompare = (a, b) => {
 
 exports.isMingClassics = (galery) => {
   // Check if galery is a Ming Classics galery
-  console.log(galery.tags)
   return galery.tags.indexOf('ming-classics') > -1
 }
